@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kalna Baložu Ogas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #000000;
@@ -23,11 +23,11 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Hand-drawn style for titles only */
-        h1, h2, h3, .sticker-font { 
-            font-family: 'Neucha', cursive; 
+        h1, h2, h3, .marker-font { 
+            font-family: 'Permanent Marker', cursive; 
             font-weight: 400; 
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .scroll-container {
@@ -44,8 +44,6 @@
             scroll-snap-stop: always;
             display: flex;
             position: relative;
-            background-size: cover;
-            background-position: center;
             overflow: hidden;
         }
 
@@ -53,7 +51,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.65);
+            background: rgba(0,0,0,0.7);
             z-index: 1;
         }
 
@@ -62,7 +60,7 @@
             z-index: 2;
             width: 100%;
             margin: auto;
-            padding: 60px 20px; 
+            padding: 40px 20px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -73,126 +71,102 @@
         /* Language Toggle */
         .nav-ui { position: fixed; top: 20px; right: 20px; z-index: 1000; }
         .lang-toggle {
-            cursor: pointer; letter-spacing: 2px; font-size: 0.75rem; font-weight: 600;
-            border: 1px solid var(--border); padding: 8px 18px; border-radius: 4px;
+            cursor: pointer; letter-spacing: 1px; font-size: 0.7rem; font-weight: 600;
+            border: 1px solid var(--border); padding: 8px 15px; border-radius: 4px;
             background: rgba(0,0,0,0.8); color: white;
         }
 
-        /* Variety Info Modal */
+        /* Variety Catalog Modal */
         .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 2000; display: none; padding: 40px 20px; overflow-y: auto;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+            z-index: 2000; display: none; padding: 60px 20px 40px; overflow-y: auto;
         }
-        .modal.active { display: flex; flex-direction: column; align-items: center; }
-        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 2.5rem; cursor: pointer; line-height: 1; }
+        .modal.active { display: block; }
+        .close-modal { position: fixed; top: 20px; right: 25px; font-size: 2.5rem; cursor: pointer; color: white; z-index: 2001; }
 
-        .stats-container { width: 100%; max-width: 600px; margin-top: 30px; }
-        .variety-block { margin-bottom: 40px; text-align: left; }
-        .stat-row { margin-bottom: 12px; }
-        .stat-label { font-size: 0.7rem; color: var(--silver); margin-bottom: 4px; text-transform: uppercase; }
-        .bar-bg { background: #222; height: 8px; width: 100%; }
-        .bar-fill { height: 100%; background: #fff; transition: width 1s ease; }
-
-        /* Split Page 2 */
-        .split-container { display: flex; width: 100%; height: 100dvh; z-index: 2; }
-        .split-box {
-            flex: 1; position: relative; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; padding: 20px;
-            border-right: 1px solid var(--border);
+        .variety-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; max-width: 1000px; margin: 20px auto;
         }
-        .gallery { position: absolute; inset: 0; z-index: -1; }
-        .slide {
-            position: absolute; inset: 0; background-size: cover;
-            background-position: center; opacity: 0; transition: opacity 1.2s ease-in-out;
-        }
-        .slide.active { opacity: 0.55; }
+        .v-card { border: 1px solid var(--border); padding: 20px; text-align: left; background: rgba(255,255,255,0.05); }
+        .v-card h3 { color: #fff; margin-bottom: 10px; font-size: 1.4rem; }
+        .v-card p { font-size: 0.75rem; color: #bbb; line-height: 1.4; margin-bottom: 10px; }
 
-        h1 { font-size: clamp(2rem, 10vw, 4rem); letter-spacing: 4px; margin-bottom: 10px; }
-        p { font-size: 0.9rem; line-height: 1.6; color: #ccc; max-width: 300px; }
-
-        /* Zig-Zag Trail */
-        .trail-wrapper { position: relative; width: 100%; max-width: 500px; margin-top: 20px; }
-        .trail-svg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; pointer-events: none;
+        /* Self-Picking Page Fix (As per Screenshot) */
+        .trail-vertical {
+            width: 100%;
+            max-width: 320px;
+            margin: 20px auto;
+            position: relative;
+            padding-left: 40px;
         }
-        .step-row { display: flex; width: 100%; margin-bottom: 30px; position: relative; z-index: 2; align-items: center; }
-        .step-row.left { justify-content: flex-start; text-align: right; padding-right: 50%; }
-        .step-row.right { justify-content: flex-end; text-align: left; padding-left: 50%; }
-        
-        .step-node {
-            position: absolute; left: 50%; transform: translateX(-50%);
-            width: 32px; height: 32px; background: black; border: 1px dashed white;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-family: 'Neucha'; font-size: 1.1rem;
+        .trail-vertical::before {
+            content: "";
+            position: absolute;
+            left: 17px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            border-left: 2px dashed rgba(255,255,255,0.4);
         }
+        .step-box {
+            position: relative;
+            margin-bottom: 35px;
+            text-align: left;
+        }
+        .step-box:last-child { margin-bottom: 0; }
+        .step-num {
+            position: absolute;
+            left: -40px;
+            width: 35px;
+            height: 35px;
+            background: black;
+            border: 1px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Permanent Marker';
+            font-size: 1rem;
+        }
+        .step-box h3 { font-size: 1.1rem; margin-bottom: 2px; }
+        .step-box p { font-size: 0.8rem; color: var(--silver); }
 
-        /* Buttons & Forms */
+        /* Buttons */
         .btn {
-            margin-top: 20px; border: 1px solid white; padding: 12px 25px; color: white; 
-            text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; font-weight: 600;
-            background: transparent; cursor: pointer;
+            margin-top: 15px; border: 1px solid white; padding: 12px 20px; color: white; 
+            text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; font-weight: 600;
+            background: transparent; cursor: pointer; transition: 0.2s;
         }
-        form { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-        input {
-            background: transparent; border: none; border-bottom: 1px solid var(--border);
-            padding: 12px 0; color: white; font-family: inherit; text-align: center; outline: none;
-        }
+        .btn:hover { background: white; color: black; }
 
         @media (max-width: 768px) {
-            .split-container { flex-direction: column; }
-            .split-box { height: 50dvh; border-right: none; border-bottom: 1px solid var(--border); }
             h1 { font-size: 2.2rem; }
-            .step-row.left, .step-row.right { padding: 0 20px; text-align: center; justify-content: center; margin-bottom: 50px;}
-            .step-node { top: -35px; }
+            .split-container { flex-direction: column; height: 100dvh; }
+            .split-box { height: 50dvh; border-bottom: 1px solid var(--border); }
         }
-        [lang="en"] { display: none; }
     </style>
 </head>
 <body>
 
     <div class="nav-ui">
-        <div class="lang-toggle" id="langToggle" onclick="toggleLang()">LATVIEŠU</div>
+        <div class="lang-toggle" onclick="toggleLang()">LATVIEŠU</div>
     </div>
 
     <div class="modal" id="varietyModal">
         <span class="close-modal" onclick="toggleModal()">&times;</span>
-        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Šķirņu Raksturojums</h2>
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Mūsu Šķirņu Katalogs</h2>
         
-        <div class="stats-container">
-            <div class="variety-block">
-                <h3 style="font-size: 1.8rem; color: #fff;">PATRIOT</h3>
-                <p style="font-size: 0.8rem; margin-bottom: 15px;">Agrīna, izcila garša, ļoti lielas ogas.</p>
-                <div class="stat-row">
-                    <div class="stat-label">Saldums</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-label">Ziemcietība (-35°C)</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 100%;"></div></div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-label">Ogu stingrība</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
-                </div>
-            </div>
-
-            <div class="variety-block">
-                <h3 style="font-size: 1.8rem; color: #fff;">BLUECROP</h3>
-                <p style="font-size: 0.8rem; margin-bottom: 15px;">Vidēji agrīna, augsta ražība, transportējama.</p>
-                <div class="stat-row">
-                    <div class="stat-label">Saldums</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 85%;"></div></div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-label">Ziemcietība (-30°C)</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 90%;"></div></div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-label">Ogu stingrība</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
-                </div>
-            </div>
+        <div class="variety-grid">
+            <div class="v-card"><h3>PATRIOT</h3><p>Agrīna, izturīga pret aukstumu (-35°C). Izteikta garša, ļoti lielas ogas.</p></div>
+            <div class="v-card"><h3>BLUECROP</h3><p>Pasaules standarts. Vidēji agrīna, ļoti ražīga un stingra.</p></div>
+            <div class="v-card"><h3>DUKE</h3><p>Viena no populārākajām agrīnajām šķirnēm. Ogas kraukšķīgas un saldas.</p></div>
+            <div class="v-card"><h3>TORO</h3><p>Vidēji agrīna. Milzīgas ogas ķekaros kā vīnogas. Izcils aromāts.</p></div>
+            <div class="v-card"><h3>CHANDLER</h3><p>Šķirne ar pasaulē lielākajām ogām. Ražo ilgstoši (līdz 6 nedēļām).</p></div>
+            <div class="v-card"><h3>ELIOTT</h3><p>Vēlā šķirne. Ogas vācamas septembrī. Skābeni salda garša.</p></div>
+            <div class="v-card"><h3>HANNAHS CHOICE</h3><p>Agrīna šķirne ar īpaši augstu cukura līmeni un persiku piegaršu.</p></div>
+            <div class="v-card"><h3>GOLDTRAUBE</h3><p>Vidēji vēlā šķirne. Augsta izturība pret slimībām un spēcīga garša.</p></div>
+            <div class="v-card"><h3>CHANTICLEER</h3><p>Pati agrākā šķirne mūsu dārzā. Tiem, kas nevar sagaidīt pirmo ražu.</p></div>
         </div>
     </div>
 
@@ -201,82 +175,57 @@
         <section style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=1200&q=80');">
             <div class="content-wrap">
                 <h1>Kalna Baložu Ogas</h1>
-                <p class="lv">Audzēts bez pesticīdiem. Tikko no lauka.</p>
-                <p lang="en">Grown without pesticides. Fresh from the field.</p>
+                <p>Audzēts bez pesticīdiem. Tikko no lauka.</p>
             </div>
         </section>
 
         <section>
-            <div class="split-container">
-                <div class="split-box">
-                    <div class="gallery" id="gal1">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?auto=format&fit=crop&w=800&q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&w=800&q=80');"></div>
-                    </div>
-                    <h2 class="lv">Mūsu Ogas</h2>
-                    <p class="lv">Saldākās Patriot un Bluecrop mellenes.</p>
-                    <button class="btn" onclick="toggleModal()" style="font-family:'Neucha'; font-size:1rem;">ŠĶIRŅU INFO</button>
+            <div style="display:flex; flex-direction:column; width:100%; height:100%;">
+                <div style="flex:1; position:relative; background-image:url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?auto=format&fit=crop&w=1000&q=80'); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center;">
+                   <div style="z-index:2; text-align:center;">
+                        <h2>Mūsu Ogas</h2>
+                        <button class="btn" onclick="toggleModal()">VISAS ŠĶIRNES</button>
+                   </div>
+                   <div style="position:absolute; inset:0; background:rgba(0,0,0,0.5);"></div>
                 </div>
-                <div class="split-box">
-                    <div class="gallery" id="gal2">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?auto=format&fit=crop&w=800&q=80');"></div>
+                <div style="flex:1; position:relative; background-image:url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?auto=format&fit=crop&w=1000&q=80'); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center;">
+                    <div style="z-index:2; text-align:center;">
+                        <h2>Mūsu Stādi</h2>
+                        <p>Sagatavoti Jūsu dārzam.</p>
                     </div>
-                    <h2 class="lv">Mūsu Stādi</h2>
-                    <p class="lv">Kvalitatīvi stādi Jūsu dārzam.</p>
+                    <div style="position:absolute; inset:0; background:rgba(0,0,0,0.5);"></div>
                 </div>
-            </div>
-        </section>
-
-        <section style="background-image: url('https://images.unsplash.com/photo-1488459711615-de9b56a0804b?auto=format&fit=crop&w=1200&q=80');">
-            <div class="content-wrap">
-                <h1 class="lv">Nakts Tirgus</h1>
-                <p class="lv">Rīga, Spīķeru iela 2. Katru dienu no 16:00.</p>
-                <a href="https://goo.gl/maps/RigaSpikeri" target="_blank" class="btn">GOOGLE MAPS</a>
-            </div>
-        </section>
-
-        <section style="background-image: url('https://images.unsplash.com/photo-1566385101042-1a000c1267c4?auto=format&fit=crop&w=1200&q=80');">
-            <div class="content-wrap">
-                <h1 class="lv">Piegāde</h1>
-                <p class="lv">Cena: 6.50€ / kg (Min. 5kg)</p>
-                <form id="orderForm">
-                    <input type="text" id="nameInp" placeholder="Vārds" required>
-                    <input type="tel" id="phoneInp" placeholder="Telefons" required>
-                    <input type="text" id="addrInp" placeholder="Adrese" required>
-                    <button type="button" class="btn" style="background:white; color:black; border:none; font-family:'Neucha'; font-size:1.2rem;">PASŪTĪT</button>
-                </form>
             </div>
         </section>
 
         <section style="background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?auto=format&fit=crop&w=1200&q=80');">
             <div class="content-wrap">
-                <h1 class="lv">Pašlasīšana</h1>
+                <h1>Pašlasīšana</h1>
                 
-                <div class="trail-wrapper">
-                    <svg class="trail-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path d="M50,5 Q50,25 20,25 T50,50 T80,75 T50,95" fill="none" stroke="white" stroke-width="0.5" stroke-dasharray="2,2" />
-                    </svg>
-
-                    <div class="step-row left">
-                        <div class="step-node">1</div>
-                        <div class="step-content"><h3>ATBRAUCIET</h3><p>Aizkraukles novads</p></div>
+                <div class="trail-vertical">
+                    <div class="step-box">
+                        <div class="step-num">1</div>
+                        <h3>ATBRAUCIET</h3>
+                        <p>Gaidām ciemos Aizkraukles novadā.</p>
                     </div>
-                    <div class="step-row right">
-                        <div class="step-node">2</div>
-                        <div class="step-content"><h3>SVĒRŠANA</h3><p>Tukšo trauku svēršana</p></div>
+                    <div class="step-box">
+                        <div class="step-num">2</div>
+                        <h3>SVĒRŠANA</h3>
+                        <p>Nosvērsim Jūsu tukšos traukus.</p>
                     </div>
-                    <div class="step-row left">
-                        <div class="step-node">3</div>
-                        <div class="step-content"><h3>LASĪŠANA</h3><p>Izbaudiet dabu (Min. 3kg)</p></div>
+                    <div class="step-box">
+                        <div class="step-num">3</div>
+                        <h3>LASĪŠANA</h3>
+                        <p>Izbaudiet dabu. Minimālais daudzums 3kg.</p>
                     </div>
-                    <div class="step-row right">
-                        <div class="step-node">4</div>
-                        <div class="step-content"><h3>APMAKSA</h3><p>Skaidrā naudā vai ar karti</p></div>
+                    <div class="step-box">
+                        <div class="step-num">4</div>
+                        <h3>APMAKSA</h3>
+                        <p>Skaidrā naudā vai ar karti.</p>
                     </div>
                 </div>
 
-                <div style="display:flex; gap:10px; margin-top:20px; z-index:5;">
+                <div style="display:flex; gap:10px; margin-top:20px;">
                     <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="btn">WAZE</a>
                     <a href="tel:+37129459247" class="btn">ZVANĪT</a>
                 </div>
@@ -285,33 +234,14 @@
     </main>
 
     <script>
-        function toggleLang() {
-            const btn = document.getElementById('langToggle');
-            const isLv = btn.innerText === 'LATVIEŠU';
-            btn.innerText = isLv ? 'ENGLISH' : 'LATVIEŠU';
-            document.querySelectorAll('.lv').forEach(el => el.style.display = isLv ? 'none' : 'block');
-            document.querySelectorAll('[lang="en"]').forEach(el => el.style.display = isLv ? 'block' : 'none');
-            
-            document.getElementById('nameInp').placeholder = isLv ? 'Name' : 'Vārds';
-            document.getElementById('phoneInp').placeholder = isLv ? 'Phone' : 'Telefons';
-            document.getElementById('addrInp').placeholder = isLv ? 'Address' : 'Adrese';
-        }
-
         function toggleModal() {
             document.getElementById('varietyModal').classList.toggle('active');
         }
-
-        function setupGallery(id) {
-            const slides = document.getElementById(id).querySelectorAll('.slide');
-            let idx = 0;
-            setInterval(() => {
-                slides[idx].classList.remove('active');
-                idx = (idx + 1) % slides.length;
-                slides[idx].classList.add('active');
-            }, 4000);
+        function toggleLang() {
+            // Simplified for logic test
+            const b = document.querySelector('.lang-toggle');
+            b.innerText = b.innerText === 'LATVIEŠU' ? 'ENGLISH' : 'LATVIEŠU';
         }
-        setupGallery('gal1');
-        setupGallery('gal2');
     </script>
 </body>
 </html>
