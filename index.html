@@ -44,7 +44,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.65);
+            background: rgba(0,0,0,0.6);
             z-index: 1;
         }
 
@@ -52,43 +52,40 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            /* Added padding to prevent top/bottom cut-off */
-            padding: 80px 20px; 
+            /* Safe zone for mobile bars */
+            padding: 10dvh 20px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease-out;
         }
 
-        section.active .content-wrap { opacity: 1; transform: translateY(0); }
-
+        /* Menu position - Higher up */
         .nav-ui {
             position: fixed;
-            top: 25px; 
-            right: 25px;
+            top: 20px; 
+            right: 20px;
             z-index: 1000;
         }
         .lang-toggle {
             cursor: pointer;
             letter-spacing: 3px;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             font-weight: 600;
             border: 1px solid var(--border);
-            padding: 10px 18px;
-            border-radius: 30px;
-            background: rgba(0,0,0,0.7);
+            padding: 8px 16px;
+            border-radius: 25px;
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(10px);
             color: white;
         }
 
+        /* Page 2: Two Galleries */
         .split-container {
             display: flex;
             width: 100%;
-            height: 100dvh;
+            height: 100%;
             z-index: 2;
         }
         .split-box {
@@ -99,9 +96,9 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow: hidden;
+            border-right: 1px solid var(--border);
         }
-        .split-box:first-child { border-right: 1px solid var(--border); }
+        .split-box:last-child { border-right: none; }
         
         .gallery { position: absolute; inset: 0; z-index: -1; }
         .slide {
@@ -110,37 +107,43 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            transition: opacity 1.2s ease-in-out;
+            transition: opacity 1.5s ease-in-out;
         }
         .slide.active { opacity: 0.5; }
 
-        h1 { font-size: clamp(1.4rem, 5vw, 2.8rem); font-weight: 100; text-transform: uppercase; letter-spacing: 8px; margin-bottom: 12px; }
-        h2 { font-size: 0.7rem; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; color: var(--silver); margin-bottom: 10px; }
-        p { font-size: 0.8rem; line-height: 1.6; color: var(--silver); max-width: 300px; }
+        h1 { font-size: clamp(1.4rem, 6vw, 3rem); font-weight: 100; text-transform: uppercase; letter-spacing: 8px; margin-bottom: 15px; }
+        h2 { font-size: 0.75rem; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; color: var(--silver); margin-bottom: 10px; }
+        p { font-size: 0.85rem; line-height: 1.6; color: var(--silver); max-width: 320px; }
 
+        /* Buttons & Forms */
         .btn {
             margin-top: 15px; border: 1px solid white; padding: 12px 24px; color: white; 
-            text-decoration: none; font-size: 0.65rem; letter-spacing: 2px; font-weight: 600;
-            transition: 0.3s; background: transparent; display: inline-block;
+            text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; font-weight: 600;
+            background: transparent; cursor: pointer; transition: 0.3s;
         }
         .btn:hover { background: white; color: black; }
 
-        .trail-container { width: 100%; max-width: 400px; margin-top: 15px; }
-        .trail-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; position: relative; min-height: 90px; }
+        form { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+        input {
+            background: transparent; border: none; border-bottom: 1px solid var(--border);
+            padding: 12px 0; color: white; font-family: inherit; text-align: center; outline: none;
+        }
+
+        /* Picking Trail */
+        .trail-container { width: 100%; max-width: 450px; margin-top: 15px; }
+        .trail-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 85px; position: relative; }
         .trail-grid::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--border); transform: translateX(-50%); }
-        .step-node { grid-column: 2; width: 24px; height: 24px; background: black; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; z-index: 2; position: relative; }
+        .step-node { grid-column: 2; width: 26px; height: 26px; background: black; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; z-index: 2; position: relative; }
         .step-content { grid-column: span 1; padding: 0 15px; }
-        .step-content h3 { font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 4px; color: #fff; }
-        .step-content p { font-size: 0.7rem; color: #aaa; line-height: 1.3; }
+        .step-content h3 { font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 4px; }
+        .step-content p { font-size: 0.7rem; color: #888; }
         .trail-grid.left .step-content { text-align: right; }
         .trail-grid.right .step-content { text-align: left; }
 
         @media (max-width: 768px) {
             .split-container { flex-direction: column; }
-            .split-box { flex: 1; border-right: none !important; border-bottom: 1px solid var(--border); }
-            .content-wrap { padding: 60px 15px; }
-            h1 { font-size: 1.3rem; letter-spacing: 4px; }
-            .trail-grid { min-height: 80px; }
+            .split-box { flex: 1; border-right: none; border-bottom: 1px solid var(--border); }
+            h1 { font-size: 1.5rem; letter-spacing: 5px; }
         }
 
         [lang="en"] { display: none; }
@@ -152,13 +155,13 @@
         <div class="lang-toggle" id="langToggle" onclick="toggleLang()">LATVIEŠU</div>
     </div>
 
-    <main class="scroll-container" id="mainScroll">
+    <main class="scroll-container">
         
         <section style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80');">
             <div class="content-wrap">
                 <h1>Kalna Baložu Ogas</h1>
-                <p class="lv">Mūsu ģimenes dārzs Aizkrauklē. Audzētas ar mīlestību, pasniegtas ar cieņu katram klientam.</p>
-                <p lang="en">Our family garden in Aizkraukle. Grown with love, served with respect to every customer.</p>
+                <p class="lv">Ģimenes dārzs Aizkrauklē. Audzētas ar mīlestību, pasniegtas ar cieņu.</p>
+                <p lang="en">Family farm in Aizkraukle. Grown with love, served with respect.</p>
             </div>
         </section>
 
@@ -166,43 +169,42 @@
             <div class="split-container">
                 <div class="split-box">
                     <div class="gallery" id="gal1">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&w=1000&q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?auto=format&fit=crop&w=1000&q=80');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?q=80');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?q=80');"></div>
                     </div>
                     <h2 class="lv">Mūsu Ogas</h2><h2 lang="en">Our Berries</h2>
-                    <p class="lv">Svaigas, lielas un saldas krūmmellenes tieši no mūsu laukiem.</p>
-                    <p lang="en">Fresh, large and sweet blueberries straight from our fields.</p>
+                    <p class="lv">Svaigas, saldas un vitamīniem bagātas krūmmellenes tieši no lauka.</p>
                 </div>
 
                 <div class="split-box">
                     <div class="gallery" id="gal2">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?auto=format&fit=crop&w=1000&q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1000&q=80');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?q=80');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80');"></div>
                     </div>
                     <h2 class="lv">Mūsu Stādi</h2><h2 lang="en">Our Plants</h2>
-                    <p class="lv">Veselīgi melleņu un sausseržu stādi Jūsu dārza pilnībai.</p>
-                    <p lang="en">Healthy blueberry and honeyberry plants for your garden perfection.</p>
+                    <p class="lv">Spēcīgi melleņu un sausserža stādi Jūsu dārza ražībai.</p>
                 </div>
             </div>
         </section>
 
         <section style="background-image: url('https://images.unsplash.com/photo-1488459711615-de9b56a0804b?q=80');">
             <div class="content-wrap">
-                <h1 class="lv">Rīgas Nakts Tirgus</h1><h1 lang="en">Riga Night Market</h1>
-                <p class="lv">Atrodiet mūs katru dienu Spīķeru ielā 2. Sezonas laikā strādājam no 16:00 rītā.</p>
-                <a href="https://maps.app.goo.gl/RigaSpikeri" target="_blank" class="btn">GOOGLE MAPS</a>
+                <h1 class="lv">Kur mūs atrast?</h1><h1 lang="en">Where to find us?</h1>
+                <h2>Zemnieku Nakts Tirgus</h2>
+                <p class="lv">Rīga, Spīķeru iela 2. Katru dienu no plkst. 16:00 līdz pat rītam.</p>
+                <a href="https://goo.gl/maps/RigaSpikeri" target="_blank" class="btn">ATVĒRT KARTI</a>
             </div>
         </section>
 
         <section style="background-image: url('https://images.unsplash.com/photo-1566385101042-1a000c1267c4?q=80');">
             <div class="content-wrap">
-                <h1 class="lv">Pasūtiet Piegādi</h1><h1 lang="en">Order Delivery</h1>
-                <p class="lv">Cena: 6.50€ / kg. Minimālais pasūtījums 5kg Jūsu ērtībai.</p>
+                <h1 class="lv">Piegāde</h1><h1 lang="en">Delivery</h1>
+                <p class="lv">Cena: 6.50€ / kg (Minimālais pasūtījums 5kg)</p>
                 <form>
                     <input type="text" placeholder="Vārds / Name" required>
                     <input type="tel" placeholder="Telefons / Phone" required>
                     <input type="text" placeholder="Adrese / Address" required>
-                    <button type="button" class="btn" style="background:white; color:black; width:100%; border:none;">PASŪTĪT OGAS</button>
+                    <button type="button" class="btn" style="background:white; color:black; width:100%; border:none;">PASŪTĪT</button>
                 </form>
             </div>
         </section>
@@ -212,56 +214,40 @@
                 <h1 class="lv">Pašlasīšana</h1><h1 lang="en">Self-Picking</h1>
                 <div class="trail-container">
                     <div class="trail-grid left">
-                        <div class="step-content">
-                            <h3 class="lv">01. ATBRAUCIET</h3>
-                            <p class="lv">Gaidām Jūs ciemos mūsu saimniecībā Aizkraukles novadā.</p>
-                        </div>
+                        <div class="step-content"><h3 class="lv">01. ATBRAUCIET</h3><p class="lv">Gaidām Jūs ciemos mūsu dārzā Aizkrauklē.</p></div>
                         <div class="step-node">1</div>
                     </div>
                     <div class="trail-grid right">
                         <div class="step-node">2</div>
-                        <div class="step-content">
-                            <h3 class="lv">02. SVĒRŠANA</h3>
-                            <p class="lv">Pirms došanās dārzā, mēs kopā nosvērsim Jūsu tukšos traukus.</p>
-                        </div>
+                        <div class="step-content"><h3 class="lv">02. SVĒRŠANA</h3><p class="lv">Pirms lasīšanas mēs nosvērsim Jūsu traukus.</p></div>
                     </div>
                     <div class="trail-grid left">
-                        <div class="step-content">
-                            <h3 class="lv">03. LASĪŠANA</h3>
-                            <p class="lv">Izbaudiet dabu un pielasiet vismaz 3kg ogu no krūmiem.</p>
-                        </div>
+                        <div class="step-content"><h3 class="lv">03. LASĪŠANA</h3><p class="lv">Izbaudiet procesu! Minimālais daudzums: 3kg.</p></div>
                         <div class="step-node">3</div>
                     </div>
                     <div class="trail-grid right">
                         <div class="step-node">4</div>
-                        <div class="step-content">
-                            <h3 class="lv">04. APMAKSA</h3>
-                            <p class="lv">Beigās nosveram ogas un norēķināmies skaidrā naudā vai ar karti.</p>
-                        </div>
+                        <div class="step-content"><h3 class="lv">04. APMAKSA</h3><p class="lv">Norēķini uz vietas skaidrā naudā vai ar karti.</p></div>
                     </div>
                 </div>
                 <div style="display:flex; gap:10px; margin-top:20px;">
                     <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="btn">WAZE</a>
-                    <a href="https://maps.app.goo.gl/AizkraukleFarm" target="_blank" class="btn">GOOGLE MAPS</a>
+                    <a href="https://goo.gl/maps/RigaSpikeri" target="_blank" class="btn">GOOGLE MAPS</a>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        // Language Logic
-        let currentLang = 'lv';
         function toggleLang() {
-            currentLang = (currentLang === 'lv') ? 'en' : 'lv';
-            document.getElementById('langToggle').innerText = (currentLang === 'lv') ? 'LATVIEŠU' : 'ENGLISH';
-            document.querySelectorAll('.lv').forEach(el => el.style.display = (currentLang === 'lv' ? 'block' : 'none'));
-            document.querySelectorAll('[lang="en"]').forEach(el => el.style.display = (currentLang === 'en' ? 'block' : 'none'));
+            const isLv = document.getElementById('langToggle').innerText === 'LATVIEŠU';
+            document.getElementById('langToggle').innerText = isLv ? 'ENGLISH' : 'LATVIEŠU';
+            document.querySelectorAll('.lv').forEach(el => el.style.display = isLv ? 'none' : 'block');
+            document.querySelectorAll('[lang="en"]').forEach(el => el.style.display = isLv ? 'block' : 'none');
         }
 
-        // Gallery Cycle Logic
         function setupGallery(id) {
-            const container = document.getElementById(id);
-            const slides = container.querySelectorAll('.slide');
+            const slides = document.getElementById(id).querySelectorAll('.slide');
             let idx = 0;
             setInterval(() => {
                 slides[idx].classList.remove('active');
@@ -271,12 +257,6 @@
         }
         setupGallery('gal1');
         setupGallery('gal2');
-
-        // Animation Observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.3 });
-        document.querySelectorAll('section').forEach(s => observer.observe(s));
     </script>
 </body>
 </html>
