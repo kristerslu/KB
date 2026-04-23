@@ -23,17 +23,19 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Fix for the cut-off issue: Use Dynamic Viewport Height (dvh) */
         .scroll-container {
-            height: 100vh;
+            height: 100dvh;
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
         }
 
         section {
-            height: 100vh;
+            height: 100dvh;
             width: 100%;
             scroll-snap-align: start;
+            scroll-snap-stop: always;
             display: flex;
             position: relative;
             background-size: cover;
@@ -45,7 +47,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.65);
             z-index: 1;
         }
 
@@ -53,44 +55,44 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            height: 100%;
+            max-height: 95%; /* Safety margin to prevent cut-off */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 5%;
+            padding: 20px;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 1s ease-out;
+            transform: translateY(15px);
+            transition: all 0.8s ease-out;
         }
 
         section.active .content-wrap { opacity: 1; transform: translateY(0); }
 
+        /* Navigation: Higher up for easier access */
         .nav-ui {
             position: fixed;
-            top: 20px; 
-            right: 40px;
+            top: 15px; 
+            right: 20px;
             z-index: 1000;
         }
         .lang-toggle {
             cursor: pointer;
-            letter-spacing: 5px;
-            font-size: 0.7rem;
+            letter-spacing: 4px;
+            font-size: 0.65rem;
             font-weight: 600;
             border: 1px solid var(--border);
-            padding: 10px 20px;
-            border-radius: 20px;
-            transition: 0.3s;
-            background: rgba(0,0,0,0.5);
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(10px);
         }
 
-        /* PAGE 2 SPLIT FIX */
+        /* Page 2 Fit Fix */
         .split-container {
             display: flex;
             width: 100%;
-            height: 100%;
+            height: 100dvh;
             z-index: 2;
         }
         .split-box {
@@ -102,7 +104,6 @@
             align-items: center;
             padding: 20px;
             overflow: hidden;
-            text-align: center;
         }
         .split-box:first-child { border-right: 1px solid var(--border); }
         
@@ -119,40 +120,41 @@
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
         }
-        .slide.active { opacity: 0.5; }
+        .slide.active { opacity: 0.55; }
 
-        h1 { font-size: clamp(1.6rem, 6vw, 3rem); font-weight: 100; text-transform: uppercase; letter-spacing: 10px; margin-bottom: 15px; }
-        h2 { font-size: 0.7rem; font-weight: 400; text-transform: uppercase; letter-spacing: 5px; color: var(--silver); margin-bottom: 10px; }
-        p { font-size: 0.85rem; line-height: 1.6; color: var(--silver); max-width: 320px; margin: 0 auto; }
+        h1 { font-size: clamp(1.5rem, 5vw, 3rem); font-weight: 100; text-transform: uppercase; letter-spacing: 8px; margin-bottom: 10px; }
+        h2 { font-size: 0.7rem; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; color: var(--silver); margin-bottom: 8px; }
+        p { font-size: 0.8rem; line-height: 1.5; color: var(--silver); max-width: 300px; }
 
-        form { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 5px; margin-top: 15px; }
+        /* Forms & Buttons */
+        form { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
         input {
             background: transparent; border: none; border-bottom: 1px solid var(--border);
             padding: 10px 0; color: white; font-family: inherit; text-align: center; outline: none; font-size: 0.8rem;
         }
-
-        .trail-container {
-            width: 100%;
-            max-width: 450px;
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .btn {
+            margin-top: 15px; border: 1px solid white; padding: 10px 20px; color: white; 
+            text-decoration: none; font-size: 0.65rem; letter-spacing: 2px; font-weight: 600;
+            transition: 0.3s; cursor: pointer; background: transparent;
         }
-        .trail-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; position: relative; min-height: 55px; }
-        .trail-grid::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--border); z-index: 1; transform: translateX(-50%); }
-        .step-node { grid-column: 2; width: 28px; height: 28px; background: black; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; z-index: 2; position: relative; }
-        .step-content { grid-column: span 1; padding: 0 10px; }
-        .trail-grid.left .step-content { grid-column: 1; text-align: right; }
-        .trail-grid.right .step-content { grid-column: 3; text-align: left; }
+        .btn:hover { background: white; color: black; }
+
+        /* Trail Adjustments */
+        .trail-container { width: 100%; max-width: 400px; margin-top: 10px; }
+        .trail-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; position: relative; min-height: 80px; }
+        .trail-grid::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--border); transform: translateX(-50%); }
+        .step-node { grid-column: 2; width: 26px; height: 26px; background: black; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; z-index: 2; position: relative; }
+        .step-content { grid-column: span 1; padding: 0 12px; }
+        .step-content h3 { font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 4px; }
+        .step-content p { font-size: 0.7rem; color: #888; }
+        .trail-grid.left .step-content { text-align: right; }
+        .trail-grid.right .step-content { text-align: left; }
 
         @media (max-width: 768px) {
             .split-container { flex-direction: column; }
-            .split-box { flex: 1 1 50%; padding: 15px; } /* Force 50/50 split on mobile screen */
-            .split-box:first-child { border-right: none; border-bottom: 1px solid var(--border); }
-            h1 { font-size: 1.8rem; letter-spacing: 6px; }
-            p { font-size: 0.75rem; }
-            .nav-ui { top: 15px; right: 20px; }
+            .split-box { flex: 1; padding: 15px; border-right: none !important; border-bottom: 1px solid var(--border); }
+            h1 { font-size: 1.4rem; letter-spacing: 5px; }
+            .trail-grid { min-height: 70px; }
         }
 
         [lang="en"] { display: none; }
@@ -178,22 +180,22 @@
             <div class="split-container">
                 <div class="split-box">
                     <div class="gallery" id="gal1">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?q=80');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?q=80&sig=1');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?q=80&sig=2');"></div>
                     </div>
-                    <h2 class="lv">Mūsu Šķirnes</h2><h2 lang="en">Our Varieties</h2>
-                    <p class="lv">10+ melleņu šķirnes (Bluecrop, Patriot u.c.).</p>
-                    <p lang="en">10+ blueberry varieties (Bluecrop, Patriot etc.).</p>
+                    <h2 class="lv">Mūsu Ogas</h2><h2 lang="en">Our Berries</h2>
+                    <p class="lv">Rūpīgi atlasītas, lielas un saldas mellenes tieši no lauka.</p>
+                    <p lang="en">Carefully selected, large and sweet blueberries straight from the field.</p>
                 </div>
 
                 <div class="split-box">
                     <div class="gallery" id="gal2">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1463936575829-25148e1db1b8?q=80');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?q=80&sig=3');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&sig=4');"></div>
                     </div>
-                    <h2 class="lv">Stādi</h2><h2 lang="en">Plants</h2>
-                    <p class="lv">10+ melleņu un 10+ <b>sausserža</b> šķirņu stādi.</p>
-                    <p lang="en">10+ blueberry and 10+ <b>sausserdis</b> varieties.</p>
+                    <h2 class="lv">Mūsu Stādi</h2><h2 lang="en">Our Plants</h2>
+                    <p class="lv">10+ melleņu un sausserža šķirnes Jūsu dārzam.</p>
+                    <p lang="en">10+ blueberry and honeyberry varieties for your garden.</p>
                 </div>
             </div>
         </section>
@@ -202,50 +204,71 @@
             <div class="content-wrap">
                 <h1 class="lv">Kur mūs atrast?</h1><h1 lang="en">Where to find us?</h1>
                 <h2>Zemnieku Nakts Tirgus</h2>
-                <p class="lv">Spīķeru iela 2, Rīga. Katru dienu no 16:00.</p>
-                <a href="https://goo.gl/maps/RigaSpikeri" target="_blank" style="margin-top:20px; display:inline-block; border:1px solid white; padding:10px 20px; color:white; text-decoration:none; font-size:0.7rem; letter-spacing:2px;">GOOGLE MAPS</a>
+                <p class="lv">Rīga, Spīķeru iela 2. Katru dienu no plkst. 16:00 līdz rītam.</p>
+                <a href="https://maps.app.goo.gl/3fX3v" target="_blank" class="btn">ATVĒRT KARTI</a>
             </div>
         </section>
 
         <section id="delivery" style="background-image: url('https://images.unsplash.com/photo-1566385101042-1a000c1267c4?q=80');">
             <div class="content-wrap">
                 <h1 class="lv">Piegāde</h1><h1 lang="en">Delivery</h1>
-                <p class="lv">6.50€ / kg (Min. 5kg)</p>
+                <p class="lv">Cena: 6.50€ / kg (Minimālais pasūtījums 5kg)</p>
                 <form>
                     <input type="text" placeholder="Vārds / Name" required>
                     <input type="tel" placeholder="Telefons / Phone" required>
                     <input type="text" placeholder="Adrese / Address" required>
-                    <button type="button" style="margin-top:15px; background:white; color:black; border:none; padding:12px; font-weight:600; cursor:pointer; font-size:0.7rem;">PASŪTĪT / ORDER</button>
+                    <button type="button" class="btn" style="background:white; color:black; width:100%;">PASŪTĪT</button>
                 </form>
             </div>
         </section>
 
-        <section id="picking" style="background-image: url('https://images.unsplash.com/photo-1595163174205-013060706248?q=80');">
+        <section id="picking" style="background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?q=80');">
             <div class="content-wrap">
                 <h1 class="lv">Pašlasīšana</h1><h1 lang="en">Self-Picking</h1>
                 <div class="trail-container">
                     <div class="trail-grid left">
-                        <div class="step-content"><h3 style="font-size:0.6rem; letter-spacing:2px;">01. ATBRAUCIET</h3></div>
+                        <div class="step-content">
+                            <h3 class="lv">01. ATBRAUCIET</h3><h3 lang="en">01. ARRIVE</h3>
+                            <p class="lv">Mūsu saimniecība Aizkraukles novadā.</p>
+                            <p lang="en">Our farm in Aizkraukle district.</p>
+                        </div>
                         <div class="step-node">1</div>
                     </div>
                     <div class="trail-grid right">
                         <div class="step-node">2</div>
-                        <div class="step-content"><h3 style="font-size:0.6rem; letter-spacing:2px;">02. SVĒRŠANA</h3></div>
+                        <div class="step-content">
+                            <h3 class="lv">02. SVĒRŠANA</h3><h3 lang="en">02. WEIGHING</h3>
+                            <p class="lv">Pirms lasīšanas nosveram Jūsu traukus.</p>
+                            <p lang="en">We weigh your containers before picking.</p>
+                        </div>
                     </div>
                     <div class="trail-grid left">
-                        <div class="step-content"><h3 style="font-size:0.6rem; letter-spacing:2px;">03. LASĪŠANA</h3></div>
+                        <div class="step-content">
+                            <h3 class="lv">03. LASĪŠANA</h3><h3 lang="en">03. PICKING</h3>
+                            <p class="lv">Minimālais daudzums - 3kg ogu.</p>
+                            <p lang="en">Minimum amount - 3kg of berries.</p>
+                        </div>
                         <div class="step-node">3</div>
                     </div>
                     <div class="trail-grid right">
                         <div class="step-node">4</div>
-                        <div class="step-content"><h3 style="font-size:0.6rem; letter-spacing:2px;">04. APMAKSA</h3></div>
+                        <div class="step-content">
+                            <h3 class="lv">04. APMAKSA</h3><h3 lang="en">04. PAYMENT</h3>
+                            <p class="lv">Norēķini skaidrā naudā vai ar karti.</p>
+                            <p lang="en">Cash or card payments accepted.</p>
+                        </div>
                     </div>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="btn">WAZE</a>
+                    <a href="https://maps.app.goo.gl/3fX3v" target="_blank" class="btn">GOOGLE MAPS</a>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        // Prevent scroll position bugs on reload
         window.onbeforeunload = function() { window.scrollTo(0,0); };
         if (window.location.hash) { window.location.replace(window.location.pathname); }
 
@@ -265,14 +288,14 @@
                 slides[idx].classList.remove('active');
                 idx = (idx + 1) % slides.length;
                 slides[idx].classList.add('active');
-            }, 4000);
+            }, 4500);
         }
         setupGallery('gal1');
         setupGallery('gal2');
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.4 });
         document.querySelectorAll('section').forEach(s => observer.observe(s));
     </script>
 </body>
