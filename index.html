@@ -31,7 +31,7 @@
         }
 
         section {
-            min-height: 100dvh;
+            height: 100dvh;
             width: 100%;
             scroll-snap-align: start;
             scroll-snap-stop: always;
@@ -46,7 +46,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.65);
+            background: rgba(0,0,0,0.6);
             z-index: 1;
         }
 
@@ -55,7 +55,7 @@
             z-index: 2;
             width: 100%;
             margin: auto;
-            padding: 60px 25px; 
+            padding: 40px 20px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -63,6 +63,7 @@
             text-align: center;
         }
 
+        /* Nav - High up */
         .nav-ui {
             position: fixed;
             top: 20px; 
@@ -71,22 +72,21 @@
         }
         .lang-toggle {
             cursor: pointer;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             font-size: 0.7rem;
             font-weight: 600;
             border: 1px solid var(--border);
-            padding: 10px 20px;
-            border-radius: 30px;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.8);
             color: white;
         }
 
-        /* PAGE 2 SPLIT */
+        /* Page 2: Layout Fix */
         .split-container {
             display: flex;
             width: 100%;
-            height: 100%;
+            height: 100dvh;
             z-index: 2;
         }
         .split-box {
@@ -97,6 +97,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            text-align: center;
             border-right: 1px solid var(--border);
         }
         .split-box:last-child { border-right: none; }
@@ -108,43 +109,43 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1s ease-in-out;
         }
-        .slide.active { opacity: 0.55; }
+        .slide.active { opacity: 0.6; }
 
-        h1 { font-size: clamp(1.5rem, 6vw, 3rem); font-weight: 100; text-transform: uppercase; letter-spacing: 8px; margin-bottom: 15px; }
-        h2 { font-size: 0.8rem; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; color: var(--silver); margin-bottom: 10px; }
-        p { font-size: 0.9rem; line-height: 1.6; color: var(--silver); max-width: 320px; }
+        h1 { font-size: clamp(1.4rem, 6vw, 3rem); font-weight: 100; text-transform: uppercase; letter-spacing: 6px; margin-bottom: 10px; }
+        h2 { font-size: 0.8rem; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; color: var(--silver); margin-bottom: 5px; }
+        p { font-size: 0.85rem; line-height: 1.5; color: #ddd; max-width: 280px; }
 
+        /* General UI */
         .btn {
-            margin-top: 15px; border: 1px solid white; padding: 12px 24px; color: white; 
+            margin-top: 15px; border: 1px solid white; padding: 10px 20px; color: white; 
             text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; font-weight: 600;
-            background: transparent; cursor: pointer; transition: 0.3s;
+            background: transparent; cursor: pointer;
         }
         .btn:hover { background: white; color: black; }
 
-        form { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        form { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         input {
             background: transparent; border: none; border-bottom: 1px solid var(--border);
-            padding: 12px 0; color: white; font-family: inherit; text-align: center; outline: none; font-size: 1rem;
+            padding: 10px 0; color: white; font-family: inherit; text-align: center; outline: none;
         }
 
-        /* PICKING TRAIL */
-        .trail-container { width: 100%; max-width: 450px; margin-top: 20px; }
-        .trail-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 90px; position: relative; }
+        /* Steps */
+        .trail-container { width: 100%; max-width: 400px; margin-top: 15px; }
+        .trail-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 80px; position: relative; }
         .trail-grid::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--border); transform: translateX(-50%); }
-        .step-node { grid-column: 2; width: 28px; height: 28px; background: black; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; z-index: 2; position: relative; }
-        .step-content { grid-column: span 1; padding: 0 15px; }
-        .step-content h3 { font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 5px; color: white; }
-        .step-content p { font-size: 0.75rem; color: #aaa; line-height: 1.4; }
-        .trail-grid.left .step-content { text-align: right; }
-        .trail-grid.right .step-content { text-align: left; }
+        .step-node { grid-column: 2; width: 24px; height: 24px; background: black; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; z-index: 2; }
+        .step-content { padding: 0 10px; }
+        .step-content h3 { font-size: 0.65rem; letter-spacing: 1px; color: white; }
+        .step-content p { font-size: 0.7rem; color: #bbb; }
+        .trail-grid.left .step-content { text-align: right; grid-column: 1; }
+        .trail-grid.right .step-content { text-align: left; grid-column: 3; }
 
         @media (max-width: 768px) {
             .split-container { flex-direction: column; }
-            .split-box { flex: 1; border-right: none; border-bottom: 1px solid var(--border); }
-            h1 { font-size: 1.6rem; letter-spacing: 6px; }
-            .content-wrap { padding: 80px 20px; }
+            .split-box { flex: 1; border-right: none; border-bottom: 1px solid var(--border); width: 100%; height: 50dvh; }
+            h1 { font-size: 1.4rem; }
         }
 
         [lang="en"] { display: none; }
@@ -158,57 +159,55 @@
 
     <main class="scroll-container">
         
-        <section style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80');">
+        <section style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=1200&q=80');">
             <div class="content-wrap">
                 <h1>Kalna Baložu Ogas</h1>
-                <p class="lv">Ģimenes dārzs Aizkrauklē. Audzētas ar mīlestību, pasniegtas ar cieņu.</p>
-                <p lang="en">Family farm in Aizkraukle. Grown with love, served with respect.</p>
+                <p class="lv">Ģimenes dārzs Aizkrauklē. Audzētas ar mīlestību.</p>
+                <p lang="en">Family farm in Aizkraukle. Grown with love.</p>
             </div>
         </section>
 
-        <section id="produce">
+        <section>
             <div class="split-container">
                 <div class="split-box">
                     <div class="gallery" id="gal1">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?q=80');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&w=800&q=80');"></div>
                     </div>
                     <h2 class="lv">Mūsu Ogas</h2><h2 lang="en">Our Berries</h2>
-                    <p class="lv">Svaigas, saldas un lielas krūmmellenes tieši no lauka.</p>
-                    <p lang="en">Fresh, sweet and large blueberries straight from the field.</p>
+                    <p class="lv">Saldākās mellenes tieši no krūma.</p>
+                    <p lang="en">Sweetest blueberries straight from the bush.</p>
                 </div>
 
                 <div class="split-box">
                     <div class="gallery" id="gal2">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?auto=format&fit=crop&w=800&q=80');"></div>
                     </div>
                     <h2 class="lv">Mūsu Stādi</h2><h2 lang="en">Our Plants</h2>
-                    <p class="lv">Spēcīgi melleņu un sausserža stādi Jūsu dārzam.</p>
-                    <p lang="en">Strong blueberry and honeyberry plants for your garden.</p>
+                    <p class="lv">Melleņu un sausserža stādi Jūsu dārzam.</p>
+                    <p lang="en">Blueberry and honeyberry plants for your garden.</p>
                 </div>
             </div>
         </section>
 
-        <section style="background-image: url('https://images.unsplash.com/photo-1488459711615-de9b56a0804b?q=80');">
+        <section style="background-image: url('https://images.unsplash.com/photo-1488459711615-de9b56a0804b?auto=format&fit=crop&w=1200&q=80');">
             <div class="content-wrap">
-                <h1 class="lv">Kur mūs atrast?</h1><h1 lang="en">Where to find us?</h1>
-                <h2>Zemnieku Nakts Tirgus</h2>
-                <p class="lv">Rīga, Spīķeru iela 2. Sezonas laikā strādājam katru dienu no 16:00.</p>
-                <p lang="en">Riga, Spīķeru iela 2. During the season, we are open daily from 16:00.</p>
+                <h1 class="lv">Nakts Tirgus</h1><h1 lang="en">Night Market</h1>
+                <p class="lv">Rīga, Spīķeru iela 2. Katru dienu no 16:00.</p>
+                <p lang="en">Riga, Spīķeru iela 2. Daily from 16:00.</p>
                 <a href="https://goo.gl/maps/RigaSpikeri" target="_blank" class="btn">GOOGLE MAPS</a>
             </div>
         </section>
 
-        <section style="background-image: url('https://images.unsplash.com/photo-1566385101042-1a000c1267c4?q=80');">
+        <section style="background-image: url('https://images.unsplash.com/photo-1566385101042-1a000c1267c4?auto=format&fit=crop&w=1200&q=80');">
             <div class="content-wrap">
                 <h1 class="lv">Piegāde</h1><h1 lang="en">Delivery</h1>
-                <p class="lv">Cena: 6.50€ / kg (Min. 5kg)</p>
-                <p lang="en">Price: 6.50€ / kg (Min. 5kg)</p>
+                <p class="lv">6.50€ / kg (Min. 5kg)</p>
                 <form id="orderForm">
-                    <input type="text" id="inputName" placeholder="Vārds" required>
-                    <input type="tel" id="inputPhone" placeholder="Telefons" required>
-                    <input type="text" id="inputAddress" placeholder="Adrese" required>
+                    <input type="text" id="nameInp" placeholder="Vārds" required>
+                    <input type="tel" id="phoneInp" placeholder="Telefons" required>
+                    <input type="text" id="addrInp" placeholder="Adrese" required>
                     <button type="button" class="btn" style="background:white; color:black; width:100%; border:none;">
                         <span class="lv">PASŪTĪT</span><span lang="en">ORDER</span>
                     </button>
@@ -216,14 +215,14 @@
             </div>
         </section>
 
-        <section style="background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?q=80');">
+        <section style="background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?auto=format&fit=crop&w=1200&q=80');">
             <div class="content-wrap">
                 <h1 class="lv">Pašlasīšana</h1><h1 lang="en">Self-Picking</h1>
                 <div class="trail-container">
                     <div class="trail-grid left">
                         <div class="step-content">
                             <h3 class="lv">01. ATBRAUCIET</h3><h3 lang="en">01. ARRIVE</h3>
-                            <p class="lv">Gaidām ciemos mūsu saimniecībā Aizkraukles novadā.</p>
+                            <p class="lv">Aizkraukles novads.</p>
                         </div>
                         <div class="step-node">1</div>
                     </div>
@@ -231,25 +230,18 @@
                         <div class="step-node">2</div>
                         <div class="step-content">
                             <h3 class="lv">02. SVĒRŠANA</h3><h3 lang="en">02. WEIGHING</h3>
-                            <p class="lv">Pirms lasīšanas mēs kopā nosvērsim Jūsu tukšos traukus.</p>
+                            <p class="lv">Sveram traukus.</p>
                         </div>
                     </div>
                     <div class="trail-grid left">
                         <div class="step-content">
                             <h3 class="lv">03. LASĪŠANA</h3><h3 lang="en">03. PICKING</h3>
-                            <p class="lv">Izbaudiet ogu lasīšanu. Minimālais daudzums: 3kg.</p>
+                            <p class="lv">Min. 3kg.</p>
                         </div>
                         <div class="step-node">3</div>
                     </div>
-                    <div class="trail-grid right">
-                        <div class="step-node">4</div>
-                        <div class="step-content">
-                            <h3 class="lv">04. APMAKSA</h3><h3 lang="en">04. PAYMENT</h3>
-                            <p class="lv">Norēķini uz vietas skaidrā naudā vai ar karti.</p>
-                        </div>
-                    </div>
                 </div>
-                <div style="display:flex; gap:10px; margin-top:25px;">
+                <div style="display:flex; gap:10px; margin-top:20px;">
                     <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="btn">WAZE</a>
                     <a href="https://goo.gl/maps/RigaSpikeri" target="_blank" class="btn">GOOGLE MAPS</a>
                 </div>
@@ -261,17 +253,13 @@
         function toggleLang() {
             const btn = document.getElementById('langToggle');
             const isLv = btn.innerText === 'LATVIEŠU';
-            
             btn.innerText = isLv ? 'ENGLISH' : 'LATVIEŠU';
-            
-            // Text toggle
             document.querySelectorAll('.lv').forEach(el => el.style.display = isLv ? 'none' : 'block');
             document.querySelectorAll('[lang="en"]').forEach(el => el.style.display = isLv ? 'block' : 'none');
             
-            // Form placeholder toggle
-            document.getElementById('inputName').placeholder = isLv ? 'Name' : 'Vārds';
-            document.getElementById('inputPhone').placeholder = isLv ? 'Phone' : 'Telefons';
-            document.getElementById('inputAddress').placeholder = isLv ? 'Address' : 'Adrese';
+            document.getElementById('nameInp').placeholder = isLv ? 'Name' : 'Vārds';
+            document.getElementById('phoneInp').placeholder = isLv ? 'Phone' : 'Telefons';
+            document.getElementById('addrInp').placeholder = isLv ? 'Address' : 'Adrese';
         }
 
         function setupGallery(id) {
