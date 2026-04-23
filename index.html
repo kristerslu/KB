@@ -45,7 +45,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.65);
+            background: rgba(0,0,0,0.6);
             z-index: 1;
         }
 
@@ -82,8 +82,8 @@
             padding: 10px 20px;
             border-radius: 20px;
             transition: 0.3s;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
         }
 
         .split-container {
@@ -117,13 +117,14 @@
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
         }
-        .slide.active { opacity: 0.45; }
+        /* Higher opacity for better visibility of the different photos */
+        .slide.active { opacity: 0.5; }
 
-        h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 100; text-transform: uppercase; letter-spacing: 15px; margin-bottom: 20px; }
+        h1 { font-size: clamp(1.8rem, 7vw, 3.2rem); font-weight: 100; text-transform: uppercase; letter-spacing: 12px; margin-bottom: 20px; }
         h2 { font-size: 0.75rem; font-weight: 400; text-transform: uppercase; letter-spacing: 6px; color: var(--silver); margin-bottom: 15px; }
         p { font-size: 0.9rem; line-height: 1.8; color: var(--silver); max-width: 350px; }
 
-        form { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 8px; margin-top: 25px; }
+        form { width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 8px; margin-top: 25px; }
         input {
             background: transparent; border: none; border-bottom: 1px solid var(--border);
             padding: 12px 0; color: white; font-family: inherit; text-align: center; outline: none;
@@ -131,13 +132,13 @@
 
         .trail-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
             margin-top: 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
-        .trail-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; position: relative; min-height: 70px; }
+        .trail-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; position: relative; min-height: 65px; }
         .trail-grid::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--border); z-index: 1; transform: translateX(-50%); }
         .step-node { grid-column: 2; width: 30px; height: 30px; background: black; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; z-index: 2; position: relative; }
         .step-content { grid-column: span 1; padding: 0 15px; }
@@ -177,17 +178,18 @@
             <div class="split-container">
                 <div class="split-box">
                     <div class="gallery" id="gal1">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?auto=format&fit=crop&w=1200&q=80&v=1');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1621259182978-f09e5e2ca1bd?auto=format&fit=crop&w=1200&q=80&v=2');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?auto=format&fit=crop&w=1000&q=80');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1621259182978-f09e5e2ca1bd?auto=format&fit=crop&w=1000&q=80');"></div>
                     </div>
                     <h2 class="lv">Mūsu Šķirnes</h2><h2 lang="en">Our Varieties</h2>
                     <p class="lv">10+ melleņu šķirnes (Bluecrop, Patriot u.c.), kas pielāgotas Latvijas klimatam.</p>
                     <p lang="en">10+ blueberry varieties (Bluecrop, Patriot etc.) adapted to the local climate.</p>
                 </div>
+
                 <div class="split-box">
                     <div class="gallery" id="gal2">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&w=1200&q=80&v=3');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522850403397-b0c8f2f75451?auto=format&fit=crop&w=1200&q=80&v=4');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?auto=format&fit=crop&w=1000&q=80');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522850403397-b0c8f2f75451?auto=format&fit=crop&w=1000&q=80');"></div>
                     </div>
                     <h2 class="lv">Stādi</h2><h2 lang="en">Plants</h2>
                     <p class="lv">10+ melleņu un 10+ <b>sausserža</b> šķirņu stādi Jūsu piemājas dārzam.</p>
@@ -202,7 +204,7 @@
                 <h2>Zemnieku Nakts Tirgus</h2>
                 <p class="lv">Spīķeru iela 2, Rīga. Katru dienu no 16:00.</p>
                 <p lang="en">Spīķeru iela 2, Riga. Daily from 16:00.</p>
-                <a href="https://maps.app.goo.gl/r6v2" target="_blank" class="icon-link">
+                <a href="https://maps.google.com/?q=Spīķeru+iela+2,+Rīga" target="_blank" class="icon-link">
                     <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                 </a>
             </div>
@@ -221,7 +223,7 @@
             </div>
         </section>
 
-        <section id="picking" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?auto=format&fit=crop&w=1920&q=80');">
+        <section id="picking" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&w=1920&q=80');">
             <div class="content-wrap">
                 <h1 class="lv">Pašlasīšana</h1><h1 lang="en">Self-Picking</h1>
                 <div class="trail-container">
@@ -229,7 +231,7 @@
                         <div class="step-content">
                             <h3 style="font-size:0.65rem; letter-spacing:2px;">01. ATBRAUCIET</h3>
                             <p style="font-size:0.65rem;">Aizkraukles novads</p>
-                            <a href="https://maps.app.goo.gl/r6v2" target="_blank" class="icon-link"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></a>
+                            <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="icon-link"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></a>
                         </div>
                         <div class="step-node">1</div>
                     </div>
@@ -251,7 +253,7 @@
     </main>
 
     <script>
-        // Force scroll to top and strip hash on refresh
+        // Start at top
         window.onbeforeunload = function() { window.scrollTo(0,0); };
         if (window.location.hash) { window.location.replace(window.location.pathname); }
 
@@ -271,7 +273,7 @@
                 slides[idx].classList.remove('active');
                 idx = (idx + 1) % slides.length;
                 slides[idx].classList.add('active');
-            }, 4500);
+            }, 5000);
         }
         setupGallery('gal1');
         setupGallery('gal2');
