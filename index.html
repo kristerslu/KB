@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalna Baložu Ogas | Premium mellenes</title>
+    <title>Kalna Baložu Ogas | Premium Blueberries</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #000000;
             --text-color: #ffffff;
             --accent-blue: #3b82f6;
-            --glass: rgba(0, 0, 0, 0.7);
+            --glass-bg: rgba(0, 0, 0, 0.6);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            overflow: hidden; /* Lock scroll to container */
+            overflow: hidden;
         }
 
         /* Scroll Snap Container */
@@ -43,30 +44,29 @@
             padding: 20px;
         }
 
-        /* Overlay for contrast */
-        section::before {
+        /* Darkening Overlays */
+        section::after {
             content: "";
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.85));
             z-index: 1;
         }
 
         .content {
             position: relative;
             z-index: 2;
-            max-width: 850px;
+            max-width: 800px;
             width: 100%;
-            background: var(--glass);
-            padding: 40px;
-            border-radius: 24px;
-            backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            padding: 50px 40px;
+            border-radius: 30px;
             border: 1px solid rgba(255,255,255,0.1);
             text-align: center;
-            /* Animation state */
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         section.active .content {
@@ -74,83 +74,82 @@
             transform: translateY(0);
         }
 
-        /* Nav & Language */
+        /* Elegant Language Switcher */
         .lang-switch {
             position: fixed;
-            top: 25px;
-            right: 25px;
+            top: 30px;
+            right: 40px;
             z-index: 1000;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
         }
         .lang-btn {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 18px;
             cursor: pointer;
-            border-radius: 50px;
-            font-weight: bold;
-            backdrop-filter: blur(5px);
+            opacity: 0.5;
             transition: 0.3s;
+            color: white;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
         }
-        .lang-btn:hover { background: var(--accent-blue); }
+        .lang-btn.active {
+            opacity: 1;
+            border-bottom: 2px solid var(--accent-blue);
+        }
 
         /* Typography */
-        h1 { font-size: 3.5rem; letter-spacing: -1px; margin-bottom: 10px; }
-        h2 { font-size: 2.2rem; color: var(--accent-blue); margin-bottom: 20px; font-weight: 300; }
-        p { font-size: 1.15rem; line-height: 1.6; color: #d1d5db; margin-bottom: 20px; }
-        b { color: white; }
+        h1 { font-size: 3.5rem; letter-spacing: -2px; margin-bottom: 15px; }
+        h2 { font-size: 2.2rem; color: var(--accent-blue); margin-bottom: 25px; font-weight: 400; }
+        p { font-size: 1.1rem; line-height: 1.7; color: #ccc; margin-bottom: 20px; }
+        .price-tag { font-size: 1.5rem; font-weight: 700; color: white; margin: 15px 0; }
 
-        /* Icons/Links */
-        .map-wrapper { display: flex; justify-content: center; gap: 25px; margin-top: 20px; }
-        .map-icon { width: 45px; height: 45px; transition: 0.3s; }
-        .map-icon:hover { transform: translateY(-5px); }
+        /* Icon Controls */
+        .map-box { display: flex; justify-content: center; gap: 30px; margin-top: 25px; align-items: center; }
+        .map-link { transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .map-link:hover { transform: scale(1.15); }
+        .map-icon { width: 45px; height: 45px; }
 
         /* Form */
-        form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; text-align: left; }
-        input { padding: 14px; border-radius: 12px; border: 1px solid #333; background: rgba(255,255,255,0.05); color: #fff; width: 100%; }
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 25px; }
+        input { padding: 16px; border-radius: 12px; border: 1px solid #444; background: rgba(0,0,0,0.4); color: white; width: 100%; outline: none; }
+        input:focus { border-color: var(--accent-blue); }
         .full-width { grid-column: span 2; }
-        .submit-btn { grid-column: span 2; background: var(--accent-blue); color: white; border: none; padding: 16px; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .submit-btn:hover { background: #2563eb; transform: scale(1.02); }
+        .submit-btn { grid-column: span 2; background: var(--accent-blue); color: white; border: none; padding: 18px; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
 
-        /* Elegant Timeline for Self-Picking */
-        .timeline {
+        /* Refined Mindmap Layout */
+        .picking-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
             text-align: left;
-            margin: 25px auto 0;
-            max-width: 600px;
-            border-left: 2px solid rgba(59, 130, 246, 0.3);
-            padding-left: 30px;
-            position: relative;
+            margin-top: 30px;
         }
-        .timeline-item { position: relative; margin-bottom: 25px; }
-        .timeline-item::before {
-            content: "";
-            position: absolute;
-            left: -37px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            background: var(--accent-blue);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-blue);
+        .step-card {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 15px;
+            border-left: 3px solid var(--accent-blue);
         }
-        .timeline-item h4 { color: var(--accent-blue); margin-bottom: 5px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .step-card h4 { color: var(--accent-blue); margin-bottom: 5px; font-size: 0.9rem; text-transform: uppercase; }
 
-        /* Section Backgrounds */
-        #home { background-image: url('https://images.unsplash.com/photo-1544070078-a212eda27b49?q=80&w=2000'); }
-        #products { background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2000'); }
-        #market { background-image: url('https://images.unsplash.com/photo-1488459711635-0c0a5a9d3637?q=80&w=2000'); } /* Clean Market Background */
-        #delivery { background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?q=80&w=2000'); }
-        #picking { background-image: url('https://images.unsplash.com/photo-1522850403397-b0c8f2f75451?q=80&w=2000'); } /* Field Background */
+        /* Correct Background Images */
+        #home { background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2000'); } /* Dramatic Blueberries */
+        #products { background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?q=80&w=2000'); }
+        #market { background-image: url('https://images.unsplash.com/photo-1515252818617-640707767f40?q=80&w=2000'); } /* Evening Market vibe */
+        #delivery { background-image: url('https://images.unsplash.com/photo-1595111051515-5684666f866b?q=80&w=2000'); }
+        #picking { background-image: url('https://images.unsplash.com/photo-1522850403397-b0c8f2f75451?q=80&w=2000'); }
 
         [lang="en"] { display: none; }
 
         @media (max-width: 700px) {
-            h1 { font-size: 2.2rem; }
-            h2 { font-size: 1.6rem; }
+            h1 { font-size: 2.5rem; }
+            .picking-grid { grid-template-columns: 1fr; }
             form { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
             .submit-btn { grid-column: span 1; }
-            .content { padding: 25px; }
             section { overflow-y: auto; }
         }
     </style>
@@ -158,7 +157,8 @@
 <body>
 
     <div class="lang-switch">
-        <button class="lang-btn" onclick="toggleLang()">Latviešu / English</button>
+        <span class="lang-btn active" id="btn-lv" onclick="toggleLang('lv')">LV</span>
+        <span class="lang-btn" id="btn-en" onclick="toggleLang('en')">EN</span>
     </div>
 
     <main class="scroll-container">
@@ -166,29 +166,32 @@
         <section id="home">
             <div class="content">
                 <h1>Kalna Baložu Ogas</h1>
-                <p class="lv">Mūsu ģimenes saimniecība Aizkrauklē piedāvā augstākās kvalitātes mellenes. Mēs ticam, ka svaigums un kvalitāte ir galvenais, tāpēc rūpējamies par katru ogu.</p>
-                <p lang="en">Our family farm in Aizkraukle offers premium blueberries. We believe freshness and quality are paramount, caring for every single berry.</p>
+                <p class="lv">Aizkraukles novada ģimenes saimniecība. Mēs audzējam augstākās kvalitātes ogas, nodrošinot nevainojamu svaigumu no lauka līdz Jūsu mājām.</p>
+                <p lang="en">A family farm in Aizkraukle. We grow premium berries, ensuring absolute freshness from our fields to your home.</p>
             </div>
         </section>
 
         <section id="products">
             <div class="content">
-                <h2 class="lv">Dārza bagātība</h2><h2 lang="en">Garden Riches</h2>
-                <p class="lv">Mūsu laukos aug <b>vairāk nekā 10 melleņu šķirnes</b>, galvenokārt <b>Bluecrop</b> un <b>Patriot</b>.</p>
-                <p lang="en">We grow <b>more than 10 blueberry varieties</b>, primarily <b>Bluecrop</b> and <b>Patriot</b>.</p>
-                <p class="lv">Piedāvājam arī stādus: 10+ melleņu un 10+ ēdamo sausseržu (honeyberry) šķirnes dažādos vecumos.</p>
-                <p lang="en">We also offer plants: 10+ varieties of blueberry and 10+ varieties of honeyberry plants of different ages.</p>
+                <h2 class="lv">Mūsu dārza veltes</h2><h2 lang="en">Our Garden Harvest</h2>
+                <p class="lv">Laukos audzējam <b>10+ melleņu šķirnes</b>, galvenokārt <b>Bluecrop</b> un <b>Patriot</b>.</p>
+                <p lang="en">We grow <b>10+ blueberry varieties</b>, mainly <b>Bluecrop</b> and <b>Patriot</b>.</p>
+                <p class="lv">Piedāvājam 10+ melleņu un 10+ krūmcūzeņu stādus dažādos vecumos.</p>
+                <p lang="en">We offer 10+ varieties of blueberry and 10+ varieties of honeyberry plants of different ages.</p>
             </div>
         </section>
 
         <section id="market">
             <div class="content">
                 <h2 class="lv">Zemnieku Nakts Tirgus</h2><h2 lang="en">Farmers' Night Market</h2>
-                <p class="lv">Katru dienu no plkst. <b>16:00</b> līdz izpārdots. <br>Adrese: <b>Spīķeru iela 2, Rīga</b>.</p>
-                <p lang="en">Every day from <b>16:00</b> until sold out. <br>Location: <b>Spīķeru Street 2, Riga</b>.</p>
-                <div class="map-wrapper">
-                    <a href="https://www.google.com/maps/search/?api=1&query=Zemnieku+Nakts+Tirgus+Spīķeru+iela+2" target="_blank">
+                <p class="lv">Esam šeit katru dienu no 16:00 līdz izpārdots.<br><b>Spīķeru iela 2, Rīga</b></p>
+                <p lang="en">We are here every day from 16:00 until sold out.<br><b>Spīķeru iela 2, Riga</b></p>
+                <div class="map-box">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas,+Aizkraukle0" target="_blank" class="map-link">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" class="map-icon" alt="Google Maps">
+                    </a>
+                    <a href="https://waze.com/ul?q=Zemnieku+Nakts+Tirgus" target="_blank" class="map-link">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Waze_icon.svg" class="map-icon" alt="Waze">
                     </a>
                 </div>
             </div>
@@ -196,79 +199,76 @@
 
         <section id="delivery">
             <div class="content">
-                <h2 class="lv">Piegāde ar refrižeratoru</h2><h2 lang="en">Refrigerated Delivery</h2>
-                <p class="lv">Mēs piegādājam svaigas ogas tieši uz birojiem vai mājām, izmantojot dzesēšanas iekārtas. <br><b>6.50€/kg</b> (minimālais pasūtījums 5kg).</p>
-                <p lang="en">We deliver fresh berries directly to offices or homes in refrigerated vans. <br><b>6.50€/kg</b> (minimum order 5kg).</p>
+                <h2 class="lv">Svaiga Piegāde</h2><h2 lang="en">Fresh Delivery</h2>
+                <p class="lv">Piegāde ar refrižeratoru uz birojiem un mājām.<br><b>6.50€/kg</b> (min. 5kg).</p>
+                <p lang="en">Refrigerated delivery to offices and homes.<br><b>6.50€/kg</b> (min. 5kg).</p>
                 
-                <form onsubmit="event.preventDefault(); alert('Paldies! Pasūtījums saņemts.');">
+                <form>
                     <input type="text" placeholder="Vārds / Name" required>
                     <input type="tel" placeholder="Telefons / Phone" required>
-                    <input type="text" class="full-width" placeholder="Piegādes adrese / Delivery Address" required>
-                    <input type="number" class="full-width" placeholder="Daudzums kg (min. 5)" min="5" required>
-                    <button type="submit" class="submit-btn">Pieteikt piegādi / Order Delivery</button>
+                    <input type="text" class="full-width" placeholder="Adrese / Address" required>
+                    <input type="number" class="full-width" placeholder="Daudzums (kg)" min="5" required>
+                    <button type="button" class="submit-btn" onclick="alert('Paldies! Mēs sazināsimies.')">Pasūtīt / Order Now</button>
                 </form>
             </div>
         </section>
 
         <section id="picking">
             <div class="content">
-                <h2 class="lv">Pašlasīšana saimniecībā</h2><h2 lang="en">Self-picking at the farm</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <h4 class="lv">1. Ceļš uz Aizkraukli</h4><h4 lang="en">1. Trip to Aizkraukle</h4>
-                        <p class="lv" style="font-size: 0.9rem; margin-bottom:5px;">Meklējiet "Kalna Baložu Ogas" navigācijā:</p>
-                        <div class="map-wrapper" style="justify-content: flex-start; gap: 15px;">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" style="width:30px;"></a>
-                            <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Waze_icon.svg" style="width:30px;"></a>
+                <h2 class="lv">Pašlasīšana</h2><h2 lang="en">Self-Picking</h2>
+                <div class="price-tag">4.50€/kg</div>
+                
+                <div class="picking-grid">
+                    <div class="step-card">
+                        <h4 class="lv">1. Brauciet pie mums</h4><h4 lang="en">1. Visit the farm</h4>
+                        <div class="map-box" style="justify-content: flex-start; margin-top: 10px; gap: 15px;">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas,+Aizkraukle1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" style="width:25px;"></a>
+                            <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Waze_icon.svg" style="width:25px;"></a>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <h4 class="lv">2. Taras svēršana</h4><h4 lang="en">2. Weighing Buckets</h4>
-                        <p class="lv" style="font-size: 0.9rem;">Iesakām ņemt līdzi savus traukus (domājot par dabu!), bet piedāvājam arī savu iepakojumu.</p>
+                    <div class="step-card">
+                        <h4 class="lv">2. Trauku svēršana</h4><h4 lang="en">2. Weigh buckets</h4>
+                        <p style="font-size: 0.8rem;">Lūdzam ņemt savus traukus!</p>
                     </div>
-                    <div class="timeline-item">
-                        <h4 class="lv">3. Lasīšanas prieks</h4><h4 lang="en">3. Picking Time</h4>
-                        <p class="lv" style="font-size: 0.9rem;">Minimālais nolasītais daudzums ir 3kg. Lasiet, cik vēlaties!</p>
+                    <div class="step-card">
+                        <h4 class="lv">3. Lasīšana</h4><h4 lang="en">3. Picking</h4>
+                        <p style="font-size: 0.8rem;">Minimālais daudzums 3kg.</p>
                     </div>
-                    <div class="timeline-item">
-                        <h4 class="lv">4. Gala svēršana</h4><h4 lang="en">4. Final Weight</h4>
-                        <p class="lv" style="font-size: 0.9rem;">Mūsu darbinieki nosvērs Jūsu ražu.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="lv">5. Apmaksa</h4><h4 lang="en">5. Payment</h4>
-                        <p class="lv" style="font-size: 0.9rem;">Pieņemam skaidru naudu un kartes (Worldline).</p>
-                        <div style="font-weight: bold; margin-top: 5px; color:white; font-size: 0.8rem; letter-spacing: 1px;">WORLDLINE 💳</div>
+                    <div class="step-card">
+                        <h4 class="lv">4. Apmaksa</h4><h4 lang="en">4. Payment</h4>
+                        <p style="font-size: 0.8rem;">Skaidra nauda vai karte.</p>
                     </div>
                 </div>
+                <div style="margin-top: 20px; font-weight: bold; font-size: 0.7rem; letter-spacing: 1.5px;">WORLDLINE 💳</div>
             </div>
         </section>
+
     </main>
 
     <script>
-        // Language Toggle
-        let currentLang = 'lv';
-        function toggleLang() {
+        function toggleLang(lang) {
             const lvEls = document.querySelectorAll('.lv');
             const enEls = document.querySelectorAll('[lang="en"]');
-            if (currentLang === 'lv') {
+            const btnLv = document.getElementById('btn-lv');
+            const btnEn = document.getElementById('btn-en');
+
+            if (lang === 'en') {
                 lvEls.forEach(el => el.style.display = 'none');
                 enEls.forEach(el => el.style.display = 'block');
-                currentLang = 'en';
+                btnEn.classList.add('active');
+                btnLv.classList.remove('active');
             } else {
                 lvEls.forEach(el => el.style.display = 'block');
                 enEls.forEach(el => el.style.display = 'none');
-                currentLang = 'lv';
+                btnLv.classList.add('active');
+                btnEn.classList.remove('active');
             }
         }
 
-        // Animation logic
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                } else {
-                    entry.target.classList.remove('active');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
+                else entry.target.classList.remove('active');
             });
         }, { threshold: 0.5 });
 
