@@ -20,15 +20,44 @@
             background-color: var(--bg);
             color: var(--text);
             overflow: hidden;
-            -webkit-font-smoothing: antialiased;
         }
 
-        h1, h2, h3, .marker-font { 
+        /* The Marker Font + Custom Glyph Fix */
+        .marker-font, h1, h2, h3 { 
             font-family: 'Permanent Marker', cursive; 
-            font-weight: 400; 
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
+
+        /* Custom Glyph CSS for Latvian letters */
+        .lv-char { position: relative; display: inline-block; }
+        .lv-char::after {
+            content: "v"; /* The 'hat' */
+            position: absolute;
+            top: -0.4em;
+            left: 50%;
+            transform: translateX(-50%) scaleX(1.2);
+            font-size: 0.6em;
+            font-family: 'Permanent Marker';
+        }
+        .macron::after { content: "-"; top: -0.5em; }
+
+        /* Sticky Navigation */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            height: 60px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 3000;
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-family: 'Permanent Marker'; font-size: 1.2rem; cursor: pointer; text-decoration: none; color: white; }
+        .menu-links { display: flex; gap: 15px; }
+        .menu-links a { color: white; text-decoration: none; font-size: 0.65rem; letter-spacing: 1px; font-weight: 600; }
 
         .scroll-container {
             height: 100dvh;
@@ -44,15 +73,7 @@
             scroll-snap-stop: always;
             display: flex;
             position: relative;
-            overflow: hidden;
-        }
-
-        section::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1;
+            padding-top: 60px;
         }
 
         .content-wrap {
@@ -60,188 +81,170 @@
             z-index: 2;
             width: 100%;
             margin: auto;
-            padding: 40px 20px; 
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             text-align: center;
         }
 
-        /* Language Toggle */
-        .nav-ui { position: fixed; top: 20px; right: 20px; z-index: 1000; }
-        .lang-toggle {
-            cursor: pointer; letter-spacing: 1px; font-size: 0.7rem; font-weight: 600;
-            border: 1px solid var(--border); padding: 8px 15px; border-radius: 4px;
-            background: rgba(0,0,0,0.8); color: white;
-        }
-
-        /* Variety Catalog Modal */
+        /* MODALS */
         .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
-            z-index: 2000; display: none; padding: 60px 20px 40px; overflow-y: auto;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 4000; display: none; padding: 80px 20px 40px; overflow-y: auto;
         }
         .modal.active { display: block; }
-        .close-modal { position: fixed; top: 20px; right: 25px; font-size: 2.5rem; cursor: pointer; color: white; z-index: 2001; }
+        .close-modal { position: fixed; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; }
 
-        .variety-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px; max-width: 1000px; margin: 20px auto;
-        }
-        .v-card { border: 1px solid var(--border); padding: 20px; text-align: left; background: rgba(255,255,255,0.05); }
-        .v-card h3 { color: #fff; margin-bottom: 10px; font-size: 1.4rem; }
-        .v-card p { font-size: 0.75rem; color: #bbb; line-height: 1.4; margin-bottom: 10px; }
-
-        /* Self-Picking Page Fix (As per Screenshot) */
-        .trail-vertical {
+        /* ZIG ZAG RE-IMPLEMENTATION */
+        .zigzag-container {
             width: 100%;
-            max-width: 320px;
-            margin: 20px auto;
+            max-width: 400px;
             position: relative;
-            padding-left: 40px;
+            margin-top: 30px;
         }
-        .trail-vertical::before {
-            content: "";
-            position: absolute;
-            left: 17px;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            border-left: 2px dashed rgba(255,255,255,0.4);
+        .zigzag-path {
+            position: absolute; top: 0; left: 50%; height: 100%; width: 2px;
+            border-left: 2px dashed white; transform: translateX(-50%);
+            z-index: 1;
         }
-        .step-box {
-            position: relative;
-            margin-bottom: 35px;
-            text-align: left;
-        }
-        .step-box:last-child { margin-bottom: 0; }
-        .step-num {
-            position: absolute;
-            left: -40px;
-            width: 35px;
-            height: 35px;
-            background: black;
-            border: 1px solid white;
-            border-radius: 50%;
-            display: flex;
+        .zigzag-step {
+            display: flex; width: 100%; margin-bottom: 40px; position: relative; z-index: 2;
             align-items: center;
-            justify-content: center;
-            font-family: 'Permanent Marker';
-            font-size: 1rem;
         }
-        .step-box h3 { font-size: 1.1rem; margin-bottom: 2px; }
-        .step-box p { font-size: 0.8rem; color: var(--silver); }
+        .zigzag-step.left { flex-direction: row-reverse; text-align: right; padding-right: 50%; }
+        .zigzag-step.right { padding-left: 50%; text-align: left; }
+        
+        .step-blob {
+            width: 30px; height: 30px; background: black; border: 1px solid white;
+            border-radius: 50%; position: absolute; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; justify-content: center; font-family: 'Permanent Marker';
+        }
 
-        /* Buttons */
         .btn {
-            margin-top: 15px; border: 1px solid white; padding: 12px 20px; color: white; 
-            text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; font-weight: 600;
-            background: transparent; cursor: pointer; transition: 0.2s;
+            margin-top: 10px; border: 1px solid white; padding: 8px 16px; color: white; 
+            text-decoration: none; font-size: 0.7rem; font-weight: 600;
+            background: transparent; cursor: pointer;
         }
-        .btn:hover { background: white; color: black; }
+
+        .v-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; text-align: left; }
+        .v-item h4 { font-family: 'Permanent Marker'; font-size: 1.1rem; }
+        .v-item p { font-size: 0.7rem; color: var(--silver); }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            .split-container { flex-direction: column; height: 100dvh; }
-            .split-box { height: 50dvh; border-bottom: 1px solid var(--border); }
+            .menu-links { display: none; } /* Hide text links on mobile for hamburger (simplified here) */
+            h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="nav-ui">
-        <div class="lang-toggle" onclick="toggleLang()">LATVIEŠU</div>
-    </div>
+    <nav>
+        <a href="#top" class="logo">KB OGAS</a>
+        <div class="menu-links">
+            <a href="#produce">PRODUKCIJA</a>
+            <a href="#market">TIRGUS</a>
+            <a href="#delivery">PIEGĀDE</a>
+            <a href="#picking">PAŠLASĪŠANA</a>
+        </div>
+    </nav>
 
-    <div class="modal" id="varietyModal">
-        <span class="close-modal" onclick="toggleModal()">&times;</span>
-        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Mūsu Šķirņu Katalogs</h2>
-        
-        <div class="variety-grid">
-            <div class="v-card"><h3>PATRIOT</h3><p>Agrīna, izturīga pret aukstumu (-35°C). Izteikta garša, ļoti lielas ogas.</p></div>
-            <div class="v-card"><h3>BLUECROP</h3><p>Pasaules standarts. Vidēji agrīna, ļoti ražīga un stingra.</p></div>
-            <div class="v-card"><h3>DUKE</h3><p>Viena no populārākajām agrīnajām šķirnēm. Ogas kraukšķīgas un saldas.</p></div>
-            <div class="v-card"><h3>TORO</h3><p>Vidēji agrīna. Milzīgas ogas ķekaros kā vīnogas. Izcils aromāts.</p></div>
-            <div class="v-card"><h3>CHANDLER</h3><p>Šķirne ar pasaulē lielākajām ogām. Ražo ilgstoši (līdz 6 nedēļām).</p></div>
-            <div class="v-card"><h3>ELIOTT</h3><p>Vēlā šķirne. Ogas vācamas septembrī. Skābeni salda garša.</p></div>
-            <div class="v-card"><h3>HANNAHS CHOICE</h3><p>Agrīna šķirne ar īpaši augstu cukura līmeni un persiku piegaršu.</p></div>
-            <div class="v-card"><h3>GOLDTRAUBE</h3><p>Vidēji vēlā šķirne. Augsta izturība pret slimībām un spēcīga garša.</p></div>
-            <div class="v-card"><h3>CHANTICLEER</h3><p>Pati agrākā šķirne mūsu dārzā. Tiem, kas nevar sagaidīt pirmo ražu.</p></div>
+    <div class="modal" id="berryModal">
+        <span class="close-modal" onclick="closeModals()">&times;</span>
+        <h2 class="marker-fix">Ogu Info</h2>
+        <div class="v-grid">
+            <div class="v-item"><h4>PATRIOT</h4><p>Saldums: 9/10<br>Tekstūra: Maiga<br>Izmērs: Ļoti liels</p></div>
+            <div class="v-item"><h4>BLUECROP</h4><p>Saldums: 8/10<br>Tekstūra: Kraukšķīga<br>Izmērs: Liels</p></div>
         </div>
     </div>
 
-    <main class="scroll-container">
+    <div class="modal" id="cropModal">
+        <span class="close-modal" onclick="closeModals()">&times;</span>
+        <h2 class="marker-fix">Audzēšanas Info</h2>
+        <div class="v-grid">
+            <div class="v-item"><h4>PATRIOT</h4><p>Ziemcietība: -35°C<br>Raža: Jūlija beigas</p></div>
+            <div class="v-item"><h4>BLUECROP</h4><p>Ziemcietība: -30°C<br>Raža: Augusta vidus</p></div>
+            <div class="v-item"><h4>ELIOTT</h4><p>Ziemcietība: -25°C<br>Raža: Septembris</p></div>
+            </div>
+    </div>
+
+    <main class="scroll-container" id="top">
         
-        <section style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=1200&q=80');">
+        <section id="home" style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=1200&q=80'); background-size: cover;">
             <div class="content-wrap">
-                <h1>Kalna Baložu Ogas</h1>
-                <p>Audzēts bez pesticīdiem. Tikko no lauka.</p>
+                <h1 class="marker-fix">KALNA BALOŽU OGAS</h1>
+                <p>Tikko no lauka.</p>
             </div>
         </section>
 
-        <section>
+        <section id="produce">
             <div style="display:flex; flex-direction:column; width:100%; height:100%;">
-                <div style="flex:1; position:relative; background-image:url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?auto=format&fit=crop&w=1000&q=80'); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center;">
-                   <div style="z-index:2; text-align:center;">
-                        <h2>Mūsu Ogas</h2>
-                        <button class="btn" onclick="toggleModal()">VISAS ŠĶIRNES</button>
-                   </div>
-                   <div style="position:absolute; inset:0; background:rgba(0,0,0,0.5);"></div>
+                <div style="flex:1; background:#111; display:flex; flex-direction:column; align-items:center; justify-content:center; border-bottom:1px solid var(--border)">
+                    <h2 class="marker-fix">MŪSU OGAS</h2>
+                    <button class="btn" onclick="openModal('berryModal')">OGU INFO</button>
                 </div>
-                <div style="flex:1; position:relative; background-image:url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?auto=format&fit=crop&w=1000&q=80'); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center;">
-                    <div style="z-index:2; text-align:center;">
-                        <h2>Mūsu Stādi</h2>
-                        <p>Sagatavoti Jūsu dārzam.</p>
-                    </div>
-                    <div style="position:absolute; inset:0; background:rgba(0,0,0,0.5);"></div>
+                <div style="flex:1; background:#050505; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                    <h2 class="marker-fix">MŪSU STĀDI</h2>
+                    <button class="btn" onclick="openModal('cropModal')">AUDZĒŠANAS INFO</button>
                 </div>
             </div>
         </section>
 
-        <section style="background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?auto=format&fit=crop&w=1200&q=80');">
+        <section id="picking" style="background:#000;">
             <div class="content-wrap">
-                <h1>Pašlasīšana</h1>
-                
-                <div class="trail-vertical">
-                    <div class="step-box">
-                        <div class="step-num">1</div>
-                        <h3>ATBRAUCIET</h3>
-                        <p>Gaidām ciemos Aizkraukles novadā.</p>
+                <h1 class="marker-fix">PAŠLASĪŠANA</h1>
+                <div class="zigzag-container">
+                    <div class="zigzag-path"></div>
+                    <div class="zigzag-step left">
+                        <div class="step-blob">1</div>
+                        <div><h3 class="marker-fix">ATBRAUCIET</h3><p>Aizkraukle</p></div>
                     </div>
-                    <div class="step-box">
-                        <div class="step-num">2</div>
-                        <h3>SVĒRŠANA</h3>
-                        <p>Nosvērsim Jūsu tukšos traukus.</p>
+                    <div class="zigzag-step right">
+                        <div class="step-blob">2</div>
+                        <div><h3 class="marker-fix">SVĒRŠANA</h3><p>Trauki</p></div>
                     </div>
-                    <div class="step-box">
-                        <div class="step-num">3</div>
-                        <h3>LASĪŠANA</h3>
-                        <p>Izbaudiet dabu. Minimālais daudzums 3kg.</p>
+                    <div class="zigzag-step left">
+                        <div class="step-blob">3</div>
+                        <div><h3 class="marker-fix">LASĪŠANA</h3><p>3kg min</p></div>
                     </div>
-                    <div class="step-box">
-                        <div class="step-num">4</div>
-                        <h3>APMAKSA</h3>
-                        <p>Skaidrā naudā vai ar karti.</p>
+                    <div class="zigzag-step right">
+                        <div class="step-blob">4</div>
+                        <div><h3 class="marker-fix">APMAKSA</h3><p>Skaidrā/Karte</p></div>
                     </div>
-                </div>
-
-                <div style="display:flex; gap:10px; margin-top:20px;">
-                    <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="btn">WAZE</a>
-                    <a href="tel:+37129459247" class="btn">ZVANĪT</a>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        function toggleModal() {
-            document.getElementById('varietyModal').classList.toggle('active');
+        // Custom function to handle Latvian characters for Permanent Marker
+        function fixLatvianChars() {
+            const elements = document.querySelectorAll('.marker-fix');
+            const lvMap = {
+                'Ž': 'Z', 'Š': 'S', 'Č': 'C', 'Ģ': 'G', 'Ķ': 'K', 'Ļ': 'L', 'Ņ': 'N',
+                'Ā': 'A', 'Ē': 'E', 'Ī': 'I', 'Ū': 'U'
+            };
+            const macronLetters = ['Ā', 'Ē', 'Ī', 'Ū'];
+
+            elements.forEach(el => {
+                let text = el.innerText.toUpperCase();
+                let html = '';
+                for (let char of text) {
+                    if (lvMap[char]) {
+                        let type = macronLetters.includes(char) ? 'lv-char macron' : 'lv-char';
+                        html += `<span class="${type}">${lvMap[char]}</span>`;
+                    } else {
+                        html += char;
+                    }
+                }
+                el.innerHTML = html;
+            });
         }
-        function toggleLang() {
-            // Simplified for logic test
-            const b = document.querySelector('.lang-toggle');
-            b.innerText = b.innerText === 'LATVIEŠU' ? 'ENGLISH' : 'LATVIEŠU';
-        }
+
+        function openModal(id) { document.getElementById(id).style.display = 'block'; }
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+
+        window.onload = fixLatvianChars;
     </script>
 </body>
 </html>
