@@ -67,9 +67,10 @@
 
         section.active .content-wrap { opacity: 1; transform: translateY(0); }
 
+        /* Moved higher up as requested */
         .nav-ui {
             position: fixed;
-            top: 40px;
+            top: 20px; 
             right: 40px;
             z-index: 1000;
         }
@@ -82,8 +83,8 @@
             padding: 10px 20px;
             border-radius: 20px;
             transition: 0.3s;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
         }
 
         .split-container {
@@ -117,8 +118,7 @@
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
         }
-        /* Higher opacity for better visibility of the different photos */
-        .slide.active { opacity: 0.5; }
+        .slide.active { opacity: 0.55; }
 
         h1 { font-size: clamp(1.8rem, 7vw, 3.2rem); font-weight: 100; text-transform: uppercase; letter-spacing: 12px; margin-bottom: 20px; }
         h2 { font-size: 0.75rem; font-weight: 400; text-transform: uppercase; letter-spacing: 6px; color: var(--silver); margin-bottom: 15px; }
@@ -153,6 +153,7 @@
         @media (max-width: 768px) {
             .split-container { flex-direction: column; }
             .split-box:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+            .nav-ui { top: 15px; right: 20px; }
         }
 
         [lang="en"] { display: none; }
@@ -166,7 +167,7 @@
 
     <main class="scroll-container" id="mainScroll">
         
-        <section id="cover" style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=1920&q=80');">
+        <section id="cover" style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80');">
             <div class="content-wrap">
                 <h1>Kalna Baložu Ogas</h1>
                 <p class="lv">Ģimenes dārzs Aizkrauklē. Audzētas ar mīlestību, pasniegtas ar cieņu.</p>
@@ -178,8 +179,8 @@
             <div class="split-container">
                 <div class="split-box">
                     <div class="gallery" id="gal1">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?auto=format&fit=crop&w=1000&q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1621259182978-f09e5e2ca1bd?auto=format&fit=crop&w=1000&q=80');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&sig=farm-wide');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?q=80&sig=berry-macro');"></div>
                     </div>
                     <h2 class="lv">Mūsu Šķirnes</h2><h2 lang="en">Our Varieties</h2>
                     <p class="lv">10+ melleņu šķirnes (Bluecrop, Patriot u.c.), kas pielāgotas Latvijas klimatam.</p>
@@ -188,8 +189,8 @@
 
                 <div class="split-box">
                     <div class="gallery" id="gal2">
-                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?auto=format&fit=crop&w=1000&q=80');"></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522850403397-b0c8f2f75451?auto=format&fit=crop&w=1000&q=80');"></div>
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&sig=nursery-pots');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1416870262648-255fbd2c867d?q=80&sig=garden-work');"></div>
                     </div>
                     <h2 class="lv">Stādi</h2><h2 lang="en">Plants</h2>
                     <p class="lv">10+ melleņu un 10+ <b>sausserža</b> šķirņu stādi Jūsu piemājas dārzam.</p>
@@ -198,19 +199,19 @@
             </div>
         </section>
 
-        <section id="market" style="background-image: url('https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=1920&q=80');">
+        <section id="market" style="background-image: url('https://images.unsplash.com/photo-1488459711615-de9b56a0804b?q=80');">
             <div class="content-wrap">
                 <h1 class="lv">Kur mūs atrast?</h1><h1 lang="en">Where to find us?</h1>
                 <h2>Zemnieku Nakts Tirgus</h2>
                 <p class="lv">Spīķeru iela 2, Rīga. Katru dienu no 16:00.</p>
                 <p lang="en">Spīķeru iela 2, Riga. Daily from 16:00.</p>
-                <a href="https://maps.google.com/?q=Spīķeru+iela+2,+Rīga" target="_blank" class="icon-link">
+                <a href="https://goo.gl/maps/RigaSpikeri" target="_blank" class="icon-link">
                     <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                 </a>
             </div>
         </section>
 
-        <section id="delivery" style="background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?auto=format&fit=crop&w=1920&q=80');">
+        <section id="delivery" style="background-image: url('https://images.unsplash.com/photo-1566385101042-1a000c1267c4?q=80');">
             <div class="content-wrap">
                 <h1 class="lv">Piegāde</h1><h1 lang="en">Delivery</h1>
                 <p class="lv">6.50€ / kg (Min. 5kg)</p>
@@ -223,7 +224,7 @@
             </div>
         </section>
 
-        <section id="picking" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&w=1920&q=80');">
+        <section id="picking" style="background-image: url('https://images.unsplash.com/photo-1595163174205-013060706248?q=80');">
             <div class="content-wrap">
                 <h1 class="lv">Pašlasīšana</h1><h1 lang="en">Self-Picking</h1>
                 <div class="trail-container">
@@ -253,7 +254,6 @@
     </main>
 
     <script>
-        // Start at top
         window.onbeforeunload = function() { window.scrollTo(0,0); };
         if (window.location.hash) { window.location.replace(window.location.pathname); }
 
@@ -273,7 +273,7 @@
                 slides[idx].classList.remove('active');
                 idx = (idx + 1) % slides.length;
                 slides[idx].classList.add('active');
-            }, 5000);
+            }, 4500);
         }
         setupGallery('gal1');
         setupGallery('gal2');
