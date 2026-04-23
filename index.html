@@ -4,241 +4,229 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kalna Baložu Ogas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
+            --bg: #000000;
             --text: #ffffff;
             --accent: #ffffff;
-            --muted: #888;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.2);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
+            overflow: hidden; /* For Scroll Snap */
         }
 
-        .marker { font-family: 'Caveat', cursive; text-transform: none; letter-spacing: 0; }
+        .marker { font-family: 'Gochi Hand', cursive; text-transform: uppercase; }
 
-        /* --- NAVIGATION --- */
+        /* --- STICKY MENU --- */
         nav {
-            position: fixed; top: 0; width: 100%; height: 70px;
+            position: fixed; top: 0; width: 100%; height: 65px;
+            background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--border);
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 30px; z-index: 1000;
-            background: rgba(10,10,10,0.8); backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border);
+            padding: 0 20px; z-index: 1000;
         }
-        .logo { font-size: 1.8rem; text-decoration: none; color: white; transition: 0.3s; }
-        .logo:hover { opacity: 0.7; }
-        .nav-links { display: flex; gap: 25px; }
-        .nav-links a { 
-            text-decoration: none; color: var(--muted); font-size: 0.7rem; 
-            font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
-            transition: 0.3s;
-        }
-        .nav-links a:hover { color: white; }
+        .logo { font-size: 1.5rem; text-decoration: none; color: white; }
+        .nav-links { display: flex; gap: 15px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
 
-        /* --- SECTIONS --- */
+        /* --- SCROLL SNAP CONTAINER --- */
+        .scroll-container {
+            height: 100dvh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
         section {
-            min-height: 100vh; width: 100%; position: relative;
-            display: flex; align-items: center; justify-content: center;
-            padding: 100px 20px;
+            height: 100dvh;
+            width: 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px 20px;
+            background-size: cover;
+            background-position: center;
         }
 
-        .hero {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(10,10,10,1)), 
-                        url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=1600&q=80');
-            background-size: cover; background-position: center;
-            text-align: center;
+        section::before {
+            content: ""; position: absolute; inset: 0;
+            background: rgba(0,0,0,0.7); z-index: 1;
         }
 
-        h1 { font-size: clamp(3rem, 10vw, 6rem); line-height: 1; margin-bottom: 10px; }
-        .subtitle { color: var(--muted); font-size: 1.1rem; font-weight: 300; }
+        .content { position: relative; z-index: 2; width: 100%; max-width: 800px; text-align: center; }
 
-        /* --- CARDS & INFO --- */
-        .produce-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-            max-width: 1200px; width: 100%;
-        }
-        .info-card {
-            background: var(--glass); border: 1px solid var(--border);
-            padding: 60px 40px; border-radius: 4px; text-align: center;
-            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: pointer;
-        }
-        .info-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); }
-        .info-card h2 { font-size: 2.5rem; margin-bottom: 15px; }
-        .btn-outline {
-            display: inline-block; margin-top: 20px; padding: 10px 25px;
-            border: 1px solid white; color: white; text-decoration: none;
-            font-size: 0.75rem; font-weight: 600; letter-spacing: 1px;
-        }
+        /* --- CARDS & MODALS --- */
+        .grid-half { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .card { border: 1px solid white; padding: 30px; cursor: pointer; transition: 0.3s; }
+        .card:hover { background: rgba(255,255,255,0.1); }
 
-        /* --- THE ZIG-ZAG TRAIL --- */
-        .trail-container {
-            width: 100%; max-width: 600px; position: relative; padding: 40px 0;
-        }
-        .trail-svg {
-            position: absolute; top: 0; left: 50%; width: 200px; height: 100%;
-            transform: translateX(-50%); z-index: 1; opacity: 0.3;
-        }
-        .step {
-            display: flex; align-items: center; margin-bottom: 100px;
-            position: relative; z-index: 2; width: 100%;
-        }
-        .step:last-child { margin-bottom: 0; }
-        .step-content { flex: 1; }
-        .step-num {
-            width: 50px; height: 50px; background: #000; border: 1px solid #fff;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; flex-shrink: 0; margin: 0 30px;
-        }
-        .step.left { text-align: right; flex-direction: row; }
-        .step.right { text-align: left; flex-direction: row-reverse; }
-        .step h3 { font-size: 2rem; margin-bottom: 5px; }
-        .step p { font-size: 0.9rem; color: var(--muted); }
-
-        /* --- MODALS --- */
         .modal {
-            position: fixed; inset: 0; background: #0a0a0a; z-index: 2000;
-            display: none; padding: 100px 40px; overflow-y: auto;
+            position: fixed; inset: 0; background: #000; z-index: 2000;
+            display: none; padding: 40px 20px; overflow-y: auto;
         }
         .modal.active { display: block; }
-        .modal-close { position: fixed; top: 30px; right: 30px; font-size: 2rem; cursor: pointer; }
-        .variety-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px; max-width: 1200px; margin: 0 auto;
-        }
-        .variety-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
-        .variety-item h4 { font-size: 1.5rem; margin-bottom: 10px; }
+        .close { position: fixed; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; }
 
-        @media (max-width: 768px) {
-            .produce-grid { grid-template-columns: 1fr; }
+        /* --- ZIG ZAG SELF PICKING --- */
+        .zigzag-wrap { position: relative; margin-top: 30px; width: 100%; max-width: 500px; margin-left: auto; margin-right: auto; }
+        
+        /* Dashed Line Path */
+        .dashed-line {
+            position: absolute; top: 0; left: 50%; height: 100%; width: 2px;
+            border-left: 2px dashed rgba(255,255,255,0.5); transform: translateX(-50%); z-index: 1;
+        }
+
+        .step { display: flex; width: 100%; margin-bottom: 40px; position: relative; z-index: 2; align-items: center; }
+        .step.left { flex-direction: row-reverse; text-align: right; padding-right: 50%; }
+        .step.right { padding-left: 50%; text-align: left; }
+        
+        .step-node {
+            width: 30px; height: 30px; background: #000; border: 1px solid #fff;
+            border-radius: 50%; position: absolute; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+        }
+
+        /* --- ORDER FORM --- */
+        form { display: flex; flex-direction: column; gap: 10px; max-width: 400px; margin: 20px auto; }
+        input { background: transparent; border: 1px solid var(--border); padding: 12px; color: white; font-family: inherit; }
+        .btn { background: white; color: black; border: none; padding: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+
+        @media (max-width: 600px) {
+            .grid-half { grid-template-columns: 1fr; }
             .nav-links { display: none; }
-            .step.left, .step.right { flex-direction: column; text-align: center; }
-            .step-num { margin: 15px auto; }
-            .trail-svg { display: none; }
+            .step { padding: 0 !important; justify-content: center; text-align: center; }
+            .step-node { display: none; }
+            .dashed-line { display: none; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="logo marker">KB</a>
+        <a href="#home" class="logo marker">KB Ogas</a>
         <div class="nav-links">
-            <a href="#produce">Produkcija</a>
+            <a href="#products">Produkcija</a>
+            <a href="#order">Pasūtīt</a>
             <a href="#picking">Pašlasīšana</a>
-            <a href="#delivery">Piegāde</a>
-            <a href="#contact">Kontakti</a>
         </div>
-        <div style="font-size: 0.7rem; font-weight: 600; cursor: pointer;">LAT</div>
     </nav>
 
-    <main>
-        <section class="hero">
-            <div>
-                <h1 class="marker">Kalna Baložu Ogas</h1>
-                <p class="subtitle">Ģimenes saimniecība Aizkrauklē • Audzēts ar mīlestību</p>
+    <div class="scroll-container">
+        
+        <section id="home" style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=1200&q=80');">
+            <div class="content">
+                <h1 class="marker" style="font-size: 3.5rem;">Kalna Baložu Ogas</h1>
+                <p>Audzēts bez pesticīdiem. Tikko no lauka.</p>
             </div>
         </section>
 
-        <section id="produce">
-            <div class="produce-grid">
-                <div class="info-card" onclick="openModal('berryModal')">
-                    <h2 class="marker">Mūsu Ogas</h2>
-                    <p>Izcilākie Patriot un Bluecrop ražas rādītāji.</p>
-                    <span class="btn-outline">OGU INFO</span>
-                </div>
-                <div class="info-card" onclick="openModal('cropModal')">
-                    <h2 class="marker">Mūsu Stādi</h2>
-                    <p>9 dažādas šķirnes Jūsu personīgajam dārzam.</p>
-                    <span class="btn-outline">STĀDU KATALOGS</span>
+        <section id="products">
+            <div class="content">
+                <h2 class="marker" style="font-size: 2.5rem;">Mūsu Piedāvājums</h2>
+                <div class="grid-half">
+                    <div class="card" onclick="toggleModal('berryModal')">
+                        <h3 class="marker">Mūsu Ogas</h3>
+                        <p>Patriot & Bluecrop kvalitātes rādītāji</p>
+                        <small>Klikšķiniet, lai uzzinātu vairāk</small>
+                    </div>
+                    <div class="card" onclick="toggleModal('cropModal')">
+                        <h3 class="marker">Mūsu Stādi</h3>
+                        <p>9 šķirņu audzēšanas raksturojums</p>
+                        <small>Klikšķiniet, lai uzzinātu vairāk</small>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="picking">
-            <div class="trail-container">
-                <svg class="trail-svg" viewBox="0 0 100 400" preserveAspectRatio="none">
-                    <path d="M50,0 C80,100 20,200 50,300 C80,400 20,500 50,600" fill="none" stroke="white" stroke-width="1" stroke-dasharray="5,5" />
-                </svg>
+        <section id="order">
+            <div class="content">
+                <h2 class="marker" style="font-size: 2.5rem;">Piegāde</h2>
+                <p>Cena: 6.50€ / kg (Minimālais pasūtījums 5kg)</p>
+                <form>
+                    <input type="text" placeholder="Vārds, Uzvārds" required>
+                    <input type="tel" placeholder="Telefona numurs" required>
+                    <input type="text" placeholder="Piegādes adrese" required>
+                    <button type="submit" class="btn">NOSŪTĪT PIEPRASĪJUMU</button>
+                </form>
+            </div>
+        </section>
 
-                <div class="step left">
-                    <div class="step-content">
-                        <h3 class="marker">Atbrauciet</h3>
-                        <p>Gaidām ciemos Aizkraukles novadā.</p>
+        <section id="picking" style="background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?auto=format&fit=crop&w=1200&q=80');">
+            <div class="content">
+                <h2 class="marker" style="font-size: 3rem;">Pašlasīšana</h2>
+                <div class="zigzag-wrap">
+                    <div class="dashed-line"></div>
+                    
+                    <div class="step left">
+                        <div class="step-node marker">1</div>
+                        <div><h3 class="marker">Atbrauciet</h3><p>Aizkraukles novads</p></div>
                     </div>
-                    <div class="step-num marker">1</div>
+
+                    <div class="step right">
+                        <div class="step-node marker">2</div>
+                        <div><h3 class="marker">Svēršana</h3><p>Tukšo trauku svars</p></div>
+                    </div>
+
+                    <div class="step left">
+                        <div class="step-node marker">3</div>
+                        <div><h3 class="marker">Lasīšana</h3><p>Minimālais apjoms 3kg</p></div>
+                    </div>
+
+                    <div class="step right">
+                        <div class="step-node marker">4</div>
+                        <div><h3 class="marker">Apmaksa</h3><p>Skaidrā naudā vai ar karti</p></div>
+                    </div>
                 </div>
-
-                <div class="step right">
-                    <div class="step-content">
-                        <h3 class="marker">Svēršana</h3>
-                        <p>Sagatavojiet traukus ražas novākšanai.</p>
-                    </div>
-                    <div class="step-num marker">2</div>
-                </div>
-
-                <div class="step left">
-                    <div class="step-content">
-                        <h3 class="marker">Lasīšana</h3>
-                        <p>Izbaudiet mieru. Minimālā raža — 3kg.</p>
-                    </div>
-                    <div class="step-num marker">3</div>
-                </div>
-
-                <div class="step right">
-                    <div class="step-content">
-                        <h3 class="marker">Apmaksa</h3>
-                        <p>Norēķini skaidrā naudā vai ar karti.</p>
-                    </div>
-                    <div class="step-num marker">4</div>
+                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: center;">
+                    <a href="tel:+37129459247" class="btn" style="text-decoration:none;">ZVANĪT</a>
+                    <a href="#" class="btn" style="text-decoration:none; background:transparent; color:white; border:1px solid white;">WAZE</a>
                 </div>
             </div>
         </section>
-    </main>
+    </div>
 
     <div id="berryModal" class="modal">
-        <span class="modal-close" onclick="closeModal('berryModal')">&times;</span>
-        <h2 class="marker" style="font-size: 3rem; text-align: center; margin-bottom: 50px;">Ogu Salīdzinājums</h2>
-        <div class="variety-grid">
-            <div class="variety-item">
-                <h4 class="marker">Patriot</h4>
-                <p>Saldums: ★★★★★ | Izmērs: Ļoti liels | Sezona: Jūlijs</p>
-                <p style="color: var(--muted); font-size: 0.8rem;">Viena no saldākajām un aromātiskākajām šķirnēm mūsu dārzā.</p>
+        <span class="close" onclick="toggleModal('berryModal')">&times;</span>
+        <h2 class="marker" style="font-size: 2.5rem; text-align: center;">Ogu Kvalitāte</h2>
+        <div style="max-width: 600px; margin: 40px auto; display: grid; gap: 20px;">
+            <div style="border-bottom: 1px solid #333; padding-bottom: 20px;">
+                <h3 class="marker">Patriot</h3>
+                <p>Saldums: 95% | Tekstūra: Stingra | Vitamīni: A, C, K</p>
             </div>
-            <div class="variety-item">
-                <h4 class="marker">Bluecrop</h4>
-                <p>Saldums: ★★★★☆ | Izmērs: Liels | Sezona: Augusts</p>
-                <p style="color: var(--muted); font-size: 0.8rem;">Klasiska vērtība. Stingras ogas ar perfektu skābuma-salduma balansu.</p>
+            <div>
+                <h3 class="marker">Bluecrop</h3>
+                <p>Saldums: 85% | Tekstūra: Ļoti stingra | Vitamīni: Antocianīni</p>
             </div>
         </div>
     </div>
 
     <div id="cropModal" class="modal">
-        <span class="modal-close" onclick="closeModal('cropModal')">&times;</span>
-        <h2 class="marker" style="font-size: 3rem; text-align: center; margin-bottom: 50px;">Stādu Katalogs</h2>
-        <div class="variety-grid">
-            <div class="variety-item"><h4 class="marker">Duke</h4><p>Agrīna, ļoti ražīga. Izturība līdz -28°C.</p></div>
-            <div class="variety-item"><h4 class="marker">Hannah's Choice</h4><p>Īpaši salda deserta šķirne.</p></div>
-            <div class="variety-item"><h4 class="marker">Toro</h4><p>Milzīgas ogas, vidēji agrīna.</p></div>
-            <div class="variety-item"><h4 class="marker">Chandler</h4><p>Pasaulē lielākās ogas, ražo ilgi.</p></div>
-            <div class="variety-item"><h4 class="marker">Goldtraube</h4><p>Izturīga pret slimībām, izcila garša.</p></div>
-            <div class="variety-item"><h4 class="marker">Eliott</h4><p>Vēlā šķirne, ogas vācamas rudenī.</p></div>
-            <div class="variety-item"><h4 class="marker">Chanticleer</h4><p>Pati agrākā raža sezonas sākumam.</p></div>
+        <span class="close" onclick="toggleModal('cropModal')">&times;</span>
+        <h2 class="marker" style="font-size: 2.5rem; text-align: center;">Stādu Raksturojums</h2>
+        <div style="max-width: 800px; margin: 40px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+            <div><h4 class="marker">Duke</h4><p>Ziemcietība: -28°C<br>Raža: Jūlija sākums</p></div>
+            <div><h4 class="marker">Toro</h4><p>Ziemcietība: -30°C<br>Raža: Milzīgas ogas</p></div>
+            <div><h4 class="marker">Chandler</h4><p>Ziemcietība: -26°C<br>Raža: Ilgs periods</p></div>
+            <div><h4 class="marker">Eliott</h4><p>Ziemcietība: -25°C<br>Raža: Septembris</p></div>
+            <div><h4 class="marker">Chanticleer</h4><p>Ziemcietība: -28°C<br>Raža: Ļoti agrīna</p></div>
+            <div><h4 class="marker">Goldtraube</h4><p>Ziemcietība: -32°C<br>Raža: Vidēji vēlā</p></div>
         </div>
     </div>
 
     <script>
-        function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function toggleModal(id) {
+            document.getElementById(id).classList.toggle('active');
+        }
     </script>
 </body>
 </html>
