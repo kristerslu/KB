@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalna Baložu Ogas | Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Kalna Baložu Ogas | Premium Farm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #050508;
-            --accent-blue: #5d83ff;
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #0a0a0a;
+            --accent: #d4af37; /* Muted Gold */
+            --text: #ffffff;
+            --glass: rgba(0, 0, 0, 0.8);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             overflow: hidden;
-            -webkit-font-smoothing: antialiased;
         }
 
-        /* Scroll Snap Logic */
         .scroll-container {
             height: 100vh;
             overflow-y: scroll;
@@ -43,252 +39,214 @@
             position: relative;
             background-size: cover;
             background-position: center;
-            padding: 40px 20px;
         }
 
-        /* Soft vignette overlay */
+        /* Gradient overlay for readability */
         section::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(5,5,8,0.2) 0%, rgba(5,5,8,0.9) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.9) 100%);
             z-index: 1;
         }
 
-        .container {
+        .safe-content {
             position: relative;
             z-index: 2;
-            max-width: 900px;
-            width: 100%;
+            width: 90%;
+            max-width: 600px;
+            max-height: 85vh; /* Prevents text overflow */
+            overflow-y: auto;
+            background: var(--glass);
+            padding: 40px 30px;
+            border-top: 4px solid var(--accent);
             text-align: center;
-        }
-
-        /* Sophisticated Reveal Animation */
-        .reveal {
+            /* Animation */
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: scale(0.95);
+            transition: all 0.8s ease-out;
         }
-        section.active .reveal {
+
+        section.active .safe-content {
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1);
         }
-        section.active .delay-1 { transition-delay: 0.2s; }
-        section.active .delay-2 { transition-delay: 0.4s; }
 
-        /* Typography */
-        h1, h2 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            line-height: 1.1;
-        }
-        h1 { font-size: clamp(3rem, 10vw, 5rem); margin-bottom: 20px; letter-spacing: -2px; }
-        h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 20px; font-style: italic; color: var(--accent-blue); }
-        p { font-size: 1.1rem; line-height: 1.8; color: var(--text-muted); max-width: 650px; margin: 0 auto 25px; }
-
-        /* Elegant Language Switcher */
-        .nav-ui {
+        /* Navigation / Lang Switch */
+        .top-nav {
             position: fixed;
-            top: 40px;
-            right: 40px;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 1000;
             display: flex;
             gap: 20px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 25px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
+
         .lang-link {
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
             letter-spacing: 2px;
             cursor: pointer;
-            text-decoration: none;
-            color: var(--text-main);
             opacity: 0.4;
             transition: 0.3s;
-            border-bottom: 1px solid transparent;
         }
-        .lang-link.active { opacity: 1; border-color: var(--accent-blue); }
+        .lang-link.active { opacity: 1; color: var(--accent); }
 
-        /* Icon Buttons */
-        .icon-group {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
-        }
-        .map-btn {
-            width: 55px;
-            height: 55px;
-            background: var(--glass);
-            border: 1px solid var(--border);
+        /* Typography */
+        h1 { font-size: 2.2rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 20px; font-weight: 700; }
+        h2 { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; font-weight: 400; }
+        p { font-size: 1rem; line-height: 1.6; color: #eee; margin-bottom: 15px; font-weight: 300; }
+        b { font-weight: 700; color: #fff; }
+
+        /* Icons */
+        .icon-row { display: flex; justify-content: center; gap: 20px; margin-top: 25px; }
+        .icon-link {
+            width: 50px; height: 50px;
+            background: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.4s;
-            backdrop-filter: blur(5px);
+            transition: 0.3s;
         }
-        .map-btn:hover { background: var(--accent-blue); transform: translateY(-5px); border-color: transparent; }
-        .map-btn svg { width: 28px; height: 28px; fill: white; }
+        .icon-link:hover { transform: translateY(-5px); background: var(--accent); }
+        .icon-link svg { width: 26px; height: 26px; }
 
-        /* Modern Form */
-        form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 30px;
-        }
+        /* Forms */
+        form { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
         input {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 18px;
-            border-radius: 12px;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
+            border-radius: 4px;
             font-family: inherit;
-            transition: 0.3s;
         }
-        input:focus { outline: none; border-color: var(--accent-blue); background: rgba(255,255,255,0.08); }
-        .full { grid-column: span 2; }
-        .btn-send {
-            grid-column: span 2;
-            padding: 20px;
-            background: var(--accent-blue);
-            color: white;
+        .btn-gold {
+            background: var(--accent);
+            color: black;
             border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn-send:hover { filter: brightness(1.2); letter-spacing: 1px; }
-
-        /* Premium Timeline */
-        .step-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 40px;
-            text-align: left;
-            max-width: 500px;
-            margin-inline: auto;
-        }
-        .step-row {
-            display: flex;
-            align-items: center;
-            gap: 20px;
             padding: 15px;
-            border-radius: 15px;
-            background: var(--glass);
-            border: 1px solid var(--border);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 10px;
         }
-        .step-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent-blue); font-weight: bold; }
-        .step-text { font-size: 0.95rem; font-weight: 400; }
 
-        /* Images */
+        /* Step List */
+        .step-list { text-align: left; margin: 20px 0; }
+        .step-item { margin-bottom: 15px; padding-left: 20px; border-left: 1px solid var(--accent); }
+        .step-title { font-weight: 700; font-size: 0.9rem; text-transform: uppercase; display: block; }
+
+        /* Sections Backgrounds */
         #home { background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2000'); }
         #products { background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?q=80&w=2000'); }
         #market { background-image: url('https://images.unsplash.com/photo-1533900298318-6b8da08a523e?q=80&w=2000'); }
-        #delivery { background-image: url('https://images.unsplash.com/photo-1595111051515-5684666f866b?q=80&w=2000'); }
+        #delivery { background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?q=80&w=2000'); }
         #picking { background-image: url('https://images.unsplash.com/photo-1522850403397-b0c8f2f75451?q=80&w=2000'); }
 
         [lang="en"] { display: none; }
 
         @media (max-width: 600px) {
-            .nav-ui { top: 20px; right: 20px; }
-            form { grid-template-columns: 1fr; }
-            .full { grid-column: span 1; }
-            .btn-send { grid-column: span 1; }
-            section { overflow-y: auto; }
+            h1 { font-size: 1.6rem; }
+            .safe-content { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="nav-ui">
-        <div class="lang-link active" id="lv-btn" onclick="setLang('lv')">LATVIEŠU</div>
-        <div class="lang-link" id="en-btn" onclick="setLang('en')">ENGLISH</div>
+    <div class="top-nav">
+        <span class="lang-link active" id="lv-link" onclick="changeLang('lv')">LATVIEŠU</span>
+        <span class="lang-link" id="en-link" onclick="changeLang('en')">ENGLISH</span>
     </div>
 
     <main class="scroll-container">
         
         <section id="home">
-            <div class="container">
-                <h1 class="reveal">Kalna Baložu Ogas</h1>
-                <p class="lv reveal delay-1">Ģimenes saimniecība Aizkrauklē. Mēs audzējam vairāk nekā tikai ogas — mēs audzējam kvalitāti, svaigumu un dabas patiesumu katrā kumosā.</p>
-                <p lang="en" class="reveal delay-1">Family farm in Aizkraukle. We grow more than just berries — we grow quality, freshness, and the truth of nature in every bite.</p>
+            <div class="safe-content">
+                <h1>Kalna Baložu Ogas</h1>
+                <p class="lv">Ģimenes saimniecība Aizkrauklē. Augstākās kvalitātes mellenes un ogulāji, kas audzēti ar cieņu pret dabu.</p>
+                <p lang="en">Family farm in Aizkraukle. Premium blueberries and plants, grown with respect for nature.</p>
             </div>
         </section>
 
         <section id="products">
-            <div class="container">
-                <h2 class="reveal">Dabas Daudzveidība</h2>
-                <p class="lv reveal delay-1">Laukos audzējam 10+ melleņu šķirnes, tostarp iecienītās <b>Bluecrop</b> un <b>Patriot</b>. Piedāvājam arī 10+ melleņu un 10+ krūmcūzeņu stādus Jūsu dārzam.</p>
-                <p lang="en" class="reveal delay-1">We cultivate 10+ blueberry varieties, including the favorites <b>Bluecrop</b> and <b>Patriot</b>. We also offer 10+ varieties of blueberry and honeyberry plants for your garden.</p>
+            <div class="safe-content">
+                <h2>Ogas un Stādi</h2>
+                <p class="lv">Audzējam 10+ melleņu šķirnes (<b>Bluecrop, Patriot</b> u.c.). <br><br>Piedāvājumā 10+ melleņu un 10+ <b>krūmcūzeņu (sausseržu)</b> stādi Jūsu dārzam.</p>
+                <p lang="en">We grow 10+ blueberry varieties (<b>Bluecrop, Patriot</b> etc.). <br><br>We also offer 10+ blueberry and 10+ <b>honeyberry (sausserdis)</b> plants for your garden.</p>
             </div>
         </section>
 
         <section id="market">
-            <div class="container">
-                <h2 class="reveal">Satieciet mūs Rīgā</h2>
-                <p class="lv reveal delay-1">Zemnieku Nakts Tirgus — Spīķeru iela 2.<br>Katru dienu no plkst. 16:00 līdz pēdējai ogai.</p>
-                <p lang="en" class="reveal delay-1">Farmers' Night Market — Spīķeru iela 2.<br>Every day from 16:00 until sold out.</p>
-                <div class="icon-group reveal delay-2">
-                    <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas,+Aizkraukle" target="_blank" class="map-btn">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <div class="safe-content">
+                <h2>Nakts Tirgus Rīgā</h2>
+                <p class="lv">Zemnieku Nakts Tirgus<br><b>Spīķeru iela 2, Rīga</b><br>Katru dienu no 16:00.</p>
+                <p lang="en">Farmers' Night Market<br><b>Spīķeru iela 2, Riga</b><br>Every day from 16:00.</p>
+                <div class="icon-row">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Spīķeru+iela+2+Rīga" target="_blank" class="icon-link">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#000"/></svg>
                     </a>
                 </div>
             </div>
         </section>
 
         <section id="delivery">
-            <div class="container">
-                <h2 class="reveal">Tiešā Piegāde</h2>
-                <p class="lv reveal delay-1">Svaigas mellenes Jūsu mājās vai birojā. Piegādājam ar refrižeratoru.<br><b>6.50€/kg</b> (minimālais pasūtījums 5kg).</p>
-                <p lang="en" class="reveal delay-1">Fresh blueberries at your home or office. Delivered via refrigerated van.<br><b>6.50€/kg</b> (minimum order 5kg).</p>
-                
-                <form class="reveal delay-2">
+            <div class="safe-content">
+                <h2>Piegāde mājās</h2>
+                <p class="lv">Svaigas mellenes ar piegādi Jūsu durvīm.<br><b>6.50€ / kg</b> (Min. 5kg).</p>
+                <p lang="en">Fresh blueberries delivered to your door.<br><b>6.50€ / kg</b> (Min. 5kg).</p>
+                <form>
                     <input type="text" placeholder="Vārds / Name" required>
                     <input type="tel" placeholder="Telefons / Phone" required>
-                    <input type="text" class="full" placeholder="Adrese / Address" required>
-                    <input type="number" class="full" placeholder="Daudzums (kg)" min="5" required>
-                    <button type="button" class="btn-send" onclick="alert('Paldies!')">PASŪTĪT / ORDER</button>
+                    <input type="text" placeholder="Adrese / Address" required>
+                    <button type="button" class="btn-gold" onclick="alert('Paldies!')">Pasūtīt / Order</button>
                 </form>
             </div>
         </section>
 
         <section id="picking">
-            <div class="container">
-                <h2 class="reveal">Pašlasīšanas Piedzīvojums</h2>
-                <p class="lv reveal delay-1">Izbaudiet vasaru laukos. Pašlasīšanas cena: <b>4.50€/kg</b> (min. 3kg).</p>
-                <p lang="en" class="reveal delay-1">Enjoy summer in the countryside. Self-picking price: <b>4.50€/kg</b> (min. 3kg).</p>
+            <div class="safe-content">
+                <h2>Pašlasīšana</h2>
+                <p class="lv"><b>4.50€ / kg</b> (Min. 3kg)</p>
+                <p lang="en"><b>4.50€ / kg</b> (Min. 3kg)</p>
                 
-                <div class="step-container reveal delay-2">
-                    <div class="step-row"><span class="step-num">01</span><span class="step-text lv">Atbrauciet uz saimniecību Aizkrauklē</span><span class="step-text" lang="en">Visit the farm in Aizkraukle</span></div>
-                    <div class="step-row"><span class="step-num">02</span><span class="step-text lv">Nosveriet līdzi paņemtos traukus</span><span class="step-text" lang="en">Weigh your own containers</span></div>
-                    <div class="step-row"><span class="step-num">03</span><span class="step-text lv">Lasiet ogas (minimums 3kg)</span><span class="step-text" lang="en">Pick your berries (minimum 3kg)</span></div>
-                    <div class="step-row"><span class="step-num">04</span><span class="step-text lv">Veiciet gala svēršanu un apmaksu</span><span class="step-text" lang="en">Final weighing and payment</span></div>
+                <div class="step-list">
+                    <div class="step-item">
+                        <span class="step-title lv">1. Brauciet uz Aizkraukli</span>
+                        <span class="step-title" lang="en">1. Drive to Aizkraukle</span>
+                        <div class="icon-row" style="justify-content: flex-start; margin-top: 10px;">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas+Aizkraukle" target="_blank" class="icon-link" style="width:35px; height:35px;">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#000"/></svg>
+                            </a>
+                            <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="icon-link" style="width:35px; height:35px;">
+                                <svg viewBox="0 0 30 30"><path d="M25.2,12.7c-0.8-4.5-4.4-8-8.9-8.7c-0.5-0.1-1.1-0.1-1.6-0.1c-1,0-2,0.1-3,0.4c-4.4,1.2-7.7,5-8.2,9.6 c-0.1,0.6-0.1,1.1-0.1,1.7c0,3.3,1.3,6.3,3.5,8.6c0.1,0.1,0.2,0.2,0.3,0.3c0.1,0.1,0.1,0.2,0.1,0.3v2c0,0.6,0.5,1.1,1.1,1.1h1.7 c0.6,0,1.1-0.5,1.1-1.1v-1.1c0-0.3,0.1-0.6,0.3-0.8c2.1,0.8,4.4,0.8,6.5,0c0.2,0.1,0.3,0.4,0.3,0.8v1.1c0,0.6,0.5,1.1,1.1,1.1h1.7 c0.6,0,1.1-0.5,1.1-1.1v-2c0-0.1,0-0.2,0.1-0.3c0.1-0.1,0.2-0.2,0.3-0.3c2.2-2.3,3.5-5.3,3.5-8.6C25.3,13.9,25.3,13.3,25.2,12.7z M10.4,17.9c-0.8,0-1.5-0.7-1.5-1.5s0.7-1.5,1.5-1.5s1.5,0.7,1.5,1.5S11.3,17.9,10.4,17.9z M19.6,17.9c-0.8,0-1.5-0.7-1.5-1.5 s0.7-1.5,1.5-1.5s1.5,0.7,1.5,1.5S20.5,17.9,19.6,17.9z" fill="#000"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="step-item"><span class="step-title lv">2. Svēršana</span><span class="step-title" lang="en">2. Weighing</span></div>
+                    <div class="step-item"><span class="step-title lv">3. Lasīšana (min. 3kg)</span><span class="step-title" lang="en">3. Picking (min. 3kg)</span></div>
+                    <div class="step-item"><span class="step-title lv">4. Apmaksa (Karte/Nauda)</span><span class="step-title" lang="en">4. Payment (Card/Cash)</span></div>
                 </div>
-
-                <div class="icon-group reveal delay-2">
-                    <a href="https://www.google.com/maps/search/?api=1&query=Spīķeru+iela+2,+Latgales+priekšpilsēta,+Rīga,+LV-1050" target="_blank" class="map-btn">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    </a>
-                    <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="map-btn" style="background: #33ccff;">
-                        <svg viewBox="0 0 512 512"><path d="M362.4 133.3C318.4 89.3 259.6 65 197.6 65c-62.1 0-120.8 24.3-164.8 68.3C13.4 177.3 1 236 1 298.1c0 57.5 20.8 111.4 58.5 153.2 2.2 2.4 5.3 3.8 8.6 3.8h21.1c5.2 0 9.7-3.5 10.9-8.5l8.1-33.8c1-4.2 4.1-7.5 8.3-8.8 38.6-11.8 72.3-33.6 96.9-62.4h223.1c5.9 0 10.7-4.8 10.7-10.7V197.6c-.1-23.7-9.4-46-26.2-62.8l-18.7-1.5zM154.9 287.4c-11.8 0-21.4-9.6-21.4-21.4s9.6-21.4 21.4-21.4 21.4 9.6 21.4 21.4-9.6 21.4-21.4 21.4zm107.1 0c-11.8 0-21.4-9.6-21.4-21.4s9.6-21.4 21.4-21.4 21.4 9.6 21.4 21.4-9.6 21.4-21.4 21.4z"/></svg>
-                    </a>
-                </div>
-                <p style="font-size: 0.7rem; margin-top: 15px; letter-spacing: 2px;">WORLDLINE CARD ACCEPTED 💳</p>
+                <p style="font-size: 0.6rem; letter-spacing: 2px;">WORLDLINE 💳</p>
             </div>
         </section>
 
     </main>
 
     <script>
-        // Language Toggle Logic
-        function setLang(lang) {
+        function changeLang(lang) {
             const lvEls = document.querySelectorAll('.lv');
             const enEls = document.querySelectorAll('[lang="en"]');
-            const lvBtn = document.getElementById('lv-btn');
-            const enBtn = document.getElementById('en-btn');
+            const lvBtn = document.getElementById('lv-link');
+            const enBtn = document.getElementById('en-link');
 
             if (lang === 'en') {
                 lvEls.forEach(el => el.style.display = 'none');
@@ -303,7 +261,6 @@
             }
         }
 
-        // Section Observer for Animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
@@ -311,7 +268,7 @@
             });
         }, { threshold: 0.5 });
 
-        document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
     </script>
 </body>
 </html>
