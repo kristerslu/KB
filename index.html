@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kalna Baložu Ogas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #000000;
             --text: #ffffff;
             --silver: #a0a0a0;
-            --accent: #ffffff;
             --border: rgba(255, 255, 255, 0.2);
         }
 
@@ -24,8 +23,12 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Handwritten Sticker Font */
-        h1, .sticker-font { font-family: 'Permanent Marker', cursive; font-weight: 400; }
+        /* Hand-drawn style for titles only */
+        h1, h2, h3, .sticker-font { 
+            font-family: 'Neucha', cursive; 
+            font-weight: 400; 
+            text-transform: uppercase;
+        }
 
         .scroll-container {
             height: 100dvh;
@@ -41,6 +44,8 @@
             scroll-snap-stop: always;
             display: flex;
             position: relative;
+            background-size: cover;
+            background-position: center;
             overflow: hidden;
         }
 
@@ -48,7 +53,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.65);
             z-index: 1;
         }
 
@@ -57,7 +62,7 @@
             z-index: 2;
             width: 100%;
             margin: auto;
-            padding: 40px 20px; 
+            padding: 60px 20px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -65,32 +70,36 @@
             text-align: center;
         }
 
-        .nav-ui {
-            position: fixed;
-            top: 20px; 
-            right: 20px;
-            z-index: 1000;
-        }
+        /* Language Toggle */
+        .nav-ui { position: fixed; top: 20px; right: 20px; z-index: 1000; }
         .lang-toggle {
-            cursor: pointer;
-            letter-spacing: 2px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 2px; /* Square edges like the sticker border */
-            background: rgba(0,0,0,0.8);
-            color: white;
+            cursor: pointer; letter-spacing: 2px; font-size: 0.75rem; font-weight: 600;
+            border: 1px solid var(--border); padding: 8px 18px; border-radius: 4px;
+            background: rgba(0,0,0,0.8); color: white;
         }
 
-        /* Page 2: Split Galleries */
+        /* Variety Info Modal */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 2000; display: none; padding: 40px 20px; overflow-y: auto;
+        }
+        .modal.active { display: flex; flex-direction: column; align-items: center; }
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 2.5rem; cursor: pointer; line-height: 1; }
+
+        .stats-container { width: 100%; max-width: 600px; margin-top: 30px; }
+        .variety-block { margin-bottom: 40px; text-align: left; }
+        .stat-row { margin-bottom: 12px; }
+        .stat-label { font-size: 0.7rem; color: var(--silver); margin-bottom: 4px; text-transform: uppercase; }
+        .bar-bg { background: #222; height: 8px; width: 100%; }
+        .bar-fill { height: 100%; background: #fff; transition: width 1s ease; }
+
+        /* Split Page 2 */
         .split-container { display: flex; width: 100%; height: 100dvh; z-index: 2; }
         .split-box {
             flex: 1; position: relative; display: flex; flex-direction: column;
             justify-content: center; align-items: center; padding: 20px;
             border-right: 1px solid var(--border);
         }
-        .split-box:last-child { border-right: none; }
         .gallery { position: absolute; inset: 0; z-index: -1; }
         .slide {
             position: absolute; inset: 0; background-size: cover;
@@ -98,62 +107,44 @@
         }
         .slide.active { opacity: 0.55; }
 
-        h1 { font-size: clamp(1.8rem, 8vw, 3.5rem); letter-spacing: 2px; margin-bottom: 10px; }
-        h2 { font-size: 0.8rem; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; color: var(--silver); margin-bottom: 5px; }
-        p { font-size: 0.85rem; line-height: 1.5; color: #ddd; max-width: 280px; }
+        h1 { font-size: clamp(2rem, 10vw, 4rem); letter-spacing: 4px; margin-bottom: 10px; }
+        p { font-size: 0.9rem; line-height: 1.6; color: #ccc; max-width: 300px; }
 
-        /* Variety Info UI */
-        .info-trigger {
-            margin-top: 15px; background: rgba(255,255,255,0.1); border: 1px solid white;
-            padding: 8px 15px; color: white; cursor: pointer; font-size: 0.65rem;
-            letter-spacing: 1px; transition: 0.3s;
-        }
-        .info-trigger:hover { background: white; color: black; }
-
-        /* Modal / Overlay */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 2000; display: none; padding: 40px 20px; overflow-y: auto;
-        }
-        .modal.active { display: block; }
-        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; }
-
-        /* Variety Stats Graph */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 600px; margin: 20px auto; text-align: left; }
-        .stat-bar-wrap { margin-bottom: 15px; }
-        .stat-label { font-size: 0.6rem; text-transform: uppercase; margin-bottom: 5px; color: var(--silver); }
-        .bar-bg { background: #333; height: 6px; width: 100%; position: relative; }
-        .bar-fill { height: 100%; background: #fff; }
-
-        /* The Trail (Self Picking) */
-        .trail-container { 
-            width: 100%; max-width: 400px; margin-top: 30px; position: relative; 
-        }
-        .step-item { display: flex; align-items: center; margin-bottom: 40px; position: relative; z-index: 2; }
-        .step-circle { 
-            width: 35px; height: 35px; border: 1px dashed white; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; font-family: 'Permanent Marker';
-            background: black; margin-right: 15px; flex-shrink: 0;
-        }
-        .step-text { text-align: left; }
-        .step-text h3 { font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 2px; }
-        
-        /* The SVG Path from Sticker */
-        .trail-path {
-            position: absolute; top: 20px; left: 17px; width: 2px; height: calc(100% - 60px);
+        /* Zig-Zag Trail */
+        .trail-wrapper { position: relative; width: 100%; max-width: 500px; margin-top: 20px; }
+        .trail-svg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; pointer-events: none;
         }
+        .step-row { display: flex; width: 100%; margin-bottom: 30px; position: relative; z-index: 2; align-items: center; }
+        .step-row.left { justify-content: flex-start; text-align: right; padding-right: 50%; }
+        .step-row.right { justify-content: flex-end; text-align: left; padding-left: 50%; }
+        
+        .step-node {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            width: 32px; height: 32px; background: black; border: 1px dashed white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: 'Neucha'; font-size: 1.1rem;
+        }
 
+        /* Buttons & Forms */
         .btn {
-            margin-top: 15px; border: 1px solid white; padding: 10px 20px; color: white; 
-            text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; font-weight: 600;
+            margin-top: 20px; border: 1px solid white; padding: 12px 25px; color: white; 
+            text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; font-weight: 600;
             background: transparent; cursor: pointer;
+        }
+        form { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        input {
+            background: transparent; border: none; border-bottom: 1px solid var(--border);
+            padding: 12px 0; color: white; font-family: inherit; text-align: center; outline: none;
         }
 
         @media (max-width: 768px) {
             .split-container { flex-direction: column; }
             .split-box { height: 50dvh; border-right: none; border-bottom: 1px solid var(--border); }
-            .stats-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2.2rem; }
+            .step-row.left, .step-row.right { padding: 0 20px; text-align: center; justify-content: center; margin-bottom: 50px;}
+            .step-node { top: -35px; }
         }
         [lang="en"] { display: none; }
     </style>
@@ -166,39 +157,40 @@
 
     <div class="modal" id="varietyModal">
         <span class="close-modal" onclick="toggleModal()">&times;</span>
-        <h2 class="sticker-font" style="font-size: 2rem; color: white;">Mūsu Šķirnes</h2>
+        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Šķirņu Raksturojums</h2>
         
-        <div class="stats-grid">
-            <div>
-                <h3 class="sticker-font">PATRIOT</h3>
-                <p style="font-size: 0.7rem; margin-bottom: 15px;">Agrīna šķirne, izcila garša, lielas ogas.</p>
-                <div class="stat-bar-wrap">
-                    [span_0](start_span)<div class="stat-label">Saldums[span_0](end_span)</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 90%;"></div></div>
-                </div>
-                <div class="stat-bar-wrap">
-                    [span_1](start_span)<div class="stat-label">Ziemcietība (-35°C)[span_1](end_span)</div>
+        <div class="stats-container">
+            <div class="variety-block">
+                <h3 style="font-size: 1.8rem; color: #fff;">PATRIOT</h3>
+                <p style="font-size: 0.8rem; margin-bottom: 15px;">Agrīna, izcila garša, ļoti lielas ogas.</p>
+                <div class="stat-row">
+                    <div class="stat-label">Saldums</div>
                     <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
                 </div>
-                <div class="stat-bar-wrap">
-                    [span_2](start_span)<div class="stat-label">Vitamīnu saturs[span_2](end_span)</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 85%;"></div></div>
+                <div class="stat-row">
+                    <div class="stat-label">Ziemcietība (-35°C)</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 100%;"></div></div>
                 </div>
-            </div>
-            <div>
-                <h3 class="sticker-font">BLUECROP</h3>
-                <p style="font-size: 0.7rem; margin-bottom: 15px;">Pasaules standarts, augsta ražība, stingras ogas.</p>
-                <div class="stat-bar-wrap">
-                    [span_3](start_span)<div class="stat-label">Saldums[span_3](end_span)</div>
+                <div class="stat-row">
+                    <div class="stat-label">Ogu stingrība</div>
                     <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
                 </div>
-                <div class="stat-bar-wrap">
-                    [span_4](start_span)<div class="stat-label">Ziemcietība (-30°C)[span_4](end_span)</div>
+            </div>
+
+            <div class="variety-block">
+                <h3 style="font-size: 1.8rem; color: #fff;">BLUECROP</h3>
+                <p style="font-size: 0.8rem; margin-bottom: 15px;">Vidēji agrīna, augsta ražība, transportējama.</p>
+                <div class="stat-row">
+                    <div class="stat-label">Saldums</div>
                     <div class="bar-bg"><div class="bar-fill" style="width: 85%;"></div></div>
                 </div>
-                <div class="stat-bar-wrap">
-                    [span_5](start_span)<div class="stat-label">Vitamīnu saturs[span_5](end_span)</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: 88%;"></div></div>
+                <div class="stat-row">
+                    <div class="stat-label">Ziemcietība (-30°C)</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 90%;"></div></div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-label">Ogu stingrība</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
                 </div>
             </div>
         </div>
@@ -222,8 +214,8 @@
                         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&w=800&q=80');"></div>
                     </div>
                     <h2 class="lv">Mūsu Ogas</h2>
-                    <p class="lv">Patriot un Bluecrop šķirnes.</p>
-                    <button class="info-trigger" onclick="toggleModal()">ŠĶIRŅU INFO</button>
+                    <p class="lv">Saldākās Patriot un Bluecrop mellenes.</p>
+                    <button class="btn" onclick="toggleModal()" style="font-family:'Neucha'; font-size:1rem;">ŠĶIRŅU INFO</button>
                 </div>
                 <div class="split-box">
                     <div class="gallery" id="gal2">
@@ -231,8 +223,29 @@
                         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1592150621344-c90ef61131ab?auto=format&fit=crop&w=800&q=80');"></div>
                     </div>
                     <h2 class="lv">Mūsu Stādi</h2>
-                    <p class="lv">Sagatavoti Jūsu dārzam.</p>
+                    <p class="lv">Kvalitatīvi stādi Jūsu dārzam.</p>
                 </div>
+            </div>
+        </section>
+
+        <section style="background-image: url('https://images.unsplash.com/photo-1488459711615-de9b56a0804b?auto=format&fit=crop&w=1200&q=80');">
+            <div class="content-wrap">
+                <h1 class="lv">Nakts Tirgus</h1>
+                <p class="lv">Rīga, Spīķeru iela 2. Katru dienu no 16:00.</p>
+                <a href="https://goo.gl/maps/RigaSpikeri" target="_blank" class="btn">GOOGLE MAPS</a>
+            </div>
+        </section>
+
+        <section style="background-image: url('https://images.unsplash.com/photo-1566385101042-1a000c1267c4?auto=format&fit=crop&w=1200&q=80');">
+            <div class="content-wrap">
+                <h1 class="lv">Piegāde</h1>
+                <p class="lv">Cena: 6.50€ / kg (Min. 5kg)</p>
+                <form id="orderForm">
+                    <input type="text" id="nameInp" placeholder="Vārds" required>
+                    <input type="tel" id="phoneInp" placeholder="Telefons" required>
+                    <input type="text" id="addrInp" placeholder="Adrese" required>
+                    <button type="button" class="btn" style="background:white; color:black; border:none; font-family:'Neucha'; font-size:1.2rem;">PASŪTĪT</button>
+                </form>
             </div>
         </section>
 
@@ -240,27 +253,32 @@
             <div class="content-wrap">
                 <h1 class="lv">Pašlasīšana</h1>
                 
-                <div class="trail-container">
-                    <svg class="trail-path">
-                        <line x1="0" y1="0" x2="0" y2="100%" stroke="white" stroke-dasharray="5,5" stroke-width="2" />
+                <div class="trail-wrapper">
+                    <svg class="trail-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M50,5 Q50,25 20,25 T50,50 T80,75 T50,95" fill="none" stroke="white" stroke-width="0.5" stroke-dasharray="2,2" />
                     </svg>
 
-                    <div class="step-item">
-                        <div class="step-circle">1</div>
-                        <div class="step-text"><h3 class="lv">ATBRAUCIET</h3><p class="lv">Aizkraukles novads</p></div>
+                    <div class="step-row left">
+                        <div class="step-node">1</div>
+                        <div class="step-content"><h3>ATBRAUCIET</h3><p>Aizkraukles novads</p></div>
                     </div>
-                    <div class="step-item">
-                        <div class="step-circle">2</div>
-                        <div class="step-text"><h3 class="lv">SVĒRŠANA</h3><p class="lv">Sveram tukšos traukus</p></div>
+                    <div class="step-row right">
+                        <div class="step-node">2</div>
+                        <div class="step-content"><h3>SVĒRŠANA</h3><p>Tukšo trauku svēršana</p></div>
                     </div>
-                    <div class="step-item">
-                        <div class="step-circle">3</div>
-                        <div class="step-text"><h3 class="lv">LASĪŠANA</h3><p class="lv">Izbaudiet dabu (Min. 3kg)</p></div>
+                    <div class="step-row left">
+                        <div class="step-node">3</div>
+                        <div class="step-content"><h3>LASĪŠANA</h3><p>Izbaudiet dabu (Min. 3kg)</p></div>
                     </div>
-                    <div class="step-item">
-                        <div class="step-circle">4</div>
-                        <div class="step-text"><h3 class="lv">APMAKSA</h3><p class="lv">Skaidrā naudā vai ar karti</p></div>
+                    <div class="step-row right">
+                        <div class="step-node">4</div>
+                        <div class="step-content"><h3>APMAKSA</h3><p>Skaidrā naudā vai ar karti</p></div>
                     </div>
+                </div>
+
+                <div style="display:flex; gap:10px; margin-top:20px; z-index:5;">
+                    <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="btn">WAZE</a>
+                    <a href="tel:+37129459247" class="btn">ZVANĪT</a>
                 </div>
             </div>
         </section>
@@ -273,6 +291,10 @@
             btn.innerText = isLv ? 'ENGLISH' : 'LATVIEŠU';
             document.querySelectorAll('.lv').forEach(el => el.style.display = isLv ? 'none' : 'block');
             document.querySelectorAll('[lang="en"]').forEach(el => el.style.display = isLv ? 'block' : 'none');
+            
+            document.getElementById('nameInp').placeholder = isLv ? 'Name' : 'Vārds';
+            document.getElementById('phoneInp').placeholder = isLv ? 'Phone' : 'Telefons';
+            document.getElementById('addrInp').placeholder = isLv ? 'Address' : 'Adrese';
         }
 
         function toggleModal() {
