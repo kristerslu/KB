@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalna Baložu Ogas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400&display=swap" rel="stylesheet">
+    <title>Kalna Baložu Ogas | Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050505;
+            --bg: #000000;
             --text: #ffffff;
-            --faded: rgba(255, 255, 255, 0.6);
-            --line: rgba(255, 255, 255, 0.2);
+            --faded: rgba(255, 255, 255, 0.5);
+            --line: rgba(255, 255, 255, 0.15);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,21 +36,20 @@
             scroll-snap-align: start;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Vertical Center */
-            align-items: center;     /* Horizontal Center */
+            justify-content: center; 
+            align-items: center;     
             position: relative;
             background-size: cover;
             background-position: center;
             text-align: center;
-            padding: 0 20px;
+            padding: 0 10%;
         }
 
-        /* Cinematic Dark Overlay */
         section::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+            background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 100%);
             z-index: 1;
         }
 
@@ -58,13 +57,13 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            max-width: 700px;
+            max-width: 800px;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Ensures children are centered */
+            align-items: center;
             opacity: 0;
-            transform: translateY(15px);
-            transition: all 1s ease-out;
+            transform: translateY(20px);
+            transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
         section.active .content {
@@ -73,111 +72,150 @@
         }
 
         /* Navigation */
-        .nav {
+        .nav-ui {
             position: fixed;
             top: 40px;
             z-index: 1000;
             display: flex;
             gap: 30px;
-            font-size: 0.65rem;
-            letter-spacing: 4px;
-            font-weight: 300;
+            letter-spacing: 5px;
+            font-size: 0.6rem;
+            font-weight: 600;
         }
-        .lang { cursor: pointer; opacity: 0.4; transition: 0.3s; border-bottom: 1px solid transparent; }
-        .lang.active { opacity: 1; border-color: white; }
+        .lang { cursor: pointer; opacity: 0.3; transition: 0.3s; }
+        .lang.active { opacity: 1; border-bottom: 1px solid white; padding-bottom: 5px; }
 
         /* Typography */
-        h1 { font-size: clamp(2rem, 8vw, 4rem); font-weight: 100; text-transform: uppercase; letter-spacing: 15px; margin-bottom: 20px; }
-        h2 { font-size: 0.8rem; font-weight: 400; text-transform: uppercase; letter-spacing: 6px; color: var(--faded); margin-bottom: 30px; }
-        p { font-size: 1rem; line-height: 1.8; font-weight: 300; color: var(--faded); max-width: 550px; }
+        h1 { font-size: clamp(2rem, 8vw, 4rem); font-weight: 100; text-transform: uppercase; letter-spacing: 18px; margin-bottom: 25px; }
+        h2 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 8px; color: var(--faded); margin-bottom: 20px; }
+        p { font-size: 1.05rem; line-height: 1.8; font-weight: 300; color: var(--faded); max-width: 500px; }
         b { color: white; font-weight: 400; }
 
-        /* Icon Controls */
-        .btn-group { display: flex; gap: 25px; margin-top: 40px; justify-content: center; width: 100%; }
-        .circle-link {
-            width: 50px; height: 50px;
+        /* Interactive Trail UI */
+        .trail-container {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 50px;
+            position: relative;
+        }
+        .trail-line {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--line);
+            z-index: 1;
+        }
+        .trail-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+        .step-node {
+            width: 50px;
+            height: 50px;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.4s;
+            color: var(--faded);
+        }
+        .step-node.active {
+            border-color: white;
+            color: white;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        .trail-info {
+            margin-top: 40px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .trail-info h3 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 1rem; margin-bottom: 10px; }
+
+        /* Icons & Buttons */
+        .icon-group { display: flex; gap: 20px; margin-top: 20px; }
+        .icon-link {
+            width: 45px; height: 45px;
             border: 1px solid var(--line);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             transition: 0.4s;
-            text-decoration: none;
         }
-        .circle-link:hover { background: white; border-color: white; }
-        .circle-link svg { width: 20px; height: 20px; fill: white; transition: 0.4s; }
-        .circle-link:hover svg { fill: black; }
+        .icon-link:hover { border-color: white; background: white; }
+        .icon-link svg { width: 18px; height: 18px; fill: white; transition: 0.4s; }
+        .icon-link:hover svg { fill: black; }
 
-        /* Luxury Delivery Form - Centered */
-        form { width: 100%; max-width: 400px; margin-top: 30px; display: flex; flex-direction: column; gap: 10px; }
+        /* Centered Form */
+        form { width: 100%; max-width: 380px; margin-top: 30px; display: flex; flex-direction: column; gap: 5px; }
         input {
             background: transparent; border: none; border-bottom: 1px solid var(--line);
             padding: 15px 0; color: white; font-family: inherit; font-weight: 300;
-            text-align: center; transition: 0.3s; outline: none;
+            text-align: center; outline: none; transition: 0.3s;
         }
         input:focus { border-bottom-color: white; }
-        .order-btn {
-            margin-top: 20px; background: white; color: black; border: none;
-            padding: 18px; text-transform: uppercase; letter-spacing: 3px;
-            font-size: 0.7rem; font-weight: 600; cursor: pointer; transition: 0.3s;
+        .btn-submit {
+            margin-top: 25px; background: white; color: black; border: none;
+            padding: 18px; text-transform: uppercase; letter-spacing: 4px;
+            font-size: 0.65rem; font-weight: 600; cursor: pointer; transition: 0.3s;
         }
-        .order-btn:hover { background: #ccc; letter-spacing: 5px; }
+        .btn-submit:hover { background: #bbb; }
 
-        /* Elegant Picking List */
-        .picking-list { margin-top: 30px; width: 100%; }
-        .picking-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 0; border-bottom: 1px solid var(--line);
-            font-size: 0.85rem; letter-spacing: 1px; color: var(--faded);
-        }
-        .picking-row span:first-child { text-transform: uppercase; font-weight: 300; }
-        .picking-row span:last-child { color: white; }
-
-        /* Background Images (Fixed IDs) */
-        #home { background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2000'); }
-        #offer { background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?q=80&w=2000'); }
-        #market { background-image: url('https://images.unsplash.com/photo-1533900298318-6b8da08a523e?q=80&w=2000'); }
-        #delivery { background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?q=80&w=2000'); }
-        #picking { background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?q=80&w=2000'); } /* Real Blueberry Field */
+        /* Background Images */
+        #hero { background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2400'); }
+        #harvest { background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?q=80&w=2400'); }
+        #market { background-image: url('https://images.unsplash.com/photo-1533900298318-6b8da08a523e?q=80&w=2400'); }
+        #delivery { background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?q=80&w=2400'); }
+        #picking { background-image: url('https://images.unsplash.com/photo-1621259182978-f09e5e2ca1bd?q=80&w=2400'); }
 
         [lang="en"] { display: none; }
 
         @media (max-width: 600px) {
-            h1 { letter-spacing: 8px; }
-            .nav { top: 20px; }
+            h1 { letter-spacing: 10px; }
+            .trail-container { transform: scale(0.9); }
         }
     </style>
 </head>
 <body>
 
-    <div class="nav">
-        <div class="lang active" id="lv-btn" onclick="setLang('lv')">LATVIEŠU</div>
-        <div class="lang" id="en-btn" onclick="setLang('en')">ENGLISH</div>
+    <div class="nav-ui">
+        <div class="lang active" id="btn-lv" onclick="setLang('lv')">LATVIEŠU</div>
+        <div class="lang" id="btn-en" onclick="setLang('en')">ENGLISH</div>
     </div>
 
     <main class="scroll-container">
         
-        <section id="home">
+        <section id="hero">
             <div class="content">
                 <h1>Kalna Baložu Ogas</h1>
-                <p class="lv">Ģimenes saimniecība Aizkrauklē. Mēs radām garšu, kas iedvesmo, cienot dabu un tās dāvāto mieru.</p>
-                <p lang="en">Family farm in Aizkraukle. Creating a taste that inspires, respecting nature and its peace.</p>
+                <p class="lv">Ģimenes dārzs Aizkrauklē. Audzētas ar mīlestību, pasniegtas ar cieņu.</p>
+                <p lang="en">Family farm in Aizkraukle. Grown with love, served with respect.</p>
             </div>
         </section>
 
-        <section id="offer">
+        <section id="harvest">
             <div class="content">
                 <h2>Ogas un Stādi</h2>
-                <p class="lv">Audzējam 10+ melleņu šķirnes (Bluecrop, Patriot u.c.). <br>Piedāvājumā melleņu un <b>sausserža</b> stādi Jūsu dārzam.</p>
-                <p lang="en">10+ blueberry varieties (Bluecrop, Patriot etc.). <br>Blueberry and <b>sausserdis</b> plants available for your garden.</p>
+                <p class="lv">Vairāk nekā 10 melleņu šķirnes (Bluecrop, Patriot u.c.). <br>Pieejami melleņu un <b>sausserža</b> stādi Jūsu dārzam.</p>
+                <p lang="en">Over 10 blueberry varieties. <br>Blueberry and <b>sausserdis</b> plants available for your garden.</p>
             </div>
         </section>
 
         <section id="market">
             <div class="content">
                 <h2>Nakts Tirgus</h2>
-                <p class="lv">Spīķeru iela 2, Rīga. <br>Katru dienu no plkst. 16:00 līdz pēdējai ogai.</p>
-                <p lang="en">Spīķeru iela 2, Riga. <br>Every day from 16:00 until sold out.</p>
-                <div class="btn-group">
-                    <a href="https://www.google.com/maps/search/?api=1&query=Zemnieku+Nakts+Tirgus+Spīķeru+iela+2" target="_blank" class="circle-link">
+                <p class="lv">Rīga, Spīķeru iela 2.<br>Katru dienu no plkst. 16:00 līdz izpārdots.</p>
+                <p lang="en">Riga, Spīķeru iela 2.<br>Daily from 16:00 until sold out.</p>
+                <div class="icon-group">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Zemnieku+Nakts+Tirgus+Spīķeru+iela+2" target="_blank" class="icon-link">
                         <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                     </a>
                 </div>
@@ -187,13 +225,13 @@
         <section id="delivery">
             <div class="content">
                 <h2>Piegāde</h2>
-                <p class="lv">Mellenes ar piegādi Jūsu mājās vai birojā.<br><b>6.50€ / kg</b> (Min. 5kg)</p>
-                <p lang="en">Blueberry delivery to your home or office.<br><b>6.50€ / kg</b> (Min. 5kg)</p>
+                <p class="lv">Svaigas mellenes pie Jūsu durvīm.<br><b>6.50€ / kg</b> (Minimālais pasūtījums 5kg)</p>
+                <p lang="en">Fresh blueberries at your doorstep.<br><b>6.50€ / kg</b> (Minimum order 5kg)</p>
                 <form>
                     <input type="text" placeholder="Vārds / Name" required>
                     <input type="tel" placeholder="Telefons / Phone" required>
                     <input type="text" placeholder="Adrese / Address" required>
-                    <button type="button" class="order-btn" onclick="alert('Paldies!')">Pasūtīt</button>
+                    <button type="button" class="btn-submit" onclick="alert('Paldies!')">Pasūtīt</button>
                 </form>
             </div>
         </section>
@@ -201,23 +239,25 @@
         <section id="picking">
             <div class="content">
                 <h2>Pašlasīšana</h2>
-                <p class="lv">Aizkraukle. Piedzīvojums dārzā.<br><b>4.50€ / kg</b> (Min. 3kg)</p>
-                <p lang="en">Aizkraukle. Garden adventure.<br><b>4.50€ / kg</b> (Min. 3kg)</p>
+                <p class="lv">Piedzīvojums dārzā: <b>4.50€ / kg</b> (Minimālais daudzums 3kg)</p>
+                <p lang="en">Garden adventure: <b>4.50€ / kg</b> (Minimum 3kg)</p>
                 
-                <div class="picking-list">
-                    <div class="picking-row"><span class="lv">1. Brauciet pie mums</span><span lang="en">1. Visit the farm</span><span>Aizkraukle</span></div>
-                    <div class="picking-row"><span class="lv">2. Taras svēršana</span><span lang="en">2. Weigh buckets</span><span>Savas / Mūsu</span></div>
-                    <div class="picking-row"><span class="lv">3. Lasīšana</span><span lang="en">3. Picking</span><span>Min 3kg</span></div>
-                    <div class="picking-row"><span class="lv">4. Apmaksa</span><span lang="en">4. Payment</span><span>Karte / Skaidra</span></div>
-                </div>
-
-                <div class="btn-group">
-                    <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas+Aizkraukle" target="_blank" class="circle-link">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    </a>
-                    <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="circle-link">
-                        <svg viewBox="0 0 512 512"><path d="M433.3 268.9c-.1-1.3-.1-2.5-.2-3.8-3.4-60.8-53.7-109-115.4-109-24.8 0-48.1 8-67.2 21.6-11.8-8-25.9-12.7-41.2-12.7-39.7 0-71.9 32.2-71.9 71.9 0 5.1.5 10.1 1.6 14.9-38.3 18.5-64.8 57.7-64.8 103.1 0 53.6 36.8 98.6 86.4 111.4l-11.4 47.7c-1.1 4.8 1.9 9.6 6.7 10.7 4.8 1.1 9.6-1.9 10.7-6.7l13-54.6c15.2 3.1 30.9 4.7 46.9 4.7 93.6 0 169.5-75.9 169.5-169.5 0-10.1-.9-20-2.6-29.7zM207.9 338.3c-14 0-25.3-11.3-25.3-25.3s11.3-25.3 25.3-25.3 25.3 11.3 25.3 25.3-11.3 25.3-25.3 25.3zm105.4 0c-14 0-25.3-11.3-25.3-25.3s11.3-25.3 25.3-25.3 25.3 11.3 25.3 25.3-11.3 25.3-25.3 25.3z"/></svg>
-                    </a>
+                <div class="trail-container">
+                    <div class="trail-line"></div>
+                    <div class="trail-steps">
+                        <div class="step-node active" onclick="goStep(0)">01</div>
+                        <div class="step-node" onclick="goStep(1)">02</div>
+                        <div class="step-node" onclick="goStep(2)">03</div>
+                        <div class="step-node" onclick="goStep(3)">04</div>
+                    </div>
+                    <div class="trail-info" id="trail-box">
+                        <h3 id="trail-title" class="lv">Ceļš pie mums</h3>
+                        <p id="trail-desc" class="lv">Brauciet uz Aizkraukles novadu. Atrodiet mūs Waze vai Google Maps.</p>
+                        <div class="icon-group" id="trail-icons">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas+Aizkraukle" target="_blank" class="icon-link"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></a>
+                            <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="icon-link"><svg viewBox="0 0 512 512"><path d="M433.3 268.9c-.1-1.3-.1-2.5-.2-3.8-3.4-60.8-53.7-109-115.4-109-24.8 0-48.1 8-67.2 21.6-11.8-8-25.9-12.7-41.2-12.7-39.7 0-71.9 32.2-71.9 71.9 0 5.1.5 10.1 1.6 14.9-38.3 18.5-64.8 57.7-64.8 103.1 0 53.6 36.8 98.6 86.4 111.4l-11.4 47.7c-1.1 4.8 1.9 9.6 6.7 10.7 4.8 1.1 9.6-1.9 10.7-6.7l13-54.6c15.2 3.1 30.9 4.7 46.9 4.7 93.6 0 169.5-75.9 169.5-169.5 0-10.1-.9-20-2.6-29.7z"/></svg></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -225,32 +265,42 @@
     </main>
 
     <script>
-        function setLang(lang) {
-            const lvEls = document.querySelectorAll('.lv');
-            const enEls = document.querySelectorAll('[lang="en"]');
-            const btnLv = document.getElementById('lv-btn');
-            const btnEn = document.getElementById('en-btn');
+        const steps = [
+            { t_lv: "Ceļš pie mums", d_lv: "Brauciet uz Aizkraukles novadu. Atrodiet mūs Waze vai Google Maps.", t_en: "Find Us", d_en: "Drive to Aizkraukle region. Locate us easily via Waze or Google Maps.", icons: true },
+            { t_lv: "Sagatavošanās", d_lv: "Lūdzam ņemt līdzi savus traukus. Pirms lasīšanas mēs tos nosvērsim.", t_en: "Preparation", d_en: "Please bring your own containers. We will weigh them before you start.", icons: false },
+            { t_lv: "Ogu lasīšana", d_lv: "Izbaudiet mieru melleņu un sausserža dārzā. Minimālais daudzums: 3kg.", t_en: "Picking", d_en: "Enjoy the peace of our blueberry and sausserdis gardens. Minimum: 3kg.", icons: false },
+            { t_lv: "Apmaksa", d_lv: "Sveram ražu! Pieņemam skaidru naudu vai bankas kartes (Worldline).", t_en: "Payment", d_en: "Time to weigh the harvest. We accept cash or credit cards.", icons: false }
+        ];
 
-            if (lang === 'en') {
-                lvEls.forEach(el => el.style.display = 'none');
-                enEls.forEach(el => el.style.display = 'block');
-                btnEn.classList.add('active');
-                btnLv.classList.remove('active');
-            } else {
-                lvEls.forEach(el => el.style.display = 'block');
-                enEls.forEach(el => el.style.display = 'none');
-                btnLv.classList.add('active');
-                btnEn.classList.remove('active');
-            }
+        let currentLang = 'lv';
+
+        function goStep(i) {
+            const nodes = document.querySelectorAll('.step-node');
+            nodes.forEach((n, idx) => n.classList.toggle('active', idx === i));
+            
+            const title = document.getElementById('trail-title');
+            const desc = document.getElementById('trail-desc');
+            const icons = document.getElementById('trail-icons');
+
+            title.innerText = currentLang === 'lv' ? steps[i].t_lv : steps[i].t_en;
+            desc.innerText = currentLang === 'lv' ? steps[i].d_lv : steps[i].d_en;
+            icons.style.display = steps[i].icons ? 'flex' : 'none';
+        }
+
+        function setLang(l) {
+            currentLang = l;
+            document.querySelectorAll('.lv').forEach(e => e.style.display = l === 'lv' ? 'block' : 'none');
+            document.querySelectorAll('[lang="en"]').forEach(e => e.style.display = l === 'en' ? 'block' : 'none');
+            document.getElementById('btn-lv').classList.toggle('active', l === 'lv');
+            document.getElementById('btn-en').classList.toggle('active', l === 'en');
+            // Refresh current trail step text
+            const activeIdx = Array.from(document.querySelectorAll('.step-node')).findIndex(n => n.classList.contains('active'));
+            goStep(activeIdx !== -1 ? activeIdx : 0);
         }
 
         const obs = new IntersectionObserver((es) => {
-            es.forEach(e => {
-                if (e.isIntersecting) e.target.classList.add('active');
-                else e.target.classList.remove('active');
-            });
+            es.forEach(e => e.target.classList.toggle('active', e.isIntersecting));
         }, { threshold: 0.5 });
-
         document.querySelectorAll('section').forEach(s => obs.observe(s));
     </script>
 </body>
