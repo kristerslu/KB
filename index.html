@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalna Baložu Ogas | Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #000000;
@@ -23,7 +23,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Scroll Snap Logic */
         .scroll-container {
             height: 100vh;
             overflow-y: scroll;
@@ -36,22 +35,17 @@
             width: 100%;
             scroll-snap-align: start;
             display: flex;
-            flex-direction: column;
-            justify-content: center; /* Vertical Center */
-            align-items: center;     /* Horizontal Center */
             position: relative;
             background-size: cover;
             background-position: center;
-            text-align: center;
-            padding: 0 5%; /* Generous horizontal padding */
+            overflow: hidden;
         }
 
-        /* Dark Vignette Overlay */
         section::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+            background: rgba(0,0,0,0.6);
             z-index: 1;
         }
 
@@ -59,264 +53,204 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            max-width: 800px;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Ensures content is centered */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
             opacity: 0;
             transform: translateY(20px);
             transition: all 1s ease-out;
         }
 
-        section.active .content-wrap {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        section.active .content-wrap { opacity: 1; transform: translateY(0); }
 
-        /* Minimalist Navigation */
+        /* Unified Language Toggle */
         .nav-ui {
             position: fixed;
             top: 40px;
+            right: 40px;
             z-index: 1000;
-            display: flex;
-            gap: 30px;
+        }
+        .lang-toggle {
+            cursor: pointer;
             letter-spacing: 5px;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 600;
-        }
-        .lang { cursor: pointer; opacity: 0.3; transition: 0.3s; }
-        .lang.active { opacity: 1; border-bottom: 1px solid white; padding-bottom: 5px; }
-
-        /* Typography */
-        h1 { font-size: clamp(2.2rem, 9vw, 4.5rem); font-weight: 200; text-transform: uppercase; letter-spacing: 15px; margin-bottom: 25px; }
-        h2 { font-size: 0.8rem; font-weight: 400; text-transform: uppercase; letter-spacing: 7px; color: var(--silver); margin-bottom: 30px; }
-        p { font-size: 1.1rem; line-height: 1.8; font-weight: 300; color: var(--silver); max-width: 600px; margin: 0 auto 30px; }
-        b { color: white; font-weight: 400; }
-
-        /* Action Buttons & Icons */
-        .icon-group { display: flex; gap: 30px; justify-content: center; margin-top: 30px; align-items: center; }
-        .icon-link {
-            width: 50px; height: 50px;
             border: 1px solid var(--border);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.4s;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: 0.3s;
         }
-        .icon-link:hover { border-color: white; background: white; }
-        .icon-link svg { width: 20px; height: 20px; fill: white; transition: 0.4s; }
-        .icon-link:hover svg { fill: black; }
+        .lang-toggle:hover { border-color: white; }
 
-        /* Elegant Delivery Form - Centered */
-        form { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 10px; margin-top: 30px; }
-        input {
-            background: transparent; border: none; border-bottom: 1px solid var(--border);
-            padding: 15px 0; color: white; font-family: inherit; font-weight: 300;
-            text-align: center; outline: none; transition: 0.3s;
-        }
-        input:focus { border-bottom-color: white; }
-        .btn-order {
-            margin-top: 25px; background: white; color: black; border: none;
-            padding: 18px; text-transform: uppercase; letter-spacing: 3px;
-            font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: 0.3s;
-        }
-        .btn-order:hover { background: #bbb; letter-spacing: 5px; }
-
-        /* Vertical Alternating Trail UI */
-        .trail-container {
+        /* Split Page Layout (Page 2) */
+        .split-container {
+            display: flex;
             width: 100%;
-            margin-top: 60px;
+            height: 100%;
+            z-index: 2;
+        }
+        .split-box {
+            flex: 1;
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-        }
-
-        .trail-grid {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            justify-content: center;
             align-items: center;
-            position: relative;
+            padding: 40px;
+            overflow: hidden;
         }
-
-        /* Central Trail Line */
-        .trail-grid::before {
-            content: "";
+        .split-box:first-child { border-right: 1px solid var(--border); }
+        
+        .gallery {
             position: absolute;
-            top: 0; bottom: 0; left: 50%;
-            width: 1px;
-            background: var(--border);
-            z-index: 1;
-            transform: translateX(-50%);
+            inset: 0;
+            z-index: -1;
+        }
+        .slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .slide.active { opacity: 0.4; }
+
+        /* Typography */
+        h1 { font-size: clamp(2rem, 8vw, 4rem); font-weight: 100; text-transform: uppercase; letter-spacing: 15px; margin-bottom: 20px; }
+        h2 { font-size: 0.8rem; font-weight: 400; text-transform: uppercase; letter-spacing: 6px; color: var(--silver); margin-bottom: 20px; }
+        p { font-size: 0.95rem; line-height: 1.8; color: var(--silver); max-width: 400px; }
+
+        /* Form */
+        form { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 10px; margin-top: 30px; }
+        input {
+            background: transparent; border: none; border-bottom: 1px solid var(--border);
+            padding: 12px 0; color: white; font-family: inherit; text-align: center; outline: none;
         }
 
-        .step-node {
-            grid-column: 2;
-            width: 45px; height: 45px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.75rem; font-weight: 600; color: white;
-            position: relative; z-index: 2;
+        /* Trail (Page 5) Fit Adjustment */
+        .trail-container {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 5px;
         }
-
-        .step-content {
-            grid-column: span 1;
-            padding: 0 30px;
-        }
-
-        .step-title {
-            font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 4px; color: #fff; margin-bottom: 8px;
-        }
-
-        .step-desc {
-            font-size: 0.85rem; font-weight: 300; line-height: 1.6; color: var(--silver);
-            margin: 0;
-        }
-
-        /* Set directions manually using grid positions and text alignment */
+        .trail-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; position: relative; min-height: 80px; }
+        .trail-grid::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--border); z-index: 1; transform: translateX(-50%); }
+        .step-node { grid-column: 2; width: 35px; height: 35px; background: black; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; z-index: 2; position: relative; }
+        .step-content { grid-column: span 1; padding: 0 15px; }
         .trail-grid.left .step-content { grid-column: 1; text-align: right; }
         .trail-grid.right .step-content { grid-column: 3; text-align: left; }
+        
+        .icon-link { width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-top: 10px; transition: 0.3s; }
+        .icon-link:hover { background: white; }
+        .icon-link svg { width: 18px; height: 18px; fill: white; }
+        .icon-link:hover svg { fill: black; }
 
-        /* Embedded Map Icons for Step 1 */
-        .step-content .icon-group { justify-content: flex-end; }
-        .trail-grid.right .step-content .icon-group { justify-content: flex-start; }
-
-        /* Background Images (Fixed IDs to guarantee farm content) */
-        #hero { background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2400'); }
-        #harvest { background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?q=80&w=2400'); } /* Clean blueberry Rows */
-        #market { background-image: url('https://images.unsplash.com/photo-1533900298318-6b8da08a523e?q=80&w=2400'); }
-        #delivery { background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?q=80&w=2400'); }
-        #picking { background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?q=80&w=2400'); } /* Atmospheric Farm Vibe */
+        @media (max-width: 768px) {
+            .split-container { flex-direction: column; }
+            .split-box:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+            .trail-container { max-height: 50vh; }
+        }
 
         [lang="en"] { display: none; }
-
-        @media (max-width: 600px) {
-            h1 { letter-spacing: 10px; }
-            .trail-grid { grid-template-columns: 1fr 30px 1fr; }
-            .step-node { width: 30px; height: 30px; font-size: 0.6rem; }
-            .step-content { padding: 0 10px; }
-            .trail-grid.left .step-content { padding-right: 15px; }
-            .trail-grid.right .step-content { padding-left: 15px; }
-        }
     </style>
 </head>
 <body>
 
     <div class="nav-ui">
-        <div class="lang active" id="lv-btn" onclick="setLang('lv')">LATVIEŠU</div>
-        <div class="lang" id="en-btn" onclick="setLang('en')">ENGLISH</div>
+        <div class="lang-toggle" id="langToggle" onclick="toggleLang()">LATVIEŠU</div>
     </div>
 
-    <main class="scroll-container">
+    <main class="scroll-container" id="mainScroll">
         
-        <section id="hero">
+        <section id="cover" style="background-image: url('https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=2400');">
             <div class="content-wrap">
                 <h1>Kalna Baložu Ogas</h1>
-                <p class="lv">Ģimenes dārzs Aizkrauklē. Mēs audzējam kvalitāti, svaigumu un dabas patiesumu.</p>
-                <p lang="en">Family farm in Aizkraukle. Growing quality, freshness, and the truth of nature.</p>
+                <p class="lv">Ģimenes dārzs Aizkrauklē. Audzētas ar mīlestību, pasniegtas ar cieņu.</p>
+                <p lang="en">Family farm in Aizkraukle. Grown with love, served with respect.</p>
             </div>
         </section>
 
-        <section id="harvest">
-            <div class="content-wrap">
-                <h2>Mūsu Raža</h2>
-                <p class="lv">Vairāk nekā 10 melleņu šķirnes (Bluecrop, Patriot u.c.). <br>Piedāvājumā melleņu un <b>sausserža</b> stādi Jūsu dārzam.</p>
-                <p lang="en">Over 10 blueberry varieties. <br>Blueberry and <b>sausserdis</b> plants available for your garden.</p>
-            </div>
-        </section>
-
-        <section id="market">
-            <div class="content-wrap">
-                <h2>Nakts Tirgus</h2>
-                <p class="lv">Rīga, Spīķeru iela 2.<br>Katru dienu no plkst. 16:00 līdz izpārdots.</p>
-                <p lang="en">Riga, Spīķeru iela 2.<br>Daily from 16:00 until sold out.</p>
-                <div class="icon-group">
-                    <a href="https://www.google.com/maps/search/?api=1&query=Zemnieku+Nakts+Tirgus+Spīķeru+iela+2" target="_blank" class="icon-link">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    </a>
+        <section id="produce">
+            <div class="split-container">
+                <div class="split-box">
+                    <div class="gallery" id="gal1">
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?w=800');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1464306208223-e0b4495a5553?w=800');"></div>
+                    </div>
+                    <h2 class="lv">Mūsu Šķirnes</h2><h2 lang="en">Our Varieties</h2>
+                    <p class="lv">Piedāvājam 10+ melleņu šķirnes (Bluecrop, Patriot u.c.), kas pielāgotas Latvijas klimatam.</p>
+                    <p lang="en">We offer 10+ blueberry varieties (Bluecrop, Patriot etc.) adapted to the local climate.</p>
+                </div>
+                <div class="split-box">
+                    <div class="gallery" id="gal2">
+                        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1522850403397-b0c8f2f75451?w=800');"></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1621259182978-f09e5e2ca1bd?w=800');"></div>
+                    </div>
+                    <h2 class="lv">Stādi</h2><h2 lang="en">Plants</h2>
+                    <p class="lv">10+ melleņu un 10+ <b>sausserža</b> šķirņu stādi Jūsu piemājas dārzam.</p>
+                    <p lang="en">10+ blueberry and 10+ <b>sausserdis</b> varieties for your home garden.</p>
                 </div>
             </div>
         </section>
 
-        <section id="delivery">
+        <section id="market" style="background-image: url('https://images.unsplash.com/photo-1533900298318-6b8da08a523e?q=80&w=2400');">
             <div class="content-wrap">
-                <h2>Tiešā Piegāde</h2>
-                <p class="lv">Mellenes ar piegādi uz Jūsu mājām vai biroju.<br><b>6.50€ / kg</b> (Minimālais pasūtījums 5kg).</p>
-                <p lang="en">Blueberry delivery to your home or office.<br><b>6.50€ / kg</b> (Minimum order 5kg).</p>
+                <h1 class="lv">Kur mūs atrast?</h1><h1 lang="en">Where to find us?</h1>
+                <h2>Zemnieku Nakts Tirgus</h2>
+                <p class="lv">Spīķeru iela 2, Rīga. Katru dienu no 16:00.</p>
+                <p lang="en">Spīķeru iela 2, Riga. Daily from 16:00.</p>
+                <a href="https://maps.google.com/?q=Spīķeru+iela+2+Rīga" target="_blank" class="icon-link">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </a>
+            </div>
+        </section>
+
+        <section id="delivery" style="background-image: url('https://images.unsplash.com/photo-1516515429572-1f99379623d8?q=80&w=2400');">
+            <div class="content-wrap">
+                <h1 class="lv">Piegāde</h1><h1 lang="en">Delivery</h1>
+                <p class="lv">6.50€ / kg (Min. 5kg)</p>
+                <p lang="en">6.50€ / kg (Min. 5kg)</p>
                 <form>
                     <input type="text" placeholder="Vārds / Name" required>
                     <input type="tel" placeholder="Telefons / Phone" required>
                     <input type="text" placeholder="Adrese / Address" required>
-                    <button type="button" class="btn-order" onclick="alert('Paldies!')">Pasūtīt</button>
+                    <button type="button" style="margin-top:20px; background:white; color:black; border:none; padding:15px; font-weight:600; cursor:pointer;">PASŪTĪT / ORDER</button>
                 </form>
             </div>
         </section>
 
-        <section id="picking">
+        <section id="picking" style="background-image: url('https://images.unsplash.com/photo-1543528176-61b2395143a4?q=80&w=2400');">
             <div class="content-wrap">
-                <h2>Pašlasīšana</h2>
-                <p class="lv">Saimniecībā Aizkrauklē. <br>Cena: <b>4.50€ / kg</b> (Min. 3kg).</p>
-                <p lang="en">At the farm in Aizkraukle. <br>Price: <b>4.50€ / kg</b> (Min. 3kg).</p>
-                
+                <h1 class="lv">Pašlasīšana</h1><h1 lang="en">Self-Picking</h1>
                 <div class="trail-container">
-                    
                     <div class="trail-grid left">
-                        <div class="step-content">
-                            <span class="lv step-title">01. Ceļš pie mums</span>
-                            <span lang="en" class="step-title">01. Arrive</span>
-                            <p class="lv step-desc">Atrodiet mūs navigācijā Aizkraukles novadā.</p>
-                            <p lang="en" class="step-desc">Locate us easily via navigation apps in Aizkraukle.</p>
-                            <div class="icon-group">
-                                <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas+Aizkraukle" target="_blank" class="icon-link"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></a>
-                                <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="icon-link"><svg viewBox="0 0 512 512"><path d="M433.3 268.9c-.1-1.3-.1-2.5-.2-3.8-3.4-60.8-53.7-109-115.4-109-24.8 0-48.1 8-67.2 21.6-11.8-8-25.9-12.7-41.2-12.7-39.7 0-71.9 32.2-71.9 71.9 0 5.1.5 10.1 1.6 14.9-38.3 18.5-64.8 57.7-64.8 103.1 0 53.6 36.8 98.6 86.4 111.4l-11.4 47.7c-1.1 4.8 1.9 9.6 6.7 10.7 4.8 1.1 9.6-1.9 10.7-6.7l13-54.6c15.2 3.1 30.9 4.7 46.9 4.7 93.6 0 169.5-75.9 169.5-169.5 0-10.1-.9-20-2.6-29.7z"/></svg></a>
-                            </div>
-                        </div>
-                        <div class="step-node">01</div>
+                        <div class="step-content"><h3 style="font-size:0.7rem; letter-spacing:2px;">01. ATBRAUCIET</h3><p style="font-size:0.7rem;">Aizkraukles novads</p>
+                        <a href="https://maps.google.com/?q=Kalna+Baložu+Ogas" target="_blank" class="icon-link"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></a></div>
+                        <div class="step-node">1</div>
                     </div>
-
                     <div class="trail-grid right">
-                        <div class="step-node">02</div>
-                        <div class="step-content">
-                            <span class="lv step-title">02. Svēršana</span>
-                            <span lang="en" class="step-title">02. Weighing</span>
-                            <p class="lv step-desc">Pirms lasīšanas mēs nosveram Jūsu traukus.</p>
-                            <p lang="en" class="step-desc">We weigh your brought containers before you start.</p>
-                        </div>
+                        <div class="step-node">2</div>
+                        <div class="step-content"><h3 style="font-size:0.7rem; letter-spacing:2px;">02. SVĒRŠANA</h3><p style="font-size:0.7rem;">Sveram traukus</p></div>
                     </div>
-
                     <div class="trail-grid left">
-                        <div class="step-content">
-                            <span class="lv step-title">03. Lasīšana</span>
-                            <span lang="en" class="step-title">03. Picking</span>
-                            <p class="lv step-desc">Minimālais daudzums: 3kg ogu.</p>
-                            <p lang="en" class="step-desc">Minimum: 3kg of picked berries.</p>
-                        </div>
-                        <div class="step-node">03</div>
+                        <div class="step-content"><h3 style="font-size:0.7rem; letter-spacing:2px;">03. LASĪŠANA</h3><p style="font-size:0.7rem;">Min. 3kg</p></div>
+                        <div class="step-node">3</div>
                     </div>
-
                     <div class="trail-grid right">
-                        <div class="step-node">04</div>
-                        <div class="step-content">
-                            <span class="lv step-title">04. Gala svars</span>
-                            <span lang="en" class="step-title">04. Final Weight</span>
-                            <p class="lv step-desc">Sveram nolasīto ražu un dodamies norēķināties.</p>
-                            <p lang="en" class="step-desc">We weigh the full harvest before payment.</p>
-                        </div>
+                        <div class="step-node">4</div>
+                        <div class="step-content"><h3 style="font-size:0.7rem; letter-spacing:2px;">04. APMAKSA</h3><p style="font-size:0.7rem;">Karte / Skaidra</p></div>
                     </div>
-
-                    <div class="trail-grid left">
-                        <div class="step-content">
-                            <span class="lv step-title">05. Apmaksa</span>
-                            <span lang="en" class="step-title">05. Payment</span>
-                            <p class="lv step-desc">Pieņemam skaidru naudu vai bankas kartes.</p>
-                            <p lang="en" class="step-desc">We accept cash or debit/credit cards.</p>
-                            <div style="font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--border); margin-top: 10px;">WORLDLINE CARD ACCEPTED</div>
-                        </div>
-                        <div class="step-node">05</div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -324,29 +258,42 @@
     </main>
 
     <script>
-        function setLang(lang) {
-            const lvEls = document.querySelectorAll('.lv');
-            const enEls = document.querySelectorAll('[lang="en"]');
-            const btnLv = document.getElementById('lv-btn');
-            const btnEn = document.getElementById('en-btn');
-
-            if (lang === 'en') {
-                lvEls.forEach(el => el.style.display = 'none');
-                enEls.forEach(el => el.style.display = 'block');
-                btnEn.classList.add('active');
-                lvBtn.classList.remove('active');
-            } else {
-                lvEls.forEach(el => el.style.display = 'block');
-                enEls.forEach(el => el.style.display = 'none');
-                btnLv.classList.add('active');
-                btnEn.classList.remove('active');
-            }
+        // 1. Clear Hash and Scroll to Top on Refresh
+        window.onbeforeunload = function() { window.scrollTo(0,0); };
+        if (window.location.hash) {
+            window.location.replace(window.location.pathname);
         }
 
-        const obs = new IntersectionObserver((es) => {
-            es.forEach(e => e.target.classList.toggle('active', e.isIntersecting));
+        // 2. Language Toggle Logic
+        let currentLang = 'lv';
+        function toggleLang() {
+            currentLang = (currentLang === 'lv') ? 'en' : 'lv';
+            document.getElementById('langToggle').innerText = (currentLang === 'lv') ? 'LATVIEŠU' : 'ENGLISH';
+            document.querySelectorAll('.lv').forEach(el => el.style.display = (currentLang === 'lv' ? 'block' : 'none'));
+            document.querySelectorAll('[lang="en"]').forEach(el => el.style.display = (currentLang === 'en' ? 'block' : 'none'));
+        }
+
+        // 3. Auto-Scrolling Galleries
+        function setupGallery(id) {
+            const container = document.getElementById(id);
+            const slides = container.querySelectorAll('.slide');
+            let idx = 0;
+            setInterval(() => {
+                slides[idx].classList.remove('active');
+                idx = (idx + 1) % slides.length;
+                slides[idx].classList.add('active');
+            }, 4000);
+        }
+        setupGallery('gal1');
+        setupGallery('gal2');
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
         }, { threshold: 0.5 });
-        document.querySelectorAll('section').forEach(s => obs.observe(s));
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
     </script>
 </body>
 </html>
