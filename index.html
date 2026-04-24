@@ -48,6 +48,7 @@
         /* --- SNAP SCROLLING CONTAINER --- */
         .snap-container {
             height: 100vh;
+            height: 100dvh; /* Dynamic Viewport Height fixes the bottom-heavy mobile bug */
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
@@ -55,15 +56,15 @@
 
         /* --- INDIVIDUAL SCREENS (Slides) --- */
         .snap-slide {
-            min-height: 100vh; 
+            height: 100vh; 
+            height: 100dvh; /* Ensures the slide is exactly the visible screen height */
             width: 100vw;
             scroll-snap-align: start;
             scroll-snap-stop: always;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Starts items at the top */
-            padding: calc(var(--nav-height) + 1.5rem) 2rem 2rem 2rem; 
+            padding: calc(var(--nav-height) + 1.5rem) 2rem 0 2rem; 
             position: relative;
         }
 
@@ -73,24 +74,26 @@
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1598336040854-1eb31110edaa?auto=format&fit=crop&w=1920&q=80') center/cover;
         }
 
-        /* --- NEW: Title & Content Centering System --- */
+        /* --- Title & Content Centering System --- */
         .slide-title {
             font-size: 3.5rem;
             color: var(--accent-blue);
             text-align: center;
             margin-top: 0;
-            margin-bottom: 1rem;
+            margin-bottom: 0;
             width: 100%;
-            flex-shrink: 0; /* Keeps the title at the top */
+            flex-shrink: 0; /* Keeps the title locked to the top */
         }
 
         .slide-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            flex-grow: 1; /* Takes remaining space and perfectly centers items inside */
+            justify-content: center; /* Centers everything perfectly in the middle */
+            flex-grow: 1; 
             width: 100%;
+            height: 100%; /* Spans the entire remaining height */
+            padding-bottom: 2rem; /* Creates a slight visual lift to counter bottom-heaviness */
         }
 
         /* --- Animations --- */
@@ -203,7 +206,6 @@
             display: flex;
             flex-direction: column;
             gap: 2.5rem; 
-            margin-top: 1rem;
         }
         .zigzag-line {
             position: absolute;
@@ -211,14 +213,14 @@
             left: 0;
             width: 100%;
             height: 90%; 
-            z-index: 0; /* Strict background layer */
+            z-index: 0; 
             pointer-events: none;
         }
         .z-step {
             display: flex;
             align-items: center;
             gap: 1rem;
-            z-index: 2; /* Keeps above line */
+            z-index: 2; 
             width: 85%;
         }
         .z-step.left { align-self: flex-start; }
@@ -239,11 +241,11 @@
             z-index: 3;
         }
         .z-content {
-            background: var(--bg-alt); /* Hides the line behind text */
+            background: var(--bg-alt); 
             padding: 0.8rem 1.2rem;
             border-radius: 12px;
             z-index: 3;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Pops text off background */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
             border: 1px solid rgba(255,255,255,0.05);
         }
         .z-content h3 {
@@ -267,7 +269,6 @@
             gap: 0.8rem;
             max-width: 800px;
             width: 100%;
-            margin-top: 1rem;
         }
         .plant-card {
             background: rgba(255, 255, 255, 0.05);
@@ -393,6 +394,9 @@
             .z-icon { width: 50px; height: 50px; font-size: 1.2rem; }
             .z-content h3 { font-size: 1.5rem; }
             .z-content p { font-size: 0.75rem; }
+            
+            /* Give a little more bottom space on small screens for forms */
+            .slide-content { padding-bottom: 3rem; }
         }
     </style>
 </head>
@@ -492,7 +496,7 @@
             <h2 class="slide-title fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
             
             <div class="slide-content">
-                <p class="fade-in delay-1 translatable" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age">15€ - 30€ atkarībā no vecuma</p>
+                <p class="fade-in delay-1 translatable" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age" style="margin-bottom: 1.5rem;">15€ - 30€ atkarībā no vecuma</p>
                 <div class="plant-grid fade-in delay-2">
                     <div class="plant-card" onclick="openPlantModal('Patriot', 'Vidēji agrīna šķirne, izturīga pret salu. Ražo ļoti lielas un saldas ogas.', 'Mid-early variety, frost-resistant. Produces very large and sweet berries.')">
                         <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
@@ -520,7 +524,7 @@
             <h2 class="slide-title fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
             
             <div class="slide-content">
-                <p class="fade-in delay-1 translatable" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age">10€ - 20€ atkarībā no vecuma</p>
+                <p class="fade-in delay-1 translatable" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age" style="margin-bottom: 1.5rem;">10€ - 20€ atkarībā no vecuma</p>
                 <div class="plant-grid fade-in delay-2">
                     <div class="plant-card" onclick="openPlantModal('Blue Banana', 'Vidēji vēla šķirne. Ļoti saldas, interesantas banānu formas ogas.', 'Mid-late variety. Very sweet, interestingly banana-shaped berries.')">
                         <h4>Banana</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
