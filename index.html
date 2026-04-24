@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Kalna Baložu Ogas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Permanent+Marker&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --text-color: #f4f4f4;
-            --accent-color: #4a90e2; /* Blueberry blue */
+            --bg-color: #0d1117;
+            --bg-alt: #121820;
+            --text-main: #f0f6fc;
+            --accent-blue: #5072A7; 
+            --nav-height: 70px;
         }
 
         * {
@@ -19,261 +21,799 @@
         }
 
         body, html {
-            height: 100%;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            color: var(--text-main);
+            height: 100%;
+            overflow: hidden; 
         }
 
-        /* Scroll Snapping Container */
-        .container {
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
+        button, a, input, select {
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        section {
-            height: 100vh;
-            scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        h1, h2 {
-            font-family: 'Permanent Marker', cursive;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-        }
-
-        .subtitle {
-            font-family: 'Caveat', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
+        h1, h2, h3, .label-font {
+            font-family: 'Amatic SC', cursive;
         }
 
         p {
             font-size: 1.1rem;
-            line-height: 1.6;
-            max-width: 800px;
-            margin-bottom: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+            text-align: center;
         }
 
-        /* Hero Section */
-        #home {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('YOUR_ICLOUD_IMAGE_LINK_HERE') center/cover;
-        }
-        #home h1 {
-            font-size: 5rem;
-        }
-
-        /* Services Layout */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            width: 100%;
-            max-width: 1000px;
-        }
-        .service-card {
-            border: 2px solid white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.05);
+        /* --- SNAP SCROLLING CONTAINER --- */
+        .snap-container {
+            height: 100vh;
+            height: 100dvh; 
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
         }
 
-        /* Varieties Chart Layout */
-        .chart-container {
-            width: 100%;
-            max-width: 800px;
-            margin-top: 2rem;
-            text-align: left;
-        }
-        .chart-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            border-bottom: 1px dashed #555;
-            padding-bottom: 0.5rem;
-        }
-        .chart-label {
-            flex: 1;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-        .chart-bar-container {
-            flex: 3;
-            background: #222;
-            height: 20px;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-        .chart-bar {
-            height: 100%;
-            background: var(--accent-color);
-            position: absolute;
-        }
-
-        /* Form Styling */
-        form {
+        .snap-slide {
+            height: 100vh; 
+            height: 100dvh; 
+            width: 100vw;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            width: 100%;
-            max-width: 500px;
-            text-align: left;
-        }
-        input, select, button {
-            padding: 0.8rem;
-            border-radius: 5px;
-            border: none;
-            font-family: inherit;
-        }
-        input, select {
-            background: #222;
-            color: white;
-            border: 1px solid #444;
-        }
-        button {
-            background: var(--accent-color);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: #357abd;
+            align-items: center;
+            padding: calc(var(--nav-height) + 1.5rem) 2rem 0 2rem; 
+            position: relative;
         }
 
-        /* Navigation */
+        .bg-alt { background-color: var(--bg-alt); }
+        
+        #hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1598336040854-1eb31110edaa?auto=format&fit=crop&w=1920&q=80') center/cover;
+        }
+
+        .slide-title {
+            font-size: 3.5rem;
+            color: var(--accent-blue);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 0;
+            width: 100%;
+            flex-shrink: 0; 
+        }
+
+        .slide-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            flex-grow: 1; 
+            width: 100%;
+            height: 100%; 
+            padding-bottom: 5rem; 
+        }
+
+        #order .slide-content {
+            padding-bottom: 2rem;
+        }
+
+        /* --- Animations --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+        @keyframes scroll-drop {
+            0% { transform: translateY(0); opacity: 1; }
+            70% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 0; }
+        }
+        .scroll-arrow-svg {
+            margin-top: 2.5rem;
+            animation: scroll-drop 2s infinite ease-in-out;
+            display: block;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* --- Navigation --- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1rem;
-            background: rgba(0,0,0,0.8);
-            z-index: 100;
+            height: var(--nav-height);
+            padding: 0 2rem;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
             display: flex;
-            justify-content: center;
-            gap: 2rem;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        nav a {
-            color: white;
+        .nav-brand {
+            font-family: 'Amatic SC', cursive;
+            font-size: 1.8rem;
+            color: var(--text-main);
             text-decoration: none;
-            font-family: 'Permanent Marker', cursive;
-            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        .nav-right-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent-blue); }
+
+        .lang-switch {
+            background: transparent;
+            border: 1px solid var(--accent-blue);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: white;
+            width: 50px;
+            text-align: center;
+        }
+        .lang-switch:hover { background: rgba(90, 156, 226, 0.2); }
+        .hamburger {
+            display: none; font-size: 2rem; background: none; border: none;
+            color: var(--text-main); cursor: pointer;
         }
 
-        @media (max-width: 768px) {
-            #home h1 { font-size: 3rem; }
-            section { height: auto; min-height: 100vh; padding-top: 80px; }
-            .container { scroll-snap-type: none; } /* Better mobile scrolling */
+        /* --- Hero --- */
+        .hero-logo { max-width: 90vw; width: 500px; height: auto; margin-bottom: 1.5rem; }
+
+        .feature-img {
+            width: 100%;
+            max-width: 400px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- Reusable Card Payment Logos --- */
+        .payment-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; 
+            margin-top: 5px;
+        }
+        .card-logos-inline {
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        /* --- App Button Layouts --- */
+        .app-links {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+        }
+        .app-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
+            padding: 5px 10px; border-radius: 6px; color: white;
+            text-decoration: none; font-size: 0.75rem; font-weight: 600;
+            transition: 0.3s;
+        }
+        .app-btn img { filter: invert(1); } 
+        .app-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); }
+
+        /* --- Zigzag U-Pick Layout (4 Steps) --- */
+        .zigzag-timeline {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem; 
+        }
+        .zigzag-line {
+            position: absolute;
+            top: 0; /* Locked to exact top and bottom of the container */
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            z-index: 0; 
+            pointer-events: none;
+        }
+        .z-step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 2; 
+            width: 85%;
+        }
+        .z-step.left { align-self: flex-start; }
+        .z-step.right { align-self: flex-end; flex-direction: row-reverse; text-align: right; }
+        
+        .z-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.3rem;
+            background: var(--bg-alt); 
+            border: 2px dashed var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(90, 156, 226, 0.2);
+            z-index: 3;
+        }
+        .z-content {
+            background: var(--bg-alt); 
+            padding: 0.6rem 1rem;
+            border-radius: 12px;
+            z-index: 3;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .z-content h3 {
+            font-family: 'Amatic SC', cursive;
+            font-size: 1.6rem;
+            color: var(--accent-blue);
+            margin-bottom: 0.1rem;
+        }
+        .z-content p {
+            font-size: 0.8rem;
+            line-height: 1.3;
+            color: #ccc;
+            text-align: inherit;
+            margin: 0;
+        }
+        .price-exaggerated {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem !important;
+            display: block;
+        }
+        .z-step.right .app-links, .z-step.right .payment-line { justify-content: flex-end; }
+
+        /* --- Plants Catalog --- */
+        .plant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 0.8rem;
+            max-width: 800px;
+            width: 100%;
+        }
+        .plant-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem 0.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid transparent;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .plant-card:hover { 
+            border-color: var(--accent-blue); 
+            transform: translateY(-3px);
+            background: rgba(90, 156, 226, 0.1);
+        }
+        .plant-card h4 {
+            font-family: 'Amatic SC', cursive;
+            font-size: 1.6rem;
+            color: var(--accent-blue);
+        }
+        .plant-card p.click-hint {
+            font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase; margin-bottom: 0;
+        }
+
+        /* --- Modern Form --- */
+        .form-container {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.2rem 1.5rem; 
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            margin-bottom: 0.6rem;
+            align-items: flex-end; 
+        }
+        .form-row .form-group {
+            flex: 1; 
+            margin-bottom: 0; 
+        }
+        .form-group {
+            width: 100%;
+            margin-bottom: 0.6rem; 
+            text-align: left;
+        }
+        .form-label {
+            display: flex;
+            align-items: center;
+            font-size: 0.7rem;
+            color: #aaa;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        input, select, button {
+            width: 100%; 
+            height: 40px; 
+            padding: 0 0.8rem; 
+            background: rgba(0,0,0,0.5); 
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white; 
+            border-radius: 8px; 
+            font-family: inherit; 
+            font-size: 16px !important; 
+            appearance: none; 
+            box-sizing: border-box; 
+        }
+        input:focus, select:focus {
+            border-color: var(--accent-blue);
+        }
+        select {
+            background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position-x: 96%;
+            background-position-y: center;
+        }
+        button[type="submit"] {
+            background: var(--accent-blue); 
+            font-weight: 600; 
+            cursor: pointer;
+            border: none; 
+            transition: 0.3s; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            margin-top: 0.2rem;
+            height: 44px;
+        }
+        button[type="submit"]:hover { 
+            background: #3f5d8a; 
+            transform: translateY(-2px); 
+        }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: var(--bg-color); padding: 2.5rem; border-radius: 15px;
+            border: 1px solid var(--accent-blue); max-width: 400px; width: 90%;
+            text-align: center; position: relative; transform: scale(0.9); transition: 0.3s;
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-close {
+            position: absolute; top: 10px; right: 15px; font-size: 2rem; cursor: pointer;
+            color: #888; background: none; border: none; padding: 0; margin: 0;
+        }
+
+        /* --- Mobile Nav & Adjustments --- */
+        @media (max-width: 900px) {
+            .hamburger { display: block; }
+            .nav-links {
+                position: fixed; top: var(--nav-height); left: -100%; flex-direction: column;
+                background: rgba(13, 17, 23, 0.98); width: 100%; text-align: center;
+                transition: left 0.3s ease; padding: 2rem 0; gap: 2rem;
+            }
+            .nav-links.active { left: 0; }
+            
+            .z-step { width: 100%; gap: 0.5rem; }
+            .z-icon { width: 50px; height: 50px; font-size: 1.2rem; }
+            .z-content h3 { font-size: 1.5rem; }
+            .z-content p { font-size: 0.75rem; }
+            
+            .slide-content { padding-bottom: 6rem; } 
+            #order .slide-content { padding-bottom: 2rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#home">Sākums</a>
-        <a href="#services">Pakalpojumi</a>
-        <a href="#varieties">Šķirnes</a>
-        <a href="#order">Pasūtīt</a>
+        <a href="#hero" class="nav-brand" onclick="this.blur()">KBO</a> 
+        <div class="nav-right-container">
+            <div class="nav-links" id="nav-links">
+                <a href="#hero" class="translatable nav-item" data-lv="Sākums" data-en="Home">Sākums</a>
+                <a href="#market" class="translatable nav-item" data-lv="Tirgus un Piegāde" data-en="Market & Delivery">Tirgus un Piegāde</a>
+                <a href="#upick" class="translatable nav-item" data-lv="Pašlasīšana" data-en="U-Pick">Pašlasīšana</a>
+                <a href="#plants-blue" class="translatable nav-item" data-lv="Stādi" data-en="Plants">Stādi</a>
+                <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
+            </div>
+            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">LV</button>
+            <button class="hamburger" onclick="toggleMenu(); this.blur()">☰</button>
+        </div>
     </nav>
 
-    <div class="container">
-        <section id="home">
-            <h1>KALNA BALOŽU OGAS</h1>
-            <div class="subtitle">tikko no lauka</div>
-            <p>Welcome to our family blueberry farm in Aizkraukle, Latvia. We grow premium Patriot and Bluecrop blueberries, alongside a wide variety of blueberry and honeyberry crops. Freshness, quality, and nature are at the heart of what we do.</p>
+    <div class="snap-container">
+        
+        <section id="hero" class="snap-slide">
+            <div class="slide-content">
+                <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
+                
+                <p class="hero-subtitle fade-in delay-1 translatable" 
+                   data-lv="Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības." 
+                   data-en="Fresh, home-grown berries from our family farm.">
+                   Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības.
+                </p>
+
+                <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="4 8 12 16 20 8"></polyline>
+                </svg>
+            </div>
         </section>
 
-        <section id="services">
-            <h2>Mūsu Pakalpojumi</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Zemnieku Nakts Tirgus</h3>
-                    <p>Find us in Riga every day from 15:00. Berries are transported in refrigerated vans for maximum freshness. Cash & Card accepted.</p>
+        <section id="market" class="snap-slide bg-alt">
+            <h2 class="slide-title fade-in translatable" data-lv="Zemnieku Nakts Tirgus" data-en="Farmers Night Market">Zemnieku Nakts Tirgus</h2>
+            <div class="slide-content">
+                <div class="slider-container fade-in delay-1">
+                    <img src="10.jpg" class="slide-img active">
+                    <img src="7.jpg" class="slide-img">
+                    <img src="IMG_4077.jpeg" class="slide-img">
                 </div>
-                <div class="service-card">
-                    <h3>Delivery</h3>
-                    <p>€6.50/kg (Min 5kg). Free delivery in Riga and the Aizkraukle-Riga route. Delivered directly to your home or office.</p>
+                
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+                    <span class="translatable" data-lv="Spīķeru iela 2, Rīga" data-en="Spīķeru iela 2, Riga">Spīķeru iela 2, Rīga</span>
                 </div>
-                <div class="service-card">
-                    <h3>Self-Picking</h3>
-                    <p>€4.50/kg. Bring your own bucket to our farm in Aizkraukle! We weigh your bucket, you pick the largest berries, and we weigh it again. Easy and eco-friendly.</p>
+                
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+                    <span class="translatable" data-lv="Katru dienu no 15:00" data-en="Every day from 15:00">Katru dienu no 15:00</span>
                 </div>
-                <div class="service-card">
-                    <h3>Plant Sales</h3>
-                    <p>Blueberry crops (€15-€30) and Honeyberry crops (€10-€20). Over 15 varieties available for farm pickup or home delivery.</p>
+                
+                <div class="payment-line fade-in delay-2">
+                    💵 <span class="translatable" data-lv="Skaidrā" data-en="Cash">Skaidrā</span> / <span class="translatable" data-lv="Karte" data-en="Card">Karte</span>
+                    <span class="card-logos-inline">
+                        <svg viewBox="0 0 24 16" width="24" height="14"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                        <svg viewBox="0 0 32 12" width="28" height="12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                    </span>
+                </div>
+
+                <div class="app-links fade-in delay-2" style="justify-content: center; margin-top: 0.8rem;">
+                    <a href="https://waze.com/ul?q=Spīķeru+iela+2+Riga" target="_blank" class="app-btn" onclick="this.blur()">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/waze.svg" width="14" height="14"> Waze
+                    </a>
+                    <a href="https://maps.google.com/?q=Spīķeru+iela+2,+Riga" target="_blank" class="app-btn" onclick="this.blur()">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlemaps.svg" width="14" height="14"> Maps
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section id="varieties">
-            <h2>Šķirnes & Ražas Laiks</h2>
-            <p>We offer a diverse selection of crops. Here is a timeline of when some of our popular varieties are ripe for picking.</p>
+        <section id="delivery" class="snap-slide">
+            <h2 class="slide-title fade-in translatable" data-lv="Ogu Piegāde" data-en="Berry Delivery">Ogu Piegāde</h2>
+            <div class="slide-content">
+                <div class="slider-container fade-in delay-1">
+                    <img src="2.jpg" class="slide-img active">
+                    <img src="6.jpg" class="slide-img">
+                </div>
+                
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></span>
+                    <span class="translatable" data-lv="Bezmaksas piegāde (Rīga-Aizkraukle)" data-en="Free Delivery (Riga-Aizkraukle)">Bezmaksas piegāde (Rīga-Aizkraukle)</span>
+                </div>
+
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></span>
+                    <span class="translatable" data-lv="Min. 5kg (6.50€/kg)" data-en="Min 5kg (€6.50/kg)">Min. 5kg (6.50€/kg)</span>
+                </div>
+
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line><path d="M20 16l-4-4 4-4"></path><path d="M4 8l4 4-4 4"></path><path d="M16 4l-4 4-4-4"></path><path d="M8 20l4-4 4 4"></path></svg></span>
+                    <span class="translatable" data-lv="Piegādātas refrižeratorā, saglabājot svaigumu" data-en="Delivered in a refrigerated van, preserving freshness">Piegādātas refrižeratorā, saglabājot svaigumu</span>
+                </div>
+                
+                <div class="payment-line fade-in delay-2">
+                    💵 <span class="translatable" data-lv="Apmaksa saņemot:" data-en="Pay on delivery:">Apmaksa saņemot:</span>
+                    <span class="translatable" data-lv="Skaidrā" data-en="Cash">Skaidrā</span> / <span class="translatable" data-lv="Karte" data-en="Card">Karte</span>
+                    <span class="card-logos-inline">
+                        <svg viewBox="0 0 24 16" width="24" height="14"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                        <svg viewBox="0 0 32 12" width="28" height="12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section id="upick" class="snap-slide bg-alt">
+            <div class="bg-slider-wrapper">
+                <img src="3.jpg" class="bg-slide-img active">
+                <img src="4.jpg" class="bg-slide-img">
+                <img src="5.jpg" class="bg-slide-img">
+            </div>
+
+            <h2 class="slide-title fade-in translatable" data-lv="Kā darbojas pašlasīšana?" data-en="How U-Pick Works?">Kā darbojas pašlasīšana?</h2>
             
-            <div class="chart-container">
-                <div class="chart-row">
-                    <div class="chart-label">Chanticleer (Early)</div>
-                    <div class="chart-bar-container">
-                        <div class="chart-bar" style="left: 10%; width: 20%;"></div>
+            <div class="slide-content">
+                <div class="zigzag-timeline">
+                    <svg class="zigzag-line fade-in delay-4" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M 8 10 C 65 10, 65 26, 35 23 C 10 20, 20 37, 92 37 C 35 37, 35 52, 65 49 C 90 46, 80 63, 8 63 C 65 63, 65 79, 35 76 C 10 73, 20 90, 92 90" 
+                              stroke="rgba(255,255,255,0.8)" stroke-width="2.5" stroke-dasharray="4, 6" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                    </svg>
+
+                    <div class="z-step left fade-in delay-1">
+                        <div class="z-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div>
+                        <div class="z-content">
+                            <h3 class="translatable" data-lv="1. Brauc ciemos" data-en="1. Arrive">1. Brauc ciemos</h3>
+                            <p class="translatable" data-lv="Atrodi mūs Aizkrauklē." data-en="Find us in Aizkraukle.">Atrodi mūs Aizkrauklē.</p>
+                            <div class="app-links" style="justify-content: flex-start;">
+                                <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="app-btn" onclick="this.blur()">
+                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/waze.svg" width="14" height="14"> Waze
+                                </a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas" target="_blank" class="app-btn" onclick="this.blur()">
+                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlemaps.svg" width="14" height="14"> Maps
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="chart-row">
-                    <div class="chart-label">Patriot (Mid-Early)</div>
-                    <div class="chart-bar-container">
-                        <div class="chart-bar" style="left: 30%; width: 25%;"></div>
+
+                    <div class="z-step right fade-in delay-2">
+                        <div class="z-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h20l-2 15H4z"/><path d="M18 7V5a6 6 0 0 0-12 0v2"/></svg>
+                        </div>
+                        <div class="z-content">
+                            <h3 class="translatable" data-lv="2. Nosver" data-en="2. Weigh">2. Nosver</h3>
+                            <p class="translatable" data-lv="Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!" data-en="Empty bucket at the station. Bring your own!">Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!</p>
+                        </div>
                     </div>
-                </div>
-                <div class="chart-row">
-                    <div class="chart-label">Bluecrop (Mid)</div>
-                    <div class="chart-bar-container">
-                        <div class="chart-bar" style="left: 45%; width: 30%;"></div>
+
+                    <div class="z-step left fade-in delay-3">
+                        <div class="z-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="14" r="3"/><circle cx="14" cy="16" r="3"/><circle cx="11" cy="9" r="4"/><path d="M11 5v4"/><path d="M11 5c2-2 5-1 5-1"/></svg>
+                        </div>
+                        <div class="z-content">
+                            <h3 class="translatable" data-lv="3. Lasi" data-en="3. Pick">3. Lasi</h3>
+                            <p class="translatable" data-lv="Svaigākās ogas laukā." data-en="Freshest berries in the field.">Svaigākās ogas laukā.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="chart-row">
-                    <div class="chart-label">Elliott (Late)</div>
-                    <div class="chart-bar-container">
-                        <div class="chart-bar" style="left: 70%; width: 25%;"></div>
+
+                    <div class="z-step right fade-in delay-4">
+                        <div class="z-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M3 21h18"/><path d="M12 3l-9 7v2"/><path d="M12 3l9 7v2"/><path d="M3 12h18"/><circle cx="7.5" cy="15" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/></svg>
+                        </div>
+                        <div class="z-content">
+                            <h3 class="translatable" data-lv="4. Norēķinies" data-en="4. Pay">4. Norēķinies</h3>
+                            <p class="translatable price-exaggerated" data-lv="Tikai 4.50€/kg!" data-en="Only €4.50/kg!">Tikai 4.50€/kg!</p>
+                            
+                            <div class="payment-line" style="margin-top: 0; justify-content: flex-end;">
+                                💵 <span class="translatable" style="font-size: 0.8rem; color: #ccc;" data-lv="Skaidrā / Karte" data-en="Cash / Card">Skaidrā / Karte</span>
+                                <span class="card-logos-inline">
+                                    <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                                    <svg viewBox="0 0 32 12" width="24" height="10"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <p style="margin-top: 1rem; font-size: 0.9rem;">* We also sell honeyberries (Sausserdis) like Blue Banana, Boreal Beast, and Strawberry Sensation!</p>
         </section>
 
-        <section id="order">
-            <h2>Pasūtīt Ogas</h2>
-            <p>Fill out the form below to schedule a delivery. Minimum order is 5kg.</p>
+        <section id="plants-blue" class="snap-slide">
+            <h2 class="slide-title fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
             
-            <form action="#" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <input type="text" name="address" placeholder="Delivery Address" required>
-                <input type="number" name="quantity" placeholder="Quantity (kg) - Min 5kg" min="5" required>
-                
-                <label style="color:#aaa; font-size:0.9rem;">Preferred Delivery Date & Time:</label>
-                <input type="datetime-local" name="datetime" required>
-                
-                <select name="payment" required>
-                    <option value="" disabled selected>Select Payment Method</option>
-                    <option value="online">Online Payment (Coming Soon)</option>
-                    <option value="card_delivery">Card on Delivery</option>
-                    <option value="cash_delivery">Cash on Delivery</option>
-                </select>
-                
-                <button type="submit">Submit Order</button>
-            </form>
-            <p style="margin-top: 2rem;">📞 29 459 247 | ✉️ kalnabalozi@inbox.lv</p>
+            <div class="slide-content">
+                <p class="fade-in delay-1 translatable" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age" style="margin-bottom: 1.5rem;">15€ - 30€ atkarībā no vecuma</p>
+                <div class="plant-grid fade-in delay-2">
+                    <div class="plant-card" onclick="openPlantModal('Patriot', 'Vidēji agrīna šķirne, izturīga pret salu. Ražo ļoti lielas un saldas ogas.', 'Mid-early variety, frost-resistant. Produces very large and sweet berries.')">
+                        <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Bluecrop', 'Viena no populārākajām šķirnēm pasaulē. Vidēji agrīna, klasiska garša.', 'One of the most popular varieties worldwide. Mid-season, classic taste.')">
+                        <h4>Bluecrop</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Chanticleer', 'Ļoti agrīna šķirne. Vidēji lielas ogas ar lielisku garšu.', 'Very early variety. Medium-sized berries with excellent flavor.')">
+                        <h4>Chanticleer</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Toro', 'Vidēji agrīna šķirne. Kompakts krūms ar milzīgām ogām.', 'Mid-early variety. Compact bush producing giant berries.')">
+                        <h4>Toro</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Chandler', 'Vēla šķirne. Vislielākās ogas starp visām mellenēm, ilgs ražas laiks.', 'Late variety. Has the largest berries of all blueberries, long harvest.')">
+                        <h4>Chandler</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Brigitta Blue', 'Vēla šķirne. Ļoti saldas, stingras un kraukšķīgas ogas.', 'Late variety. Very sweet, firm and crisp berries.')">
+                        <h4>Brigitta</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                </div>
+            </div>
         </section>
+
+        <section id="plants-honey" class="snap-slide bg-alt">
+            <h2 class="slide-title fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
+            
+            <div class="slide-content">
+                <p class="fade-in delay-1 translatable" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age" style="margin-bottom: 1.5rem;">10€ - 20€ atkarībā no vecuma</p>
+                <div class="plant-grid fade-in delay-2">
+                    <div class="plant-card" onclick="openPlantModal('Blue Banana', 'Vidēji vēla šķirne. Ļoti saldas, interesantas banānu formas ogas.', 'Mid-late variety. Very sweet, interestingly banana-shaped berries.')">
+                        <h4>Banana</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Boreal Beast', 'Vidēji vēla šķirne. Lieliska, salda garša, izcila šķirne apputeksnēšanai.', 'Mid-late variety. Excellent sweet taste, outstanding pollinator.')">
+                        <h4>Beast</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Strawberry Sensation', 'Lielas, saldas ogas ar unikālām zemeņu garšas niansēm.', 'Large, sweet berries with unique hints of strawberry flavor.')">
+                        <h4>Strawberry</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Giant\'s Heart', 'Ļoti ražīga šķirne ar milzīgām, sirds formas ogām.', 'Highly productive variety with giant, heart-shaped berries.')">
+                        <h4>Heart</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="order" class="snap-slide">
+            <h2 class="slide-title fade-in translatable" data-lv="Melleņu piegāde uz mājām vai ofisu" data-en="Blueberry delivery to home or office">Melleņu piegāde uz mājām vai ofisu</h2>
+            
+            <div class="slide-content">
+                <div class="form-container fade-in delay-1">
+                    <form action="#" method="POST">
+                        <div class="form-group fade-in delay-1">
+                            <label class="form-label translatable" data-lv="Vārds, Uzvārds" data-en="Full Name">Vārds, Uzvārds</label>
+                            <input type="text" name="name" required>
+                        </div>
+
+                        <div class="form-group fade-in delay-1">
+                            <label class="form-label translatable" data-lv="Piegādes Adrese" data-en="Delivery Address">Piegādes Adrese</label>
+                            <input type="text" name="address" required>
+                        </div>
+
+                        <div class="form-row fade-in delay-2">
+                            <div class="form-group">
+                                <label class="form-label translatable" data-lv="Daudzums (Min 5kg)" data-en="Amount (Min 5kg)">Daudzums (Min 5kg)</label>
+                                <input type="number" name="quantity" min="5" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label translatable" data-lv="Piegādes laiks" data-en="Delivery time">Piegādes laiks</label>
+                                <input type="datetime-local" name="datetime" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group fade-in delay-3">
+                            <label class="form-label translatable" data-lv="Apmaksas veids" data-en="Payment Method">
+                                Apmaksas veids
+                                <span class="card-logos-inline" style="margin-left: 8px;">
+                                    <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                                    <svg viewBox="0 0 32 12" width="24" height="10"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                </span>
+                            </label>
+                            <select name="payment" required>
+                                <option value="" disabled selected class="translatable" data-lv="Izvēlieties..." data-en="Select...">Izvēlieties...</option>
+                                <option value="online" class="translatable" data-lv="Tiešsaistē (Drīzumā)" data-en="Online (Coming Soon)">Tiešsaistē (Drīzumā)</option>
+                                <option value="card" class="translatable" data-lv="Karte saņemot" data-en="Card on delivery">Karte saņemot</option>
+                                <option value="cash" class="translatable" data-lv="Skaidra nauda" data-en="Cash on delivery">Skaidra nauda</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="translatable fade-in delay-3" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+    </div> <div class="modal-overlay" id="plantModal" onclick="closePlantModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closePlantModal(event)">×</button>
+            <h3 id="modalTitle" style="font-family: 'Amatic SC', cursive; font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem;">Variety</h3>
+            <p id="modalDescLv" style="display: block;">Apraksts</p>
+            <p id="modalDescEn" style="display: none;">Description</p>
+        </div>
     </div>
 
+    <script>
+        // --- Slider Initialization Script ---
+        function initSliders() {
+            document.querySelectorAll('.slider-container, .bg-slider-wrapper').forEach(container => {
+                const images = container.querySelectorAll('.slide-img, .bg-slide-img');
+                if(images.length <= 1) return;
+                let currentIndex = 0;
+                setInterval(() => {
+                    images[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % images.length;
+                    images[currentIndex].classList.add('active');
+                }, 4000); 
+            });
+        }
+        initSliders();
+
+        // --- Hamburger Menu Toggle ---
+        function toggleMenu() {
+            document.getElementById('nav-links').classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.getElementById('nav-links').classList.remove('active');
+            });
+        });
+
+        // --- Language Toggle Logic ---
+        let currentLang = 'lv';
+        function toggleLanguage() {
+            currentLang = currentLang === 'lv' ? 'en' : 'lv';
+            document.getElementById('langBtn').innerText = currentLang.toUpperCase();
+            
+            document.querySelectorAll('.translatable').forEach(el => {
+                el.innerText = el.getAttribute(`data-${currentLang}`);
+            });
+            document.querySelectorAll('.translatable-placeholder').forEach(el => {
+                el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`);
+            });
+
+            document.getElementById('modalDescLv').style.display = currentLang === 'lv' ? 'block' : 'none';
+            document.getElementById('modalDescEn').style.display = currentLang === 'en' ? 'block' : 'none';
+        }
+
+        // --- Modal Logic ---
+        function openPlantModal(title, descLv, descEn) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDescLv').innerText = descLv;
+            document.getElementById('modalDescEn').innerText = descEn;
+            
+            document.getElementById('modalDescLv').style.display = currentLang === 'lv' ? 'block' : 'none';
+            document.getElementById('modalDescEn').style.display = currentLang === 'en' ? 'block' : 'none';
+
+            document.getElementById('plantModal').classList.add('active');
+        }
+
+        function closePlantModal(event) {
+            if(event) event.preventDefault();
+            document.getElementById('plantModal').classList.remove('active');
+        }
+
+        // --- Scroll Animation Script ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { 
+            root: document.querySelector('.snap-container'),
+            threshold: 0.1 
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
