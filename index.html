@@ -59,23 +59,37 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1rem 2rem;
+            height: 70px;
+            padding: 0 2rem;
             background: rgba(13, 17, 23, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
             display: flex;
-            flex-wrap: wrap; /* Fixes menu not fitting */
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 1.5rem;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .nav-links {
+
+        .nav-brand {
+            font-family: 'Amatic SC', cursive;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-right-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            align-items: center;
             gap: 1.5rem;
         }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
         .nav-links a {
             color: var(--text-main);
             text-decoration: none;
@@ -85,7 +99,9 @@
             letter-spacing: 1px;
             transition: 0.3s;
         }
+
         .nav-links a:hover { color: var(--accent-blue); }
+
         .lang-switch {
             background: transparent;
             border: 1px solid var(--accent-blue);
@@ -95,10 +111,21 @@
             cursor: pointer;
             font-weight: 600;
             transition: 0.3s;
+            font-family: 'Montserrat', sans-serif;
         }
+
         .lang-switch:hover {
             background: var(--accent-blue);
             color: white;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
         }
 
         /* --- Sections --- */
@@ -171,7 +198,6 @@
             margin: 3rem auto;
             padding: 2rem 0;
         }
-        /* The dotted line */
         .trail-line {
             position: absolute;
             top: 0;
@@ -265,27 +291,54 @@
             cursor: pointer;
             border: none;
             transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         button:hover { background: #4682c4; }
 
-        @media (max-width: 768px) {
+        /* --- Mobile Responsiveness for Nav & Content --- */
+        @media (max-width: 900px) {
+            .hamburger {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(13, 17, 23, 0.98);
+                width: 100%;
+                text-align: center;
+                transition: left 0.3s ease;
+                padding: 2rem 0;
+                gap: 2rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .nav-brand { display: block; }
+            
             .trail-line { left: 10%; }
             .trail-step { flex-direction: row; text-align: left; gap: 1rem; }
-            .trail-icon { width: 80px; height: 80px; font-size: 2rem; flex-shrink: 0; }
+            .trail-icon { width: 80px; height: 80px; font-size: 2rem; flex-shrink: 0; margin-bottom: 0; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="nav-links">
-            <a href="#hero" class="translatable" data-lv="Sākums" data-en="Home">Sākums</a>
-            <a href="#market" class="translatable" data-lv="Tirgus un Piegāde" data-en="Market & Delivery">Tirgus un Piegāde</a>
-            <a href="#self-picking" class="translatable" data-lv="Pašlasīšana" data-en="U-Pick">Pašlasīšana</a>
-            <a href="#plants" class="translatable" data-lv="Stādi" data-en="Plants">Stādi</a>
-            <a href="#order" class="translatable" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
+        <a href="#hero" class="nav-brand">KBO</a> <div class="nav-right-container">
+            <div class="nav-links" id="nav-links">
+                <a href="#hero" class="translatable nav-item" data-lv="Sākums" data-en="Home">Sākums</a>
+                <a href="#market" class="translatable nav-item" data-lv="Tirgus un Piegāde" data-en="Market & Delivery">Tirgus un Piegāde</a>
+                <a href="#self-picking" class="translatable nav-item" data-lv="Pašlasīšana" data-en="U-Pick">Pašlasīšana</a>
+                <a href="#plants" class="translatable nav-item" data-lv="Stādi" data-en="Plants">Stādi</a>
+                <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
+            </div>
+            <button class="lang-switch" onclick="toggleLanguage()">EN</button>
+            <button class="hamburger" onclick="toggleMenu()">☰</button>
         </div>
-        <button class="lang-switch" onclick="toggleLanguage()">EN</button>
     </nav>
 
     <section id="hero">
@@ -366,7 +419,8 @@
             <div class="plant-card fade-in"><h4>Brigitta Blue</h4></div>
         </div>
 
-        <h2 class="fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
+        <h2 class="fade-in translatable" style="margin-top: 3rem;" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
+        <p class="fade-in translatable" style="margin-bottom: 2rem;" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age">10€ - 20€ atkarībā no vecuma</p>
         <div class="plant-grid">
             <div class="plant-card fade-in"><h4>Blue Banana</h4></div>
             <div class="plant-card fade-in"><h4>Boreal Beast</h4></div>
@@ -396,6 +450,19 @@
     </section>
 
     <script>
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close menu when a link is clicked (for mobile)
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.getElementById('nav-links').classList.remove('active');
+            });
+        });
+
         // Language Toggle Script
         let currentLang = 'lv';
         function toggleLanguage() {
