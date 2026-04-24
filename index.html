@@ -8,8 +8,10 @@
     <style>
         :root {
             --bg-color: #0d1117;
+            --bg-alt: #121820;
             --text-main: #f0f6fc;
             --accent-blue: #5a9ce2;
+            --nav-height: 70px;
         }
 
         * {
@@ -18,15 +20,15 @@
             padding: 0;
         }
 
-        /* --- Global Setup (Restored Natural Scrolling) --- */
+        /* --- Global Setup --- */
         body, html {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            scroll-behavior: smooth;
+            height: 100%;
+            overflow: hidden; /* Locks the body, lets snap-container handle scrolling */
         }
 
-        /* --- Fix for sticky focus/highlights --- */
         button, a, input, select {
             outline: none !important;
             -webkit-tap-highlight-color: transparent;
@@ -37,35 +39,68 @@
         }
 
         h2 {
-            font-size: 3.5rem;
-            margin-bottom: 2rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
             color: var(--accent-blue);
             text-align: center;
         }
 
         p {
             font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+            text-align: center;
         }
 
-        /* --- Scroll Animations --- */
+        /* --- SNAP SCROLLING CONTAINER --- */
+        .snap-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* --- INDIVIDUAL SCREENS (Slides) --- */
+        .snap-slide {
+            min-height: 100vh; /* min-height allows for mobile keyboard popup in the form */
+            width: 100vw;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: calc(var(--nav-height) + 1rem) 2rem 2rem 2rem;
+            position: relative;
+        }
+
+        /* Alternate background colors for clear section breaks */
+        .bg-alt { background-color: var(--bg-alt); }
+        
+        #hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1598336040854-1eb31110edaa?auto=format&fit=crop&w=1920&q=80') center/cover;
+        }
+
+        /* --- Animations --- */
         .fade-in {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
 
         /* --- Navigation --- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 70px;
+            height: var(--nav-height);
             padding: 0 2rem;
             background: rgba(13, 17, 23, 0.95);
             backdrop-filter: blur(10px);
@@ -75,7 +110,6 @@
             align-items: center;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-
         .nav-brand {
             font-family: 'Amatic SC', cursive;
             font-size: 1.8rem;
@@ -83,19 +117,16 @@
             text-decoration: none;
             letter-spacing: 1px;
         }
-
         .nav-right-container {
             display: flex;
             align-items: center;
             gap: 1.5rem;
         }
-
         .nav-links {
             display: flex;
             gap: 1.5rem;
             align-items: center;
         }
-
         .nav-links a {
             color: var(--text-main);
             text-decoration: none;
@@ -105,10 +136,8 @@
             letter-spacing: 1px;
             transition: 0.3s;
         }
-
         .nav-links a:hover { color: var(--accent-blue); }
 
-        /* --- Simplistic Language Switcher --- */
         .lang-switch {
             background: transparent;
             border: 1px solid var(--accent-blue);
@@ -123,138 +152,47 @@
             width: 50px;
             text-align: center;
         }
-
-        .lang-switch:hover {
-            background: rgba(90, 156, 226, 0.2);
-        }
-
+        .lang-switch:hover { background: rgba(90, 156, 226, 0.2); }
         .hamburger {
-            display: none;
-            font-size: 2rem;
-            background: none;
-            border: none;
-            color: var(--text-main);
-            cursor: pointer;
+            display: none; font-size: 2rem; background: none; border: none;
+            color: var(--text-main); cursor: pointer;
         }
 
-        /* --- Sections --- */
-        section {
-            padding: 8rem 2rem 4rem 2rem; /* Added more top padding so headers aren't hidden by nav */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            position: relative;
-        }
+        /* --- Hero --- */
+        .hero-logo { max-width: 90vw; width: 500px; height: auto; margin-bottom: 2rem; }
 
-        /* --- Hero Section --- */
-        #hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1598336040854-1eb31110edaa?auto=format&fit=crop&w=1920&q=80') center/cover;
-            text-align: center;
-            padding-top: 4rem;
-        }
-        .hero-logo {
-            max-width: 90vw;
-            width: 600px;
-            height: auto;
-            margin-bottom: 2rem;
-        }
-
-        /* --- Image/Text Grids (Market & Delivery) --- */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            width: 100%;
-        }
-        .feature-card {
-            background: rgba(255,255,255,0.02);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
-            padding-bottom: 1.5rem;
-        }
-        .feature-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
+        /* --- Icons & Feature Layouts --- */
+        .big-icon {
+            font-size: 4rem;
             margin-bottom: 1rem;
-        }
-        .icon-text {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        /* --- Interactive Dotted Trail (U-Pick) --- */
-        #self-picking {
-            background: #121820;
-        }
-        .trail-wrapper {
-            position: relative;
-            max-width: 800px;
-            width: 100%;
-            margin: 2rem auto;
-            padding: 1rem 0;
-        }
-        .trail-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            border-left: 4px dashed rgba(255, 255, 255, 0.4);
-            z-index: 0;
-        }
-        .trail-step {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        .trail-icon {
-            width: 100px;
             height: 100px;
-            background: var(--bg-color);
-            border: 3px solid var(--accent-blue);
-            border-radius: 50%;
+            width: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 0 20px rgba(90, 156, 226, 0.3);
-            transition: transform 0.3s;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 0 20px rgba(90, 156, 226, 0.2);
         }
-        .trail-step:hover .trail-icon {
-            transform: scale(1.1);
-        }
-        .trail-content {
-            background: rgba(0,0,0,0.5);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
+        .feature-img {
+            width: 100%;
             max-width: 400px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* --- Smaller Plants Catalog --- */
+        /* --- Plants Catalog --- */
         .plant-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 1rem;
-            max-width: 900px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 0.8rem;
+            max-width: 800px;
             width: 100%;
-            margin-bottom: 2rem;
+            margin-top: 1rem;
         }
         .plant-card {
             background: rgba(255, 255, 255, 0.05);
@@ -272,99 +210,61 @@
         }
         .plant-card h4 {
             font-family: 'Amatic SC', cursive;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--accent-blue);
         }
         .plant-card p.click-hint {
-            font-size: 0.7rem;
-            color: #888;
-            margin-top: 0.5rem;
-            margin-bottom: 0;
-            text-transform: uppercase;
+            font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase;
         }
 
         /* --- Form --- */
         .form-container {
             background: rgba(255, 255, 255, 0.03);
-            padding: 3rem;
+            padding: 2rem;
             border-radius: 15px;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
             border: 1px solid rgba(255,255,255,0.1);
         }
         input, select, button {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            border-radius: 5px;
-            font-family: inherit;
+            width: 100%; padding: 0.9rem; margin-bottom: 0.8rem;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);
+            color: white; border-radius: 5px; font-family: inherit; font-size: 0.9rem;
         }
         button[type="submit"] {
-            background: var(--accent-blue);
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: var(--accent-blue); font-weight: bold; cursor: pointer;
+            border: none; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
         }
         button[type="submit"]:hover { background: #4682c4; }
 
-        /* --- Modal (Plant Info) --- */
+        /* --- Modal --- */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
             display: flex; justify-content: center; align-items: center;
-            z-index: 2000;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
+            z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
-        .modal-overlay.active {
-            opacity: 1; pointer-events: auto;
-        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-content {
-            background: var(--bg-color);
-            padding: 2.5rem;
-            border-radius: 15px;
-            border: 1px solid var(--accent-blue);
-            max-width: 450px; width: 90%;
-            text-align: center;
-            position: relative;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: var(--bg-color); padding: 2.5rem; border-radius: 15px;
+            border: 1px solid var(--accent-blue); max-width: 400px; width: 90%;
+            text-align: center; position: relative; transform: scale(0.9); transition: 0.3s;
         }
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
         .modal-close {
-            position: absolute; top: 10px; right: 15px;
-            font-size: 2rem; cursor: pointer; color: #888;
-            background: none; border: none; width: auto; padding: 0; margin: 0;
-            transition: 0.3s;
+            position: absolute; top: 10px; right: 15px; font-size: 2rem; cursor: pointer;
+            color: #888; background: none; border: none; padding: 0; margin: 0;
         }
-        .modal-close:hover { color: white; }
 
-        /* --- Mobile Responsiveness --- */
+        /* --- Mobile Nav --- */
         @media (max-width: 900px) {
             .hamburger { display: block; }
             .nav-links {
-                position: fixed; top: 70px; left: -100%; flex-direction: column;
+                position: fixed; top: var(--nav-height); left: -100%; flex-direction: column;
                 background: rgba(13, 17, 23, 0.98); width: 100%; text-align: center;
                 transition: left 0.3s ease; padding: 2rem 0; gap: 2rem;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             }
             .nav-links.active { left: 0; }
-            .nav-brand { display: block; }
-            
-            .trail-line { left: 10%; }
-            .trail-step { flex-direction: row; text-align: left; gap: 1rem; }
-            .trail-icon { width: 70px; height: 70px; font-size: 1.8rem; flex-shrink: 0; margin-bottom: 0; }
         }
     </style>
 </head>
@@ -376,146 +276,142 @@
             <div class="nav-links" id="nav-links">
                 <a href="#hero" class="translatable nav-item" data-lv="Sākums" data-en="Home">Sākums</a>
                 <a href="#market" class="translatable nav-item" data-lv="Tirgus un Piegāde" data-en="Market & Delivery">Tirgus un Piegāde</a>
-                <a href="#self-picking" class="translatable nav-item" data-lv="Pašlasīšana" data-en="U-Pick">Pašlasīšana</a>
-                <a href="#plants" class="translatable nav-item" data-lv="Stādi" data-en="Plants">Stādi</a>
+                <a href="#upick-1" class="translatable nav-item" data-lv="Pašlasīšana" data-en="U-Pick">Pašlasīšana</a>
+                <a href="#plants-blue" class="translatable nav-item" data-lv="Stādi" data-en="Plants">Stādi</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            
             <button class="lang-switch" id="langBtn" onclick="toggleLanguage()">LV</button>
             <button class="hamburger" onclick="toggleMenu()">☰</button>
         </div>
     </nav>
 
-    <section id="hero">
-        <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
+    <div class="snap-container">
         
-        <p class="fade-in translatable" style="transition-delay: 0.2s; max-width: 600px;" 
-           data-lv="Ģimenes melleņu saimniecība Aizkrauklē." 
-           data-en="A family blueberry farm in Aizkraukle.">
-           Ģimenes melleņu saimniecība Aizkrauklē.
-        </p>
-    </section>
+        <section id="hero" class="snap-slide">
+            <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
+            <p class="fade-in delay-1 translatable" style="max-width: 600px;" 
+               data-lv="Ģimenes melleņu saimniecība Aizkrauklē." 
+               data-en="A family blueberry farm in Aizkraukle.">
+               Ģimenes melleņu saimniecība Aizkrauklē.
+            </p>
+            <p class="fade-in delay-2" style="font-size: 0.8rem; margin-top: 3rem; opacity: 0.5;">
+                <span class="translatable" data-lv="Ritiniet uz leju" data-en="Scroll down">Ritiniet uz leju</span> ↓
+            </p>
+        </section>
 
-    <section id="market">
-        <h2 class="fade-in translatable" data-lv="Mūsu Pakalpojumi" data-en="Our Services">Mūsu Pakalpojumi</h2>
-        
-        <div class="feature-grid">
-            <div class="feature-card fade-in">
-                <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=600&q=80" alt="Market">
-                <h3 class="translatable" style="font-size: 2.5rem; color: var(--accent-blue);" data-lv="Zemnieku Nakts Tirgus" data-en="Farmers Night Market">Zemnieku Nakts Tirgus</h3>
-                <div class="icon-text">📍 <span class="translatable" data-lv="Rīga" data-en="Riga">Rīga</span></div>
-                <div class="icon-text">🕒 <span class="translatable" data-lv="Katru dienu no 15:00" data-en="Every day from 15:00">Katru dienu no 15:00</span></div>
-                <div class="icon-text">💳 <span class="translatable" data-lv="Skaidrā naudā / Karte" data-en="Cash / Card">Skaidrā naudā / Karte</span></div>
-            </div>
+        <section id="market" class="snap-slide bg-alt">
+            <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=600&q=80" alt="Market" class="feature-img fade-in">
+            <h2 class="fade-in delay-1 translatable" data-lv="Zemnieku Nakts Tirgus" data-en="Farmers Night Market">Zemnieku Nakts Tirgus</h2>
+            <p class="fade-in delay-2">📍 <span class="translatable" data-lv="Rīga" data-en="Riga">Rīga</span></p>
+            <p class="fade-in delay-2">🕒 <span class="translatable" data-lv="Katru dienu no 15:00" data-en="Every day from 15:00">Katru dienu no 15:00</span></p>
+            <p class="fade-in delay-2">💳 <span class="translatable" data-lv="Skaidrā naudā / Karte" data-en="Cash / Card">Skaidrā naudā / Karte</span></p>
+        </section>
 
-            <div class="feature-card fade-in" style="transition-delay: 0.2s;">
-                <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=600&q=80" alt="Van">
-                <h3 class="translatable" style="font-size: 2.5rem; color: var(--accent-blue);" data-lv="Ogu Piegāde" data-en="Berry Delivery">Ogu Piegāde</h3>
-                <div class="icon-text">🚚 <span class="translatable" data-lv="Bezmaksas piegāde (Rīga/Aizkraukle)" data-en="Free Delivery (Riga/Aizkraukle)">Bezmaksas piegāde (Rīga/Aizkraukle)</span></div>
-                <div class="icon-text">📦 <span class="translatable" data-lv="Min. 5kg (6.50€/kg)" data-en="Min 5kg (€6.50/kg)">Min. 5kg (6.50€/kg)</span></div>
-                <div class="icon-text">❄️ <span class="translatable" data-lv="Refrižeratoru furgons" data-en="Refrigerated Van">Refrižeratoru furgons</span></div>
-            </div>
-        </div>
-    </section>
+        <section id="delivery" class="snap-slide">
+            <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=600&q=80" alt="Van" class="feature-img fade-in">
+            <h2 class="fade-in delay-1 translatable" data-lv="Ogu Piegāde" data-en="Berry Delivery">Ogu Piegāde</h2>
+            <p class="fade-in delay-2">🚚 <span class="translatable" data-lv="Bezmaksas piegāde (Rīga/Aizkraukle)" data-en="Free Delivery (Riga/Aizkraukle)">Bezmaksas piegāde (Rīga/Aizkraukle)</span></p>
+            <p class="fade-in delay-2">📦 <span class="translatable" data-lv="Min. 5kg (6.50€/kg)" data-en="Min 5kg (€6.50/kg)">Min. 5kg (6.50€/kg)</span></p>
+            <p class="fade-in delay-2">❄️ <span class="translatable" data-lv="Refrižeratoru furgons" data-en="Refrigerated Van">Refrižeratoru furgons</span></p>
+        </section>
 
-    <section id="self-picking">
-        <h2 class="fade-in translatable" data-lv="Kā darbojas pašlasīšana?" data-en="How U-Pick Works?">Kā darbojas pašlasīšana?</h2>
-        <p class="fade-in translatable" data-lv="Atbrauc uz Aizkraukli un lasi pats par 4.50€/kg!" data-en="Visit Aizkraukle and pick your own for €4.50/kg!">Atbrauc uz Aizkraukli un lasi pats par 4.50€/kg!</p>
+        <section id="upick-1" class="snap-slide bg-alt">
+            <div class="big-icon fade-in">🪣</div>
+            <h2 class="fade-in delay-1 translatable" data-lv="1. Nosver tukšu trauku" data-en="1. Weigh your bucket">1. Nosver tukšu trauku</h2>
+            <p class="fade-in delay-2 translatable" style="max-width: 400px;" 
+               data-lv="Pašlasīšana (4.50€/kg). Sekojiet zīmēm uz svēršanas staciju. Aicinām ņemt savus traukus!" 
+               data-en="U-Pick (€4.50/kg). Follow signs to the weighing station. We encourage bringing your own bucket!">
+               Pašlasīšana (4.50€/kg). Sekojiet zīmēm uz svēršanas staciju. Aicinām ņemt savus traukus!
+            </p>
+        </section>
 
-        <div class="trail-wrapper">
-            <div class="trail-line"></div>
+        <section id="upick-2" class="snap-slide">
+            <div class="big-icon fade-in">🫐</div>
+            <h2 class="fade-in delay-1 translatable" data-lv="2. Lasi ogas" data-en="2. Pick berries">2. Lasi ogas</h2>
+            <p class="fade-in delay-2 translatable" style="max-width: 400px;"
+               data-lv="Dodies uz lauku un salasi lielākās un svaigākās mellenes!" 
+               data-en="Head into the fields and pick the largest, freshest blueberries!">
+               Dodies uz lauku un salasi lielākās un svaigākās mellenes!
+            </p>
+        </section>
 
-            <div class="trail-step fade-in">
-                <div class="trail-icon">🪣</div>
-                <div class="trail-content">
-                    <h3 class="translatable" style="font-size: 2rem; color: var(--accent-blue);" data-lv="1. Nosver tukšu trauku" data-en="1. Weigh your bucket">1. Nosver tukšu trauku</h3>
-                    <p class="translatable" data-lv="Sekojiet zīmēm uz svēršanas staciju. Mēs iesakām ņemt savus traukus dabas vārdā!" data-en="Follow signs to the weighing station. We encourage bringing your own bucket for nature!">Sekojiet zīmēm uz svēršanas staciju. Mēs iesakām ņemt savus traukus dabas vārdā!</p>
+        <section id="upick-3" class="snap-slide bg-alt">
+            <div class="big-icon fade-in">⚖️</div>
+            <h2 class="fade-in delay-1 translatable" data-lv="3. Nosver un maksā" data-en="3. Weigh & Pay">3. Nosver un maksā</h2>
+            <p class="fade-in delay-2 translatable" style="max-width: 400px;"
+               data-lv="Nāc atpakaļ, nosver pilno trauku un norēķinies (skaidrā naudā vai ar karti)." 
+               data-en="Come back, weigh your full bucket, and pay (cash or card).">
+               Nāc atpakaļ, nosver pilno trauku un norēķinies (skaidrā naudā vai ar karti).
+            </p>
+        </section>
+
+        <section id="plants-blue" class="snap-slide">
+            <h2 class="fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
+            <p class="fade-in delay-1 translatable" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age">15€ - 30€ atkarībā no vecuma</p>
+            
+            <div class="plant-grid fade-in delay-2">
+                <div class="plant-card" onclick="openPlantModal('Patriot', 'Vidēji agrīna šķirne, izturīga pret salu. Ražo ļoti lielas un saldas ogas.', 'Mid-early variety, frost-resistant. Produces very large and sweet berries.')">
+                    <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                </div>
+                <div class="plant-card" onclick="openPlantModal('Bluecrop', 'Viena no populārākajām šķirnēm pasaulē. Vidēji agrīna, klasiska garša.', 'One of the most popular varieties worldwide. Mid-season, classic taste.')">
+                    <h4>Bluecrop</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                </div>
+                <div class="plant-card" onclick="openPlantModal('Chanticleer', 'Ļoti agrīna šķirne. Vidēji lielas ogas ar lielisku garšu.', 'Very early variety. Medium-sized berries with excellent flavor.')">
+                    <h4>Chanticleer</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                </div>
+                <div class="plant-card" onclick="openPlantModal('Toro', 'Vidēji agrīna šķirne. Kompakts krūms ar milzīgām ogām.', 'Mid-early variety. Compact bush producing giant berries.')">
+                    <h4>Toro</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                </div>
+                <div class="plant-card" onclick="openPlantModal('Chandler', 'Vēla šķirne. Vislielākās ogas starp visām mellenēm, ilgs ražas laiks.', 'Late variety. Has the largest berries of all blueberries, long harvest.')">
+                    <h4>Chandler</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                </div>
+                <div class="plant-card" onclick="openPlantModal('Brigitta Blue', 'Vēla šķirne. Ļoti saldas, stingras un kraukšķīgas ogas.', 'Late variety. Very sweet, firm and crisp berries.')">
+                    <h4>Brigitta</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
                 </div>
             </div>
+        </section>
 
-            <div class="trail-step fade-in">
-                <div class="trail-icon">🫐</div>
-                <div class="trail-content">
-                    <h3 class="translatable" style="font-size: 2rem; color: var(--accent-blue);" data-lv="2. Lasi ogas" data-en="2. Pick berries">2. Lasi ogas</h3>
-                    <p class="translatable" data-lv="Dodies uz lauku un salasi lielākās un svaigākās mellenes!" data-en="Head into the fields and pick the largest, freshest blueberries!">Dodies uz lauku un salasi lielākās un svaigākās mellenes!</p>
+        <section id="plants-honey" class="snap-slide bg-alt">
+            <h2 class="fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
+            <p class="fade-in delay-1 translatable" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age">10€ - 20€ atkarībā no vecuma</p>
+            
+            <div class="plant-grid fade-in delay-2">
+                <div class="plant-card" onclick="openPlantModal('Blue Banana', 'Vidēji vēla šķirne. Ļoti saldas, interesantas banānu formas ogas.', 'Mid-late variety. Very sweet, interestingly banana-shaped berries.')">
+                    <h4>Banana</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                </div>
+                <div class="plant-card" onclick="openPlantModal('Boreal Beast', 'Vidēji vēla šķirne. Lieliska, salda garša, izcila šķirne apputeksnēšanai.', 'Mid-late variety. Excellent sweet taste, outstanding pollinator.')">
+                    <h4>Beast</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                </div>
+                <div class="plant-card" onclick="openPlantModal('Strawberry', 'Lielas, saldas ogas ar unikālām zemeņu garšas niansēm.', 'Large, sweet berries with unique hints of strawberry flavor.')">
+                    <h4>Strawberry</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                </div>
+                <div class="plant-card" onclick="openPlantModal('Giant\'s Heart', 'Ļoti ražīga šķirne ar milzīgām, sirds formas ogām.', 'Highly productive variety with giant, heart-shaped berries.')">
+                    <h4>Heart</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
                 </div>
             </div>
+        </section>
 
-            <div class="trail-step fade-in">
-                <div class="trail-icon">⚖️</div>
-                <div class="trail-content">
-                    <h3 class="translatable" style="font-size: 2rem; color: var(--accent-blue);" data-lv="3. Nosver un maksā" data-en="3. Weigh & Pay">3. Nosver un maksā</h3>
-                    <p class="translatable" data-lv="Nāc atpakaļ, nosver pilno trauku un norēķinies (skaidrā naudā vai ar karti)." data-en="Come back, weigh your full bucket, and pay (cash or card).">Nāc atpakaļ, nosver pilno trauku un norēķinies (skaidrā naudā vai ar karti).</p>
-                </div>
+        <section id="order" class="snap-slide">
+            <div class="form-container fade-in">
+                <h2 class="translatable" data-lv="Pasūtīt Piegādi" data-en="Order Delivery">Pasūtīt Piegādi</h2>
+                <form action="#" method="POST">
+                    <input type="text" name="name" class="translatable-placeholder delay-1 fade-in" data-lv-placeholder="Vārds, Uzvārds" data-en-placeholder="Full Name" placeholder="Vārds, Uzvārds" required>
+                    <input type="text" name="address" class="translatable-placeholder delay-1 fade-in" data-lv-placeholder="Piegādes Adrese" data-en-placeholder="Delivery Address" placeholder="Piegādes Adrese" required>
+                    <input type="number" name="quantity" class="translatable-placeholder delay-2 fade-in" data-lv-placeholder="Daudzums (Min 5kg)" data-en-placeholder="Amount (Min 5kg)" placeholder="Daudzums (Min 5kg)" min="5" required>
+                    <input type="datetime-local" name="datetime" class="delay-2 fade-in" required>
+                    
+                    <select name="payment" class="delay-3 fade-in" required>
+                        <option value="" disabled selected class="translatable" data-lv="Apmaksas veids" data-en="Payment Method">Apmaksas veids</option>
+                        <option value="card" class="translatable" data-lv="Karte saņemot" data-en="Card on delivery">Karte saņemot</option>
+                        <option value="cash" class="translatable" data-lv="Skaidra nauda" data-en="Cash on delivery">Skaidra nauda</option>
+                    </select>
+
+                    <button type="submit" class="translatable delay-3 fade-in" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
+                </form>
             </div>
-        </div>
-    </section>
-
-    <section id="plants">
-        <h2 class="fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
-        <p class="fade-in translatable" style="margin-bottom: 2rem;" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age">15€ - 30€ atkarībā no vecuma</p>
+        </section>
         
-        <div class="plant-grid fade-in">
-            <div class="plant-card" onclick="openPlantModal('Patriot', 'Vidēji agrīna šķirne, izturīga pret salu. Ražo ļoti lielas un saldas ogas.', 'Mid-early variety, frost-resistant. Produces very large and sweet berries.')">
-                <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-            <div class="plant-card" onclick="openPlantModal('Bluecrop', 'Viena no populārākajām šķirnēm pasaulē. Vidēji agrīna, klasiska garša, ļoti ražīga.', 'One of the most popular varieties worldwide. Mid-season, classic taste, highly productive.')">
-                <h4>Bluecrop</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-            <div class="plant-card" onclick="openPlantModal('Chanticleer', 'Ļoti agrīna šķirne. Vidēji lielas ogas ar lielisku garšu.', 'Very early variety. Medium-sized berries with excellent flavor.')">
-                <h4>Chanticleer</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-            <div class="plant-card" onclick="openPlantModal('Toro', 'Vidēji agrīna šķirne. Kompakts krūms ar milzīgām ogām.', 'Mid-early variety. Compact bush producing giant berries.')">
-                <h4>Toro</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-            <div class="plant-card" onclick="openPlantModal('Chandler', 'Vēla šķirne. Vislielākās ogas starp visām mellenēm, ilgs ražas laiks.', 'Late variety. Has the largest berries of all blueberries, long harvest period.')">
-                <h4>Chandler</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-            <div class="plant-card" onclick="openPlantModal('Brigitta Blue', 'Vēla šķirne. Ļoti saldas, stingras un kraukšķīgas ogas, labi uzglabājas.', 'Late variety. Very sweet, firm and crisp berries, stores excellently.')">
-                <h4>Brigitta Blue</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-        </div>
-
-        <h2 class="fade-in translatable" style="margin-top: 2rem;" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
-        <p class="fade-in translatable" style="margin-bottom: 2rem;" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age">10€ - 20€ atkarībā no vecuma</p>
-        
-        <div class="plant-grid fade-in">
-            <div class="plant-card" onclick="openPlantModal('Blue Banana', 'Vidēji vēla šķirne. Ļoti saldas, interesantas banānu formas ogas.', 'Mid-late variety. Very sweet, interestingly banana-shaped berries.')">
-                <h4>Blue Banana</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-            <div class="plant-card" onclick="openPlantModal('Boreal Beast', 'Vidēji vēla šķirne. Lieliska, salda garša, izcila šķirne apputeksnēšanai.', 'Mid-late variety. Excellent sweet taste, outstanding pollinator.')">
-                <h4>Boreal Beast</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-            <div class="plant-card" onclick="openPlantModal('Strawberry Sensation', 'Lielas, saldas ogas ar unikālām zemeņu garšas niansēm.', 'Large, sweet berries with unique hints of strawberry flavor.')">
-                <h4>Strawberry Sensation</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-            <div class="plant-card" onclick="openPlantModal('Giant\'s Heart', 'Ļoti ražīga šķirne ar milzīgām, sirds formas ogām.', 'Highly productive variety with giant, heart-shaped berries.')">
-                <h4>Giant's Heart</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="order">
-        <div class="form-container fade-in">
-            <h2 class="translatable" data-lv="Pasūtīt Piegādi" data-en="Order Delivery">Pasūtīt Piegādi</h2>
-            <form action="#" method="POST">
-                <input type="text" name="name" class="translatable-placeholder" data-lv-placeholder="Vārds, Uzvārds" data-en-placeholder="Full Name" placeholder="Vārds, Uzvārds" required>
-                <input type="text" name="address" class="translatable-placeholder" data-lv-placeholder="Piegādes Adrese" data-en-placeholder="Delivery Address" placeholder="Piegādes Adrese" required>
-                <input type="number" name="quantity" class="translatable-placeholder" data-lv-placeholder="Daudzums (Min 5kg)" data-en-placeholder="Amount (Min 5kg)" placeholder="Daudzums (Min 5kg)" min="5" required>
-                <input type="datetime-local" name="datetime" required>
-                
-                <select name="payment" required>
-                    <option value="" disabled selected class="translatable" data-lv="Apmaksas veids" data-en="Payment Method">Apmaksas veids</option>
-                    <option value="card" class="translatable" data-lv="Karte saņemot" data-en="Card on delivery">Karte saņemot</option>
-                    <option value="cash" class="translatable" data-lv="Skaidra nauda" data-en="Cash on delivery">Skaidra nauda</option>
-                </select>
-
-                <button type="submit" class="translatable" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
-            </form>
-        </div>
-    </section>
-    
-    <div class="modal-overlay" id="plantModal" onclick="closePlantModal(event)">
+    </div> <div class="modal-overlay" id="plantModal" onclick="closePlantModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closePlantModal(event)">&times;</button>
             <h3 id="modalTitle" style="font-family: 'Amatic SC', cursive; font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem;">Variety</h3>
@@ -525,17 +421,9 @@
     </div>
 
     <script>
-        // --- Prevent sticky focus highlighting ---
-        document.querySelectorAll('button, a').forEach(el => {
-            el.addEventListener('click', function() {
-                this.blur();
-            });
-        });
-
         // --- Hamburger Menu Toggle ---
         function toggleMenu() {
-            const navLinks = document.getElementById('nav-links');
-            navLinks.classList.toggle('active');
+            document.getElementById('nav-links').classList.toggle('active');
         }
 
         document.querySelectorAll('.nav-item').forEach(item => {
@@ -547,23 +435,16 @@
         // --- Language Toggle Logic ---
         let currentLang = 'lv';
         function toggleLanguage() {
-            // Swap Language
             currentLang = currentLang === 'lv' ? 'en' : 'lv';
-            
-            // Update UI Button Text
             document.getElementById('langBtn').innerText = currentLang.toUpperCase();
             
-            // Translate text elements
             document.querySelectorAll('.translatable').forEach(el => {
                 el.innerText = el.getAttribute(`data-${currentLang}`);
             });
-
-            // Translate placeholders
             document.querySelectorAll('.translatable-placeholder').forEach(el => {
                 el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`);
             });
 
-            // Translate active modal if it is open
             document.getElementById('modalDescLv').style.display = currentLang === 'lv' ? 'block' : 'none';
             document.getElementById('modalDescEn').style.display = currentLang === 'en' ? 'block' : 'none';
         }
@@ -574,7 +455,6 @@
             document.getElementById('modalDescLv').innerText = descLv;
             document.getElementById('modalDescEn').innerText = descEn;
             
-            // Show correct language description
             document.getElementById('modalDescLv').style.display = currentLang === 'lv' ? 'block' : 'none';
             document.getElementById('modalDescEn').style.display = currentLang === 'en' ? 'block' : 'none';
 
@@ -586,14 +466,17 @@
             document.getElementById('plantModal').classList.remove('active');
         }
 
-        // --- Restored Global Scroll Observer ---
+        // --- Scroll Animation Script (Triggers perfectly per snap-slide) ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1 });
+        }, { 
+            root: document.querySelector('.snap-container'),
+            threshold: 0.1 
+        });
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     </script>
