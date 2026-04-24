@@ -53,6 +53,7 @@
             scroll-behavior: smooth;
         }
 
+        /* --- INDIVIDUAL SCREENS (Slides) --- */
         .snap-slide {
             height: 100vh; 
             height: 100dvh; 
@@ -64,7 +65,6 @@
             align-items: center;
             padding: calc(var(--nav-height) + 1.5rem) 2rem 0 2rem; 
             position: relative;
-            z-index: 1;
         }
 
         .bg-alt { background-color: var(--bg-alt); }
@@ -81,7 +81,6 @@
             margin-bottom: 0;
             width: 100%;
             flex-shrink: 0; 
-            z-index: 5;
         }
 
         .slide-content {
@@ -93,7 +92,6 @@
             width: 100%;
             height: 100%; 
             padding-bottom: 5rem; 
-            z-index: 5;
         }
 
         #order .slide-content {
@@ -174,6 +172,7 @@
         .lang-switch {
             background: transparent;
             border: 1px solid var(--accent-blue);
+            padding: 0.4rem 1rem;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
@@ -181,16 +180,10 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
             color: white;
-            width: 55px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center; 
+            width: 50px;
+            text-align: center;
         }
-        @media (hover: hover) {
-            .lang-switch:hover { background: rgba(80, 114, 167, 0.2); }
-        }
-
+        .lang-switch:hover { background: rgba(90, 156, 226, 0.2); }
         .hamburger {
             display: none; font-size: 2rem; background: none; border: none;
             color: var(--text-main); cursor: pointer;
@@ -232,8 +225,7 @@
         /* --- Clean Left-Aligned Info Lists --- */
         .info-list {
             display: flex; flex-direction: column; gap: 0.8rem;
-            align-items: flex-start; /* Locks icons to the left */
-            margin: 0 auto; width: fit-content; max-width: 100%;
+            align-items: flex-start; margin: 0 auto; width: fit-content; max-width: 100%;
         }
         .info-row {
             display: flex; align-items: flex-start; text-align: left;
@@ -360,13 +352,18 @@
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-content {
             background: var(--bg-color); padding: 2.5rem; border-radius: 15px;
-            border: 1px solid var(--accent-blue); max-width: 400px; width: 90%;
+            border: 1px solid var(--accent-blue); max-width: 450px; width: 90%;
             text-align: center; position: relative; transform: scale(0.9); transition: 0.3s;
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
         .modal-close {
             position: absolute; top: 10px; right: 15px; font-size: 2rem; cursor: pointer;
             color: #888; background: none; border: none; padding: 0; margin: 0;
+        }
+        
+        /* Format detailed modal descriptions */
+        #modalDescLv, #modalDescEn {
+            font-size: 0.95rem; line-height: 1.5; color: #ccc; text-align: left;
         }
 
         @media (max-width: 900px) {
@@ -379,18 +376,8 @@
             .nav-links.active { left: 0; }
             
             .slide-title { font-size: 2.8rem; }
-            
-            /* Squeezing U-Pick layout to fit beautifully on small screens */
-            .zigzag-timeline { gap: 0.8rem; margin-top: 0.5rem; }
-            .z-step { width: 100%; gap: 0.6rem; }
-            .z-icon { width: 40px; height: 40px; font-size: 1.1rem; }
-            .z-content { padding: 0.5rem 0.8rem; }
-            .z-content h3 { font-size: 1.3rem; margin-bottom: 0; }
-            .z-content p { font-size: 0.7rem; line-height: 1.2; }
-            .price-exaggerated { font-size: 1rem !important; }
-            .app-btn { padding: 3px 8px; font-size: 0.65rem; }
-            
-            .slide-content { padding-bottom: 2rem; } 
+            .z-step { width: 100%; gap: 0.4rem; }
+            .slide-content { padding-bottom: 6rem; }
             #order .slide-content { padding-bottom: 2rem; }
         }
     </style>
@@ -511,7 +498,7 @@
             </div>
         </section>
 
-        <section id="upick" class="snap-slide">
+        <section id="upick" class="snap-slide bg-alt">
             <div class="bg-slider-wrapper">
                 <img src="3.jpg" class="bg-slide-img active">
                 <img src="4.jpg" class="bg-slide-img">
@@ -537,7 +524,7 @@
                                 <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="app-btn" onclick="this.blur()">
                                     <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/waze.svg" width="14" height="14"> Waze
                                 </a>
-                                <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas?q=Kalna+Baložu+Ogas" target="_blank" class="app-btn" onclick="this.blur()">
+                                <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas" target="_blank" class="app-btn" onclick="this.blur()">
                                     <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlemaps.svg" width="14" height="14"> Maps
                                 </a>
                             </div>
@@ -591,22 +578,22 @@
             <div class="slide-content">
                 <p class="fade-in delay-1 translatable" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age" style="margin-bottom: 1.5rem;">15€ - 30€ atkarībā no vecuma</p>
                 <div class="plant-grid fade-in delay-2">
-                    <div class="plant-card" onclick="openPlantModal('Patriot', 'Vidēji agrīna šķirne, izturīga pret salu. Ražo ļoti lielas un saldas ogas.', 'Mid-early variety, frost-resistant. Produces very large and sweet berries.')">
+                    <div class="plant-card" onclick="openPlantModal('Patriot', 'Agrīna līdz vidēji agrīna šķirne. Ļoti augsta salizturība (līdz -34°C). Ogas ļoti lielas, plakaniski apaļas, ar lielisku garšu. Labi pacieš smagākas augsnes. Krūms stāvs un izplests.', 'Early to mid-season variety. Extremely frost-resistant (down to -34°C). Very large, flat-spherical berries with excellent flavor. Tolerates heavier soils well. Upright and spreading bush.')">
                         <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
-                    <div class="plant-card" onclick="openPlantModal('Bluecrop', 'Viena no populārākajām šķirnēm pasaulē. Vidēji agrīna, klasiska garša.', 'One of the most popular varieties worldwide. Mid-season, classic taste.')">
+                    <div class="plant-card" onclick="openPlantModal('Bluecrop', 'Vidēji agrīna šķirne, pasaules standarts. Ļoti ražīga. Ogas lielas, gaiši zilas, stingras, piemērotas gan saldēšanai, gan svaigam patēriņam. Augsta izturība pret sausumu un salu.', 'Mid-season variety, the global standard. Highly productive. Large, light blue, firm berries, excellent for freezing and fresh eating. High resistance to drought and frost.')">
                         <h4>Bluecrop</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
-                    <div class="plant-card" onclick="openPlantModal('Chanticleer', 'Ļoti agrīna šķirne. Vidēji lielas ogas ar lielisku garšu.', 'Very early variety. Medium-sized berries with excellent flavor.')">
+                    <div class="plant-card" onclick="openPlantModal('Chanticleer', 'Ļoti agrīna šķirne. Krūms stāvs. Ogas vidēji lielas līdz lielas, saldas, ar patīkamu aromātu. Laba izturība pret pavasara salnām. Nogatavojas viena no pirmajām.', 'Very early variety. Upright bush. Medium to large, sweet berries with a pleasant aroma. Good resistance to spring frosts. One of the first to ripen.')">
                         <h4>Chanticleer</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
-                    <div class="plant-card" onclick="openPlantModal('Toro', 'Vidēji agrīna šķirne. Kompakts krūms ar milzīgām ogām.', 'Mid-early variety. Compact bush producing giant berries.')">
+                    <div class="plant-card" onclick="openPlantModal('Toro', 'Vidēji agrīna šķirne. Ļoti lielas ogas, kas aug blīvos ķekaros, līdzīgi kā vīnogas. Izcila garša. Spēcīgs, kompakts un stāvs krūms. Augsta ražība.', 'Mid-season variety. Very large berries growing in tight clusters, similar to grapes. Outstanding flavor. Strong, compact, and upright bush. High yield.')">
                         <h4>Toro</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
-                    <div class="plant-card" onclick="openPlantModal('Chandler', 'Vēla šķirne. Vislielākās ogas starp visām mellenēm, ilgs ražas laiks.', 'Late variety. Has the largest berries of all blueberries, long harvest.')">
+                    <div class="plant-card" onclick="openPlantModal('Chandler', 'Vēla šķirne. Milzīgas ogas (pat virs 2 cm diametrā), iespējams, lielākās starp mellenēm. Ļoti ilgs ražas novākšanas periods (4-6 nedēļas). Lieliska garša.', 'Late-season variety. Giant berries (over 2cm in diameter), possibly the largest of all blueberries. Very long harvesting period (4-6 weeks). Excellent flavor.')">
                         <h4>Chandler</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
-                    <div class="plant-card" onclick="openPlantModal('Brigitta Blue', 'Vēla šķirne. Ļoti saldas, stingras un kraukšķīgas ogas.', 'Late variety. Very sweet, firm and crisp berries.')">
+                    <div class="plant-card" onclick="openPlantModal('Brigitta Blue', 'Vēla šķirne. Ogas ļoti stingras, kraukšķīgas, gaiši zilas. Izcili uzglabājas un pārvadājamas. Spēcīgi augošs, stāvs krūms.', 'Late-season variety. Berries are very firm, crisp, and light blue. Outstanding shelf life and transportability. Vigorous, upright-growing bush.')">
                         <h4>Brigitta</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
                 </div>
@@ -619,16 +606,16 @@
             <div class="slide-content">
                 <p class="fade-in delay-1 translatable" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age" style="margin-bottom: 1.5rem;">10€ - 20€ atkarībā no vecuma</p>
                 <div class="plant-grid fade-in delay-2">
-                    <div class="plant-card" onclick="openPlantModal('Blue Banana', 'Vidēji vēla šķirne. Ļoti saldas, interesantas banānu formas ogas.', 'Mid-late variety. Very sweet, interestingly banana-shaped berries.')">
+                    <div class="plant-card" onclick="openPlantModal('Blue Banana', 'Vidēji vēla sausseržu šķirne. Ogas ar izteiktu banānu formu, garenas, saldas un sulīgas. Krūms stāvs, kupolveida. Ļoti ražīga.', 'Mid-late honeyberry variety. Berries have a distinct banana shape, elongated, sweet, and juicy. Upright, dome-shaped bush. Very productive.')">
                         <h4>Banana</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
-                    <div class="plant-card" onclick="openPlantModal('Boreal Beast', 'Vidēji vēla šķirne. Lieliska, salda garša, izcila šķirne apputeksnēšanai.', 'Mid-late variety. Excellent sweet taste, outstanding pollinator.')">
+                    <div class="plant-card" onclick="openPlantModal('Boreal Beast', 'Vidēji vēla šķirne. Lieliska garša – salda ar patīkamu skābumiņu. Ogas stingras un gaļīgas. Izcils apputeksnētājs citām vēlajām šķirnēm. Spēcīgs krūms.', 'Mid-late variety. Excellent flavor – sweet with a pleasant tartness. Firm, meaty berries. An outstanding pollinator for other late varieties. Vigorous bush.')">
                         <h4>Beast</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
-                    <div class="plant-card" onclick="openPlantModal('Strawberry Sensation', 'Lielas, saldas ogas ar unikālām zemeņu garšas niansēm.', 'Large, sweet berries with unique hints of strawberry flavor.')">
+                    <div class="plant-card" onclick="openPlantModal('Strawberry Sensation', 'Vidēji vēla šķirne. Salda garša ar pamanāmām zemeņu niansēm. Lielas ogas. Vidēji spēcīgi augošs, nedaudz izplests krūms. Augsta ražība.', 'Mid-late variety. Sweet flavor with noticeable strawberry notes. Large berries. Medium-vigor, slightly spreading bush. High yield.')">
                         <h4>Strawberry</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
-                    <div class="plant-card" onclick="openPlantModal('Giant\'s Heart', 'Ļoti ražīga šķirne ar milzīgām, sirds formas ogām.', 'Highly productive variety with giant, heart-shaped berries.')">
+                    <div class="plant-card" onclick="openPlantModal('Giant\'s Heart', 'Vidēji vēla šķirne. Ļoti lielas, sirds formas vai ovālas ogas. Patīkama, salda garša. Spēcīgs, stāvus izplests krūms.', 'Mid-late variety. Very large, heart-shaped or oval berries. Pleasant, sweet flavor. Strong, upright-spreading bush.')">
                         <h4>Heart</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                     </div>
                 </div>
