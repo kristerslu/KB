@@ -10,7 +10,7 @@
             --bg-color: #0d1117;
             --bg-alt: #121820;
             --text-main: #f0f6fc;
-            --accent-blue: #5a9ce2;
+            --accent-blue: #5072A7; /* Updated to a realistic, deeper blueberry color */
             --nav-height: 70px;
         }
 
@@ -38,6 +38,7 @@
         }
 
         p {
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.1rem;
             line-height: 1.5;
             margin-bottom: 0.5rem;
@@ -53,7 +54,6 @@
             scroll-behavior: smooth;
         }
 
-        /* --- INDIVIDUAL SCREENS (Slides) --- */
         .snap-slide {
             height: 100vh; 
             height: 100dvh; 
@@ -94,7 +94,6 @@
             padding-bottom: 5rem; 
         }
 
-        /* Compress form slide bottom padding so it fits screens perfectly */
         #order .slide-content {
             padding-bottom: 2rem;
         }
@@ -113,7 +112,6 @@
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
-        .delay-5 { transition-delay: 0.5s; }
 
         @keyframes scroll-drop {
             0% { transform: translateY(0); opacity: 1; }
@@ -121,7 +119,7 @@
             100% { transform: translateY(0); opacity: 0; }
         }
         .scroll-arrow-svg {
-            margin-top: 2.5rem;
+            margin-top: 3.5rem;
             animation: scroll-drop 2s infinite ease-in-out;
             display: block;
             width: 40px;
@@ -174,7 +172,6 @@
         .lang-switch {
             background: transparent;
             border: 1px solid var(--accent-blue);
-            padding: 0.4rem 1rem;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
@@ -182,56 +179,68 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
             color: white;
-            width: 50px;
-            text-align: center;
+            width: 55px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Properly centers text */
         }
-        .lang-switch:hover { background: rgba(90, 156, 226, 0.2); }
+        @media (hover: hover) {
+            .lang-switch:hover { background: rgba(80, 114, 167, 0.2); }
+        }
+
         .hamburger {
             display: none; font-size: 2rem; background: none; border: none;
             color: var(--text-main); cursor: pointer;
         }
 
         /* --- Hero --- */
-        .hero-logo { max-width: 90vw; width: 500px; height: auto; margin-bottom: 1.5rem; }
+        .hero-logo { max-width: 90vw; width: 500px; height: auto; margin-bottom: 3rem; }
 
-        .feature-img {
-            width: 100%;
-            max-width: 400px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 15px;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.1);
+        .hero-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            max-width: 700px;
+            color: #ddd;
         }
 
-        /* --- Reusable Card Payment Logos (Locked close to text) --- */
-        .payment-line {
+        /* --- General Layouts & SVG Icons --- */
+        .feature-img {
+            width: 100%; max-width: 400px; height: 200px; object-fit: cover;
+            border-radius: 15px; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .info-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px; /* Strict gap keeps logos glued to text */
-            margin-top: 5px;
+            gap: 10px;
+            margin-bottom: 0.6rem;
         }
-        .card-logos-inline {
+        
+        .icon-svg {
             display: inline-flex;
-            gap: 4px;
             align-items: center;
+            justify-content: center;
+            color: var(--accent-blue);
         }
 
-        /* --- App Button Layouts --- */
+        .card-logos-inline {
+            display: inline-flex; gap: 4px; align-items: center; margin-left: 6px;
+        }
+
         .app-links {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.4rem;
+            display: flex; gap: 0.5rem; margin-top: 0.8rem; justify-content: center;
         }
         .app-btn {
             display: inline-flex; align-items: center; gap: 6px;
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
-            padding: 5px 10px; border-radius: 6px; color: white;
-            text-decoration: none; font-size: 0.75rem; font-weight: 600;
-            transition: 0.3s;
+            padding: 5px 12px; border-radius: 6px; color: white;
+            text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: 0.3s;
         }
-        .app-btn img { filter: invert(1); } 
+        .app-btn svg { width: 16px; height: 16px; fill: white; }
         .app-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); }
 
         /* --- Zigzag U-Pick Layout (4 Steps) --- */
@@ -241,177 +250,100 @@
             max-width: 500px;
             display: flex;
             flex-direction: column;
-            gap: 1.8rem; 
+            gap: 1.2rem; /* Shrunk for mobile fitment */
         }
         .zigzag-line {
             position: absolute;
-            top: 5%; 
-            left: 0;
-            width: 100%;
-            height: 90%; 
-            z-index: 0; 
-            pointer-events: none;
+            top: 5%; left: 0; width: 100%; height: 90%; 
+            z-index: 0; pointer-events: none;
         }
         .z-step {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 2; 
-            width: 85%;
+            display: flex; align-items: center; gap: 0.8rem;
+            z-index: 2; width: 90%;
         }
         .z-step.left { align-self: flex-start; }
         .z-step.right { align-self: flex-end; flex-direction: row-reverse; text-align: right; }
         
         .z-icon {
-            width: 50px;
-            height: 50px;
-            font-size: 1.3rem;
+            width: 45px; height: 45px; /* Shrunk for fitment */
             background: var(--bg-alt); 
-            border: 2px dashed var(--accent-blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 0 15px rgba(90, 156, 226, 0.2);
-            z-index: 3;
+            border: 2px dashed var(--accent-blue); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; box-shadow: 0 0 15px rgba(80, 114, 167, 0.2); z-index: 3;
+            color: var(--accent-blue);
         }
         .z-content {
             background: var(--bg-alt); 
-            padding: 0.6rem 1rem;
-            border-radius: 12px;
-            z-index: 3;
+            padding: 0.5rem 0.8rem; border-radius: 10px; z-index: 3;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
             border: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
         }
         .z-content h3 {
-            font-family: 'Amatic SC', cursive;
-            font-size: 1.6rem;
-            color: var(--accent-blue);
-            margin-bottom: 0.1rem;
+            font-family: 'Amatic SC', cursive; font-size: 1.6rem;
+            color: var(--accent-blue); margin-bottom: 0.1rem;
         }
         .z-content p {
-            font-size: 0.8rem;
-            line-height: 1.3;
-            color: #ccc;
-            text-align: inherit;
-            margin: 0;
+            font-size: 0.75rem; line-height: 1.3; color: #ccc; margin: 0;
         }
         .price-exaggerated {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.3rem !important;
-            display: block;
+            font-size: 1.2rem !important; font-weight: bold; color: var(--accent-blue) !important;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem !important; display: block;
         }
-        .z-step.right .app-links, .z-step.right .payment-line { justify-content: flex-end; }
+        .z-step.right .app-links { justify-content: flex-end; }
 
         /* --- Plants Catalog --- */
         .plant-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 0.8rem;
-            max-width: 800px;
-            width: 100%;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.6rem; max-width: 800px; width: 100%;
         }
         .plant-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem 0.5rem;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid transparent;
-            transition: 0.3s;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05); padding: 0.8rem 0.5rem;
+            border-radius: 10px; text-align: center; border: 1px solid transparent;
+            transition: 0.3s; cursor: pointer;
         }
         .plant-card:hover { 
-            border-color: var(--accent-blue); 
-            transform: translateY(-3px);
-            background: rgba(90, 156, 226, 0.1);
+            border-color: var(--accent-blue); transform: translateY(-3px); background: rgba(80, 114, 167, 0.1);
         }
         .plant-card h4 {
-            font-family: 'Amatic SC', cursive;
-            font-size: 1.6rem;
-            color: var(--accent-blue);
+            font-family: 'Amatic SC', cursive; font-size: 1.5rem; color: var(--accent-blue);
         }
         .plant-card p.click-hint {
-            font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase; margin-bottom: 0;
+            font-size: 0.55rem; color: #888; margin-top: 0.4rem; text-transform: uppercase; margin-bottom: 0;
         }
 
         /* --- Modern Form --- */
         .form-container {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 1.2rem 1.5rem; /* Compressed for fit */
-            border-radius: 15px;
-            width: 100%;
-            max-width: 500px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.03); padding: 1.2rem 1.5rem; 
+            border-radius: 15px; width: 100%; max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         .form-row {
-            display: flex;
-            gap: 1rem;
-            width: 100%;
-            margin-bottom: 0.6rem;
-            align-items: flex-end; 
+            display: flex; gap: 0.8rem; width: 100%; margin-bottom: 0.6rem; align-items: flex-end; 
         }
-        .form-row .form-group {
-            flex: 1; 
-            margin-bottom: 0; 
-        }
-        .form-group {
-            width: 100%;
-            margin-bottom: 0.6rem; 
-            text-align: left;
-        }
+        .form-row .form-group { flex: 1; margin-bottom: 0; }
+        .form-group { width: 100%; margin-bottom: 0.6rem; text-align: left; }
         .form-label {
-            display: flex;
-            align-items: center;
-            font-size: 0.7rem;
-            color: #aaa;
-            margin-bottom: 0.3rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            display: flex; align-items: center; font-size: 0.7rem; color: #aaa;
+            margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 1px;
         }
         
         input, select, button {
-            width: 100%; 
-            height: 40px; /* Compressed height */
-            padding: 0 0.8rem; 
-            background: rgba(0,0,0,0.5); 
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white; 
-            border-radius: 8px; 
-            font-family: inherit; 
-            font-size: 16px !important; 
-            appearance: none; 
-            box-sizing: border-box; 
+            width: 100%; height: 42px; padding: 0 0.8rem; 
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);
+            color: white; border-radius: 8px; font-family: inherit; 
+            font-size: 16px !important; appearance: none; box-sizing: border-box; 
         }
-        input:focus, select:focus {
-            border-color: var(--accent-blue);
-        }
+        input:focus, select:focus { border-color: var(--accent-blue); }
         select {
             background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-            background-repeat: no-repeat;
-            background-position-x: 96%;
-            background-position-y: center;
+            background-repeat: no-repeat; background-position-x: 96%; background-position-y: center;
         }
         button[type="submit"] {
-            background: var(--accent-blue); 
-            font-weight: 600; 
-            cursor: pointer;
-            border: none; 
-            transition: 0.3s; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            margin-top: 0.2rem;
-            height: 44px;
+            background: var(--accent-blue); font-weight: 600; cursor: pointer; border: none; 
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.2rem; height: 46px;
         }
-        button[type="submit"]:hover { 
-            background: #4682c4; 
-            transform: translateY(-2px); 
-        }
+        button[type="submit"]:hover { background: #3f5d8a; transform: translateY(-2px); }
 
         /* --- Modal --- */
         .modal-overlay {
@@ -432,7 +364,6 @@
             color: #888; background: none; border: none; padding: 0; margin: 0;
         }
 
-        /* --- Mobile Nav & Adjustments --- */
         @media (max-width: 900px) {
             .hamburger { display: block; }
             .nav-links {
@@ -442,11 +373,8 @@
             }
             .nav-links.active { left: 0; }
             
-            .z-step { width: 100%; gap: 0.5rem; }
-            .z-content h3 { font-size: 1.4rem; }
-            .z-content p { font-size: 0.75rem; }
-            .price-exaggerated { font-size: 1.1rem; }
-            
+            .slide-title { font-size: 3rem; }
+            .z-step { width: 100%; gap: 0.4rem; }
             .slide-content { padding-bottom: 6rem; }
             #order .slide-content { padding-bottom: 2rem; }
         }
@@ -455,7 +383,7 @@
 <body>
 
     <nav>
-        <a href="#hero" class="nav-brand">KBO</a> 
+        <a href="#hero" class="nav-brand" onclick="this.blur()">KBO</a> 
         <div class="nav-right-container">
             <div class="nav-links" id="nav-links">
                 <a href="#hero" class="translatable nav-item" data-lv="Sākums" data-en="Home">Sākums</a>
@@ -464,8 +392,8 @@
                 <a href="#plants-blue" class="translatable nav-item" data-lv="Stādi" data-en="Plants">Stādi</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            <button class="lang-switch" id="langBtn" onclick="toggleLanguage()">LV</button>
-            <button class="hamburger" onclick="toggleMenu()">☰</button>
+            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">LV</button>
+            <button class="hamburger" onclick="toggleMenu(); this.blur()">☰</button>
         </div>
     </nav>
 
@@ -474,11 +402,13 @@
         <section id="hero" class="snap-slide">
             <div class="slide-content">
                 <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
-                <p class="fade-in delay-1 translatable" style="max-width: 600px;" 
-                   data-lv="Ģimenes melleņu saimniecība Aizkrauklē." 
-                   data-en="A family blueberry farm in Aizkraukle.">
-                   Ģimenes melleņu saimniecība Aizkrauklē.
+                
+                <p class="hero-subtitle fade-in delay-1 translatable" 
+                   data-lv="Svaigas, saldas un pašu audzētas. Izbaudi īsto dabas garšu tieši no mūsu ģimenes saimniecības." 
+                   data-en="Fresh, sweet, and home-grown. Experience the true taste of nature straight from our family farm.">
+                   Svaigas, saldas un pašu audzētas. Izbaudi īsto dabas garšu tieši no mūsu ģimenes saimniecības.
                 </p>
+
                 <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="4 8 12 16 20 8"></polyline>
                 </svg>
@@ -489,23 +419,34 @@
             <h2 class="slide-title fade-in translatable" data-lv="Zemnieku Nakts Tirgus" data-en="Farmers Night Market">Zemnieku Nakts Tirgus</h2>
             <div class="slide-content">
                 <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=600&q=80" alt="Market" class="feature-img fade-in delay-1">
-                <p class="fade-in delay-2">📍 <span class="translatable" data-lv="Rīga" data-en="Riga">Rīga</span></p>
-                <p class="fade-in delay-2">🕒 <span class="translatable" data-lv="Katru dienu no 15:00" data-en="Every day from 15:00">Katru dienu no 15:00</span></p>
                 
-                <div class="payment-line fade-in delay-2">
-                    💵 <span class="translatable" data-lv="Skaidrā" data-en="Cash">Skaidrā</span> / <span class="translatable" data-lv="Karte" data-en="Card">Karte</span>
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+                    <span class="translatable" data-lv="Spīķeru iela 2, Rīga" data-en="Spīķeru iela 2, Riga">Spīķeru iela 2, Rīga</span>
+                </div>
+                
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+                    <span class="translatable" data-lv="Katru dienu no 15:00" data-en="Every day from 15:00">Katru dienu no 15:00</span>
+                </div>
+                
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg></span>
+                    <span class="translatable" data-lv="Apmaksa: Tiešsaistē / Skaidrā / Karte" data-en="Payment: Online / Cash / Card">Apmaksa: Tiešsaistē / Skaidrā / Karte</span>
                     <span class="card-logos-inline">
-                        <svg viewBox="0 0 24 16" width="24" height="14"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                        <svg viewBox="0 0 32 12" width="28" height="12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                        <svg viewBox="0 0 24 16" width="22" height="14"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                        <svg viewBox="0 0 32 12" width="26" height="12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                     </span>
                 </div>
 
-                <div class="app-links fade-in delay-2" style="justify-content: center; margin-top: 0.8rem;">
-                    <a href="https://waze.com/ul?q=Spīķeru+iela+2+Riga" target="_blank" class="app-btn">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/waze.svg" width="14" height="14"> Waze
+                <div class="app-links fade-in delay-2">
+                    <a href="https://waze.com/ul?q=Spīķeru+iela+2+Riga" target="_blank" class="app-btn" onclick="this.blur()">
+                        <svg viewBox="0 0 24 24"><path d="M23.957 9.17c-.438-2.613-1.637-4.996-3.483-6.938-1.92-2.023-4.502-3.15-7.306-3.15-2.825 0-5.367 1.085-7.234 3.064-2.122 2.25-3.324 5.376-3.393 8.8-.465.17-1.106.635-1.576 1.455-.407.712-.51 1.488-.51 2.25 0 2.253 1.157 4.09 2.946 4.673.498.162 1.05.244 1.58.244.604 0 1.258-.112 1.848-.352 1.52.87 3.32 1.34 5.253 1.34 1.95 0 3.82-.496 5.405-1.42.368.106.745.163 1.127.163.66 0 1.31-.144 1.87-.417 1.83-.895 2.872-2.82 2.872-5.308 0-.825-.136-1.642-.613-2.39-.462-.727-1.077-1.152-1.505-1.343l.42-.516c.866-1.066 1.445-2.457 1.634-3.626h.66z" fill="white"/></svg>
+                        Waze
                     </a>
-                    <a href="https://maps.google.com/?q=Spīķeru+iela+2,+Riga" target="_blank" class="app-btn">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlemaps.svg" width="14" height="14"> Maps
+                    <a href="https://maps.google.com/?q=Spīķeru+iela+2,+Riga?q=Spīķeru+iela+2+Riga" target="_blank" class="app-btn" onclick="this.blur()">
+                        <svg viewBox="0 0 24 24"><path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 16 8 16s8-10.75 8-16c0-4.42-3.58-8-8-8zm0 11.5c-1.93 0-3.5-1.57-3.5-3.5S10.07 4.5 12 4.5 15.5 6.07 15.5 8 13.93 11.5 12 11.5z" fill="white"/></svg>
+                        Maps
                     </a>
                 </div>
             </div>
@@ -515,16 +456,28 @@
             <h2 class="slide-title fade-in translatable" data-lv="Ogu Piegāde" data-en="Berry Delivery">Ogu Piegāde</h2>
             <div class="slide-content">
                 <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=600&q=80" alt="Van" class="feature-img fade-in delay-1">
-                <p class="fade-in delay-2">🚚 <span class="translatable" data-lv="Bezmaksas piegāde (Rīga-Aizkraukle)" data-en="Free Delivery (Riga-Aizkraukle)">Bezmaksas piegāde (Rīga-Aizkraukle)</span></p>
-                <p class="fade-in delay-2">📦 <span class="translatable" data-lv="Min. 5kg (6.50€/kg)" data-en="Min 5kg (€6.50/kg)">Min. 5kg (6.50€/kg)</span></p>
-                <p class="fade-in delay-2">❄️ <span class="translatable" data-lv="Piegādātas refrižeratorā, saglabājot svaigumu" data-en="Delivered in a refrigerated van, preserving freshness">Piegādātas refrižeratorā, saglabājot svaigumu</span></p>
                 
-                <div class="payment-line fade-in delay-2">
-                    💵 <span class="translatable" data-lv="Apmaksa saņemot:" data-en="Pay on delivery:">Apmaksa saņemot:</span>
-                    <span class="translatable" data-lv="Skaidrā" data-en="Cash">Skaidrā</span> / <span class="translatable" data-lv="Karte" data-en="Card">Karte</span>
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></span>
+                    <span class="translatable" data-lv="Bezmaksas piegāde (Rīga-Aizkraukle)" data-en="Free Delivery (Riga-Aizkraukle)">Bezmaksas piegāde (Rīga-Aizkraukle)</span>
+                </div>
+
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></span>
+                    <span class="translatable" data-lv="Min. 5kg (6.50€/kg)" data-en="Min 5kg (€6.50/kg)">Min. 5kg (6.50€/kg)</span>
+                </div>
+
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line><path d="M20 16l-4-4 4-4"></path><path d="M4 8l4 4-4 4"></path><path d="M16 4l-4 4-4-4"></path><path d="M8 20l4-4 4 4"></path></svg></span>
+                    <span class="translatable" data-lv="Piegādātas refrižeratorā, saglabājot svaigumu" data-en="Delivered in a refrigerated van, preserving freshness">Piegādātas refrižeratorā, saglabājot svaigumu</span>
+                </div>
+                
+                <div class="info-row fade-in delay-2">
+                    <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg></span>
+                    <span class="translatable" data-lv="Apmaksa: Tiešsaistē / Skaidrā / Karte" data-en="Payment: Online / Cash / Card">Apmaksa: Tiešsaistē / Skaidrā / Karte</span>
                     <span class="card-logos-inline">
-                        <svg viewBox="0 0 24 16" width="24" height="14"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                        <svg viewBox="0 0 32 12" width="28" height="12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                        <svg viewBox="0 0 24 16" width="22" height="14"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                        <svg viewBox="0 0 32 12" width="26" height="12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                     </span>
                 </div>
             </div>
@@ -536,27 +489,31 @@
             <div class="slide-content">
                 <div class="zigzag-timeline">
                     <svg class="zigzag-line fade-in delay-4" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path d="M 15 5 C 130 -10, 130 40, 85 35 C 30 30, -30 70, 15 65 C 80 60, 130 95, 85 95" stroke="rgba(255,255,255,0.7)" stroke-width="3" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                        <path d="M 15 8 C 150 8, 150 35, 85 35 C 10 35, -40 65, 15 65 C 80 65, 150 90, 85 92" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
                     </svg>
 
                     <div class="z-step left fade-in delay-1">
-                        <div class="z-icon">📍</div>
+                        <div class="z-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div>
                         <div class="z-content">
                             <h3 class="translatable" data-lv="1. Brauc ciemos" data-en="1. Arrive">1. Brauc ciemos</h3>
                             <p class="translatable" data-lv="Atrodi mūs Aizkrauklē." data-en="Find us in Aizkraukle.">Atrodi mūs Aizkrauklē.</p>
-                            <div class="app-links">
-                                <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="app-btn">
-                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/waze.svg" width="14" height="14"> Waze
+                            <div class="app-links" style="justify-content: flex-start;">
+                                <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="app-btn" onclick="this.blur()">
+                                    <svg viewBox="0 0 24 24"><path d="M23.957 9.17c-.438-2.613-1.637-4.996-3.483-6.938-1.92-2.023-4.502-3.15-7.306-3.15-2.825 0-5.367 1.085-7.234 3.064-2.122 2.25-3.324 5.376-3.393 8.8-.465.17-1.106.635-1.576 1.455-.407.712-.51 1.488-.51 2.25 0 2.253 1.157 4.09 2.946 4.673.498.162 1.05.244 1.58.244.604 0 1.258-.112 1.848-.352 1.52.87 3.32 1.34 5.253 1.34 1.95 0 3.82-.496 5.405-1.42.368.106.745.163 1.127.163.66 0 1.31-.144 1.87-.417 1.83-.895 2.872-2.82 2.872-5.308 0-.825-.136-1.642-.613-2.39-.462-.727-1.077-1.152-1.505-1.343l.42-.516c.866-1.066 1.445-2.457 1.634-3.626h.66z" fill="white"/></svg> Waze
                                 </a>
-                                <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas" target="_blank" class="app-btn">
-                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlemaps.svg" width="14" height="14"> Maps
+                                <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas?q=Kalna+Baložu+Ogas" target="_blank" class="app-btn" onclick="this.blur()">
+                                    <svg viewBox="0 0 24 24"><path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 16 8 16s8-10.75 8-16c0-4.42-3.58-8-8-8zm0 11.5c-1.93 0-3.5-1.57-3.5-3.5S10.07 4.5 12 4.5 15.5 6.07 15.5 8 13.93 11.5 12 11.5z" fill="white"/></svg> Maps
                                 </a>
                             </div>
                         </div>
                     </div>
 
                     <div class="z-step right fade-in delay-2">
-                        <div class="z-icon">🪣</div>
+                        <div class="z-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h20l-2 15H4z"/><path d="M18 7V5a6 6 0 0 0-12 0v2"/></svg>
+                        </div>
                         <div class="z-content">
                             <h3 class="translatable" data-lv="2. Nosver" data-en="2. Weigh">2. Nosver</h3>
                             <p class="translatable" data-lv="Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!" data-en="Empty bucket at the station. Bring your own!">Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!</p>
@@ -564,7 +521,9 @@
                     </div>
 
                     <div class="z-step left fade-in delay-3">
-                        <div class="z-icon">🫐</div>
+                        <div class="z-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="14" r="3"/><circle cx="14" cy="16" r="3"/><circle cx="11" cy="9" r="4"/><path d="M11 5v4"/><path d="M11 5c2-2 5-1 5-1"/></svg>
+                        </div>
                         <div class="z-content">
                             <h3 class="translatable" data-lv="3. Lasi" data-en="3. Pick">3. Lasi</h3>
                             <p class="translatable" data-lv="Svaigākās ogas laukā." data-en="Freshest berries in the field.">Svaigākās ogas laukā.</p>
@@ -572,16 +531,19 @@
                     </div>
 
                     <div class="z-step right fade-in delay-4">
-                        <div class="z-icon">⚖️</div>
+                        <div class="z-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M3 21h18"/><path d="M12 3l-9 7v2"/><path d="M12 3l9 7v2"/><path d="M3 12h18"/><circle cx="7.5" cy="15" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/></svg>
+                        </div>
                         <div class="z-content">
                             <h3 class="translatable" data-lv="4. Norēķinies" data-en="4. Pay">4. Norēķinies</h3>
+                            
                             <p class="translatable price-exaggerated" data-lv="Tikai 4.50€/kg!" data-en="Only €4.50/kg!">Tikai 4.50€/kg!</p>
                             
-                            <div class="payment-line" style="margin-top: 0;">
-                                💵 <span class="translatable" data-lv="Skaidrā" data-en="Cash">Skaidrā</span> / <span class="translatable" data-lv="Karte" data-en="Card">Karte</span>
+                            <div class="info-row" style="margin-bottom: 0; justify-content: flex-end;">
+                                <span class="translatable" style="font-size: 0.8rem; color: #ccc;" data-lv="Tiešsaistē / Skaidrā / Karte" data-en="Online / Cash / Card">Tiešsaistē / Skaidrā / Karte</span>
                                 <span class="card-logos-inline">
-                                    <svg viewBox="0 0 24 16" width="24" height="14"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                                    <svg viewBox="0 0 32 12" width="28" height="12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                    <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                                    <svg viewBox="0 0 32 12" width="24" height="10"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                                 </span>
                             </div>
                         </div>
@@ -672,12 +634,13 @@
                             <label class="form-label translatable" data-lv="Apmaksas veids" data-en="Payment Method">
                                 Apmaksas veids
                                 <span class="card-logos-inline" style="margin-left: 8px;">
-                                    <svg viewBox="0 0 24 16" width="24" height="14"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                                    <svg viewBox="0 0 32 12" width="28" height="12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                    <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                                    <svg viewBox="0 0 32 12" width="24" height="10"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                                 </span>
                             </label>
                             <select name="payment" required>
                                 <option value="" disabled selected class="translatable" data-lv="Izvēlieties..." data-en="Select...">Izvēlieties...</option>
+                                <option value="online" class="translatable" data-lv="Tiešsaistē (Drīzumā)" data-en="Online (Coming Soon)">Tiešsaistē (Drīzumā)</option>
                                 <option value="card" class="translatable" data-lv="Karte saņemot" data-en="Card on delivery">Karte saņemot</option>
                                 <option value="cash" class="translatable" data-lv="Skaidra nauda" data-en="Cash on delivery">Skaidra nauda</option>
                             </select>
