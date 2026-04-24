@@ -70,7 +70,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: calc(var(--nav-height) + 1rem) 2rem 2rem 2rem;
+            padding: var(--nav-height) 2rem 0 2rem; /* Adjusted for perfect centering */
             position: relative;
         }
 
@@ -94,16 +94,18 @@
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
 
-        @keyframes bounce {
+        /* --- Custom Bouncing Arrow --- */
+        @keyframes bounce-arrow {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-15px); }
             60% { transform: translateY(-7px); }
         }
-        .scroll-arrow {
-            font-size: 2.5rem;
-            color: rgba(255,255,255,0.6);
+        .scroll-arrow-svg {
+            width: 45px;
+            height: 45px;
+            stroke: rgba(255, 255, 255, 0.7);
             margin-top: 2rem;
-            animation: bounce 2s infinite;
+            animation: bounce-arrow 2s infinite ease-in-out;
             display: block;
         }
 
@@ -171,7 +173,7 @@
         }
 
         /* --- Hero --- */
-        .hero-logo { max-width: 90vw; width: 500px; height: auto; margin-bottom: 2rem; }
+        .hero-logo { max-width: 90vw; width: 500px; height: auto; margin-bottom: 1.5rem; }
 
         /* --- Icons & Feature Layouts --- */
         .feature-img {
@@ -192,14 +194,14 @@
             margin: 1.5rem auto 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 2.5rem; /* Slightly more breathing room */
         }
         .zigzag-line {
             position: absolute;
-            top: 15%; /* Aligns with center of top icon */
+            top: 10%; 
             left: 0;
             width: 100%;
-            height: 70%; /* Stretches down to bottom icon */
+            height: 80%; 
             z-index: 0;
             pointer-events: none;
         }
@@ -207,7 +209,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            z-index: 1;
+            z-index: 1; /* Keeps it above the trail line */
             width: 85%;
         }
         .z-step.left { align-self: flex-start; }
@@ -217,7 +219,7 @@
             width: 60px;
             height: 60px;
             font-size: 1.5rem;
-            background: var(--bg-alt);
+            background: var(--bg-alt); /* Solid background to hide line underneath */
             border: 2px dashed var(--accent-blue);
             border-radius: 50%;
             display: flex;
@@ -225,6 +227,13 @@
             justify-content: center;
             flex-shrink: 0;
             box-shadow: 0 0 15px rgba(90, 156, 226, 0.2);
+            z-index: 2;
+        }
+        .z-content {
+            background: var(--bg-alt); /* Prevents the line from slicing through text */
+            padding: 0.5rem;
+            border-radius: 10px;
+            z-index: 2;
         }
         .z-content h3 {
             font-family: 'Amatic SC', cursive;
@@ -271,25 +280,65 @@
             font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase; margin-bottom: 0;
         }
 
-        /* --- Form --- */
+        /* --- Modern Form --- */
         .form-container {
             background: rgba(255, 255, 255, 0.03);
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 15px;
             width: 100%;
             max-width: 500px;
             border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .form-group {
+            width: 100%;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         input, select, button {
-            width: 100%; padding: 0.9rem; margin-bottom: 0.8rem;
-            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);
-            color: white; border-radius: 5px; font-family: inherit; font-size: 0.9rem;
+            width: 100%; 
+            height: 48px; /* Fixed height so all boxes align perfectly */
+            padding: 0 1rem; 
+            background: rgba(0,0,0,0.5); 
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white; 
+            border-radius: 8px; /* Modern curves */
+            font-family: inherit; 
+            font-size: 0.95rem;
+            appearance: none; /* Removes default styling for standard look */
+        }
+        input:focus, select:focus {
+            border-color: var(--accent-blue);
+        }
+        select {
+            /* Adds a custom drop-down arrow for the modern look */
+            background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position-x: 96%;
+            background-position-y: center;
         }
         button[type="submit"] {
-            background: var(--accent-blue); font-weight: bold; cursor: pointer;
-            border: none; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+            background: var(--accent-blue); 
+            font-weight: 600; 
+            cursor: pointer;
+            border: none; 
+            transition: 0.3s; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
         }
-        button[type="submit"]:hover { background: #4682c4; }
+        button[type="submit"]:hover { 
+            background: #4682c4; 
+            transform: translateY(-2px); 
+        }
 
         /* --- Modal --- */
         .modal-overlay {
@@ -353,7 +402,9 @@
                data-en="A family blueberry farm in Aizkraukle.">
                Ģimenes melleņu saimniecība Aizkrauklē.
             </p>
-            <div class="scroll-arrow fade-in delay-2">↓</div>
+            <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
         </section>
 
         <section id="market" class="snap-slide bg-alt">
@@ -377,7 +428,7 @@
             
             <div class="zigzag-timeline">
                 <svg class="zigzag-line fade-in delay-1" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <path d="M 15 15 L 85 50 L 15 85" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="4, 6" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                    <path d="M 15 10 C 60 10, 85 20, 85 50 C 85 80, 60 90, 15 90" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="6, 6" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
                 </svg>
 
                 <div class="z-step left fade-in delay-1">
@@ -455,19 +506,38 @@
         <section id="order" class="snap-slide">
             <div class="form-container fade-in">
                 <h2 class="translatable" data-lv="Pasūtīt Piegādi" data-en="Order Delivery">Pasūtīt Piegādi</h2>
+                
                 <form action="#" method="POST">
-                    <input type="text" name="name" class="translatable-placeholder delay-1 fade-in" data-lv-placeholder="Vārds, Uzvārds" data-en-placeholder="Full Name" placeholder="Vārds, Uzvārds" required>
-                    <input type="text" name="address" class="translatable-placeholder delay-1 fade-in" data-lv-placeholder="Piegādes Adrese" data-en-placeholder="Delivery Address" placeholder="Piegādes Adrese" required>
-                    <input type="number" name="quantity" class="translatable-placeholder delay-2 fade-in" data-lv-placeholder="Daudzums (Min 5kg)" data-en-placeholder="Amount (Min 5kg)" placeholder="Daudzums (Min 5kg)" min="5" required>
-                    <input type="datetime-local" name="datetime" class="delay-2 fade-in" required>
-                    
-                    <select name="payment" class="delay-3 fade-in" required>
-                        <option value="" disabled selected class="translatable" data-lv="Apmaksas veids" data-en="Payment Method">Apmaksas veids</option>
-                        <option value="card" class="translatable" data-lv="Karte saņemot" data-en="Card on delivery">Karte saņemot</option>
-                        <option value="cash" class="translatable" data-lv="Skaidra nauda" data-en="Cash on delivery">Skaidra nauda</option>
-                    </select>
+                    <div class="form-group fade-in delay-1">
+                        <label class="form-label translatable" data-lv="Vārds, Uzvārds" data-en="Full Name">Vārds, Uzvārds</label>
+                        <input type="text" name="name" required>
+                    </div>
 
-                    <button type="submit" class="translatable delay-3 fade-in" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
+                    <div class="form-group fade-in delay-1">
+                        <label class="form-label translatable" data-lv="Piegādes Adrese" data-en="Delivery Address">Piegādes Adrese</label>
+                        <input type="text" name="address" required>
+                    </div>
+
+                    <div class="form-group fade-in delay-2">
+                        <label class="form-label translatable" data-lv="Daudzums (Min 5kg)" data-en="Amount (Min 5kg)">Daudzums (Min 5kg)</label>
+                        <input type="number" name="quantity" min="5" required>
+                    </div>
+
+                    <div class="form-group fade-in delay-2">
+                        <label class="form-label translatable" data-lv="Vēlamais piegādes laiks" data-en="Preferred delivery time">Vēlamais piegādes laiks</label>
+                        <input type="datetime-local" name="datetime" required>
+                    </div>
+                    
+                    <div class="form-group fade-in delay-3">
+                        <label class="form-label translatable" data-lv="Apmaksas veids" data-en="Payment Method">Apmaksas veids</label>
+                        <select name="payment" required>
+                            <option value="" disabled selected class="translatable" data-lv="Izvēlieties..." data-en="Select...">Izvēlieties...</option>
+                            <option value="card" class="translatable" data-lv="Karte saņemot" data-en="Card on delivery">Karte saņemot</option>
+                            <option value="cash" class="translatable" data-lv="Skaidra nauda" data-en="Cash on delivery">Skaidra nauda</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="translatable fade-in delay-3" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
                 </form>
             </div>
         </section>
@@ -502,9 +572,6 @@
             document.querySelectorAll('.translatable').forEach(el => {
                 el.innerText = el.getAttribute(`data-${currentLang}`);
             });
-            document.querySelectorAll('.translatable-placeholder').forEach(el => {
-                el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`);
-            });
 
             document.getElementById('modalDescLv').style.display = currentLang === 'lv' ? 'block' : 'none';
             document.getElementById('modalDescEn').style.display = currentLang === 'en' ? 'block' : 'none';
@@ -527,7 +594,7 @@
             document.getElementById('plantModal').classList.remove('active');
         }
 
-        // --- Scroll Animation Script (Triggers perfectly per snap-slide) ---
+        // --- Scroll Animation Script ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
