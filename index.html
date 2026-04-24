@@ -38,13 +38,6 @@
             font-family: 'Amatic SC', cursive;
         }
 
-        h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--accent-blue);
-            text-align: center;
-        }
-
         p {
             font-size: 1.1rem;
             line-height: 1.5;
@@ -69,8 +62,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: var(--nav-height) 2rem 0 2rem; 
+            justify-content: flex-start; /* Starts items at the top */
+            padding: calc(var(--nav-height) + 1.5rem) 2rem 2rem 2rem; 
             position: relative;
         }
 
@@ -78,6 +71,26 @@
         
         #hero {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1598336040854-1eb31110edaa?auto=format&fit=crop&w=1920&q=80') center/cover;
+        }
+
+        /* --- NEW: Title & Content Centering System --- */
+        .slide-title {
+            font-size: 3.5rem;
+            color: var(--accent-blue);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            width: 100%;
+            flex-shrink: 0; /* Keeps the title at the top */
+        }
+
+        .slide-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1; /* Takes remaining space and perfectly centers items inside */
+            width: 100%;
         }
 
         /* --- Animations --- */
@@ -96,17 +109,13 @@
 
         /* --- Custom Bouncing Arrow --- */
         @keyframes bounce-arrow {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
-            60% { transform: translateY(-7px); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
         }
-        .scroll-arrow-svg {
-            width: 45px;
-            height: 45px;
-            stroke: rgba(255, 255, 255, 0.7);
+        .scroll-arrow-wrapper {
             margin-top: 2rem;
-            animation: bounce-arrow 2s infinite ease-in-out;
-            display: block;
+            animation: bounce-arrow 1.5s infinite ease-in-out;
+            opacity: 0.8;
         }
 
         /* --- Navigation --- */
@@ -191,25 +200,25 @@
             position: relative;
             width: 100%;
             max-width: 500px;
-            margin: 1.5rem auto 0 auto;
             display: flex;
             flex-direction: column;
             gap: 2.5rem; 
+            margin-top: 1rem;
         }
         .zigzag-line {
             position: absolute;
-            top: 10%; 
+            top: 5%; 
             left: 0;
             width: 100%;
-            height: 80%; 
-            z-index: 0;
+            height: 90%; 
+            z-index: 0; /* Strict background layer */
             pointer-events: none;
         }
         .z-step {
             display: flex;
             align-items: center;
             gap: 1rem;
-            z-index: 1; 
+            z-index: 2; /* Keeps above line */
             width: 85%;
         }
         .z-step.left { align-self: flex-start; }
@@ -227,13 +236,15 @@
             justify-content: center;
             flex-shrink: 0;
             box-shadow: 0 0 15px rgba(90, 156, 226, 0.2);
-            z-index: 2;
+            z-index: 3;
         }
         .z-content {
-            background: var(--bg-alt); 
-            padding: 0.5rem;
-            border-radius: 10px;
-            z-index: 2;
+            background: var(--bg-alt); /* Hides the line behind text */
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            z-index: 3;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Pops text off background */
+            border: 1px solid rgba(255,255,255,0.05);
         }
         .z-content h3 {
             font-family: 'Amatic SC', cursive;
@@ -246,6 +257,7 @@
             line-height: 1.4;
             color: #ccc;
             text-align: inherit;
+            margin: 0;
         }
 
         /* --- Plants Catalog --- */
@@ -280,19 +292,15 @@
             font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase; margin-bottom: 0;
         }
 
-        /* --- Modern Form (COMPACTED TO FIT) --- */
+        /* --- Modern Form --- */
         .form-container {
             background: rgba(255, 255, 255, 0.03);
-            padding: 1.5rem 2rem; /* Reduced padding */
+            padding: 1.8rem 2rem; 
             border-radius: 15px;
             width: 100%;
             max-width: 500px;
             border: 1px solid rgba(255,255,255,0.1);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .form-container h2 {
-            font-size: 2.5rem; /* Slightly smaller header */
-            margin-bottom: 0.5rem;
         }
         .form-row {
             display: flex;
@@ -300,24 +308,24 @@
             width: 100%;
         }
         .form-row .form-group {
-            flex: 1; /* Makes columns equal width */
+            flex: 1; 
         }
         .form-group {
             width: 100%;
-            margin-bottom: 0.6rem; /* Reduced gap between boxes */
+            margin-bottom: 0.8rem; 
             text-align: left;
         }
         .form-label {
             display: block;
             font-size: 0.7rem;
             color: #aaa;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.3rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         input, select, button {
             width: 100%; 
-            height: 42px; /* Thinner boxes to save space */
+            height: 44px; 
             padding: 0 0.8rem; 
             background: rgba(0,0,0,0.5); 
             border: 1px solid rgba(255,255,255,0.2);
@@ -345,7 +353,7 @@
             text-transform: uppercase; 
             letter-spacing: 1px;
             margin-top: 0.2rem;
-            height: 45px;
+            height: 48px;
         }
         button[type="submit"]:hover { 
             background: #4682c4; 
@@ -381,11 +389,10 @@
             }
             .nav-links.active { left: 0; }
             
-            .z-step { width: 95%; gap: 0.5rem; }
+            .z-step { width: 100%; gap: 0.5rem; }
             .z-icon { width: 50px; height: 50px; font-size: 1.2rem; }
             .z-content h3 { font-size: 1.5rem; }
             .z-content p { font-size: 0.75rem; }
-            .form-container { padding: 1.2rem 1.5rem; } /* Even tighter on mobile screens */
         }
     </style>
 </head>
@@ -409,151 +416,168 @@
     <div class="snap-container">
         
         <section id="hero" class="snap-slide">
-            <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
-            <p class="fade-in delay-1 translatable" style="max-width: 600px;" 
-               data-lv="Ģimenes melleņu saimniecība Aizkrauklē." 
-               data-en="A family blueberry farm in Aizkraukle.">
-               Ģimenes melleņu saimniecība Aizkrauklē.
-            </p>
-            <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+            <div class="slide-content">
+                <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
+                <p class="fade-in delay-1 translatable" style="max-width: 600px;" 
+                   data-lv="Ģimenes melleņu saimniecība Aizkrauklē." 
+                   data-en="A family blueberry farm in Aizkraukle.">
+                   Ģimenes melleņu saimniecība Aizkrauklē.
+                </p>
+                <div class="scroll-arrow-wrapper fade-in delay-2">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </div>
+            </div>
         </section>
 
         <section id="market" class="snap-slide bg-alt">
-            <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=600&q=80" alt="Market" class="feature-img fade-in">
-            <h2 class="fade-in delay-1 translatable" data-lv="Zemnieku Nakts Tirgus" data-en="Farmers Night Market">Zemnieku Nakts Tirgus</h2>
-            <p class="fade-in delay-2">📍 <span class="translatable" data-lv="Rīga" data-en="Riga">Rīga</span></p>
-            <p class="fade-in delay-2">🕒 <span class="translatable" data-lv="Katru dienu no 15:00" data-en="Every day from 15:00">Katru dienu no 15:00</span></p>
-            <p class="fade-in delay-2">💳 <span class="translatable" data-lv="Skaidrā naudā / Karte" data-en="Cash / Card">Skaidrā naudā / Karte</span></p>
+            <h2 class="slide-title fade-in translatable" data-lv="Zemnieku Nakts Tirgus" data-en="Farmers Night Market">Zemnieku Nakts Tirgus</h2>
+            <div class="slide-content">
+                <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=600&q=80" alt="Market" class="feature-img fade-in delay-1">
+                <p class="fade-in delay-2">📍 <span class="translatable" data-lv="Rīga" data-en="Riga">Rīga</span></p>
+                <p class="fade-in delay-2">🕒 <span class="translatable" data-lv="Katru dienu no 15:00" data-en="Every day from 15:00">Katru dienu no 15:00</span></p>
+                <p class="fade-in delay-2">💳 <span class="translatable" data-lv="Skaidrā naudā / Karte" data-en="Cash / Card">Skaidrā naudā / Karte</span></p>
+            </div>
         </section>
 
         <section id="delivery" class="snap-slide">
-            <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=600&q=80" alt="Van" class="feature-img fade-in">
-            <h2 class="fade-in delay-1 translatable" data-lv="Ogu Piegāde" data-en="Berry Delivery">Ogu Piegāde</h2>
-            <p class="fade-in delay-2">🚚 <span class="translatable" data-lv="Bezmaksas piegāde (Rīga/Aizkraukle)" data-en="Free Delivery (Riga/Aizkraukle)">Bezmaksas piegāde (Rīga/Aizkraukle)</span></p>
-            <p class="fade-in delay-2">📦 <span class="translatable" data-lv="Min. 5kg (6.50€/kg)" data-en="Min 5kg (€6.50/kg)">Min. 5kg (6.50€/kg)</span></p>
-            <p class="fade-in delay-2">❄️ <span class="translatable" data-lv="Refrižeratoru furgons" data-en="Refrigerated Van">Refrižeratoru furgons</span></p>
+            <h2 class="slide-title fade-in translatable" data-lv="Ogu Piegāde" data-en="Berry Delivery">Ogu Piegāde</h2>
+            <div class="slide-content">
+                <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=600&q=80" alt="Van" class="feature-img fade-in delay-1">
+                <p class="fade-in delay-2">🚚 <span class="translatable" data-lv="Bezmaksas piegāde (Rīga/Aizkraukle)" data-en="Free Delivery (Riga/Aizkraukle)">Bezmaksas piegāde (Rīga/Aizkraukle)</span></p>
+                <p class="fade-in delay-2">📦 <span class="translatable" data-lv="Min. 5kg (6.50€/kg)" data-en="Min 5kg (€6.50/kg)">Min. 5kg (6.50€/kg)</span></p>
+                <p class="fade-in delay-2">❄️ <span class="translatable" data-lv="Refrižeratoru furgons" data-en="Refrigerated Van">Refrižeratoru furgons</span></p>
+            </div>
         </section>
 
         <section id="upick" class="snap-slide bg-alt">
-            <h2 class="fade-in translatable" data-lv="Kā darbojas pašlasīšana?" data-en="How U-Pick Works?">Kā darbojas pašlasīšana?</h2>
+            <h2 class="slide-title fade-in translatable" data-lv="Kā darbojas pašlasīšana?" data-en="How U-Pick Works?">Kā darbojas pašlasīšana?</h2>
             
-            <div class="zigzag-timeline">
-                <svg class="zigzag-line fade-in delay-1" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <path d="M 15 10 C 60 10, 85 20, 85 50 C 85 80, 60 90, 15 90" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="6, 6" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
-                </svg>
+            <div class="slide-content">
+                <div class="zigzag-timeline">
+                    <svg class="zigzag-line fade-in delay-1" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M 20 5 C 80 20, 90 40, 50 50 C 10 60, 20 80, 80 95" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                    </svg>
 
-                <div class="z-step left fade-in delay-1">
-                    <div class="z-icon">🪣</div>
-                    <div class="z-content">
-                        <h3 class="translatable" data-lv="1. Nosver" data-en="1. Weigh">1. Nosver</h3>
-                        <p class="translatable" data-lv="Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!" data-en="Empty bucket at the station. Bring your own!">Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!</p>
+                    <div class="z-step left fade-in delay-1">
+                        <div class="z-icon">🪣</div>
+                        <div class="z-content">
+                            <h3 class="translatable" data-lv="1. Nosver" data-en="1. Weigh">1. Nosver</h3>
+                            <p class="translatable" data-lv="Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!" data-en="Empty bucket at the station. Bring your own!">Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="z-step right fade-in delay-2">
-                    <div class="z-icon">🫐</div>
-                    <div class="z-content">
-                        <h3 class="translatable" data-lv="2. Lasi" data-en="2. Pick">2. Lasi</h3>
-                        <p class="translatable" data-lv="Svaigākās ogas laukā." data-en="Freshest berries in the field.">Svaigākās ogas laukā.</p>
+                    <div class="z-step right fade-in delay-2">
+                        <div class="z-icon">🫐</div>
+                        <div class="z-content">
+                            <h3 class="translatable" data-lv="2. Lasi" data-en="2. Pick">2. Lasi</h3>
+                            <p class="translatable" data-lv="Svaigākās ogas laukā." data-en="Freshest berries in the field.">Svaigākās ogas laukā.</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="z-step left fade-in delay-3">
-                    <div class="z-icon">⚖️</div>
-                    <div class="z-content">
-                        <h3 class="translatable" data-lv="3. Maksā" data-en="3. Pay">3. Maksā</h3>
-                        <p class="translatable" data-lv="Tikai 4.50€/kg (Skaidrā/Karte)." data-en="Only €4.50/kg (Cash/Card).">Tikai 4.50€/kg (Skaidrā/Karte).</p>
+                    <div class="z-step left fade-in delay-3">
+                        <div class="z-icon">⚖️</div>
+                        <div class="z-content">
+                            <h3 class="translatable" data-lv="3. Maksā" data-en="3. Pay">3. Maksā</h3>
+                            <p class="translatable" data-lv="Tikai 4.50€/kg (Skaidrā/Karte)." data-en="Only €4.50/kg (Cash/Card).">Tikai 4.50€/kg (Skaidrā/Karte).</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="plants-blue" class="snap-slide">
-            <h2 class="fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
-            <p class="fade-in delay-1 translatable" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age">15€ - 30€ atkarībā no vecuma</p>
+            <h2 class="slide-title fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
             
-            <div class="plant-grid fade-in delay-2">
-                <div class="plant-card" onclick="openPlantModal('Patriot', 'Vidēji agrīna šķirne, izturīga pret salu. Ražo ļoti lielas un saldas ogas.', 'Mid-early variety, frost-resistant. Produces very large and sweet berries.')">
-                    <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
-                </div>
-                <div class="plant-card" onclick="openPlantModal('Bluecrop', 'Viena no populārākajām šķirnēm pasaulē. Vidēji agrīna, klasiska garša.', 'One of the most popular varieties worldwide. Mid-season, classic taste.')">
-                    <h4>Bluecrop</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
-                </div>
-                <div class="plant-card" onclick="openPlantModal('Chanticleer', 'Ļoti agrīna šķirne. Vidēji lielas ogas ar lielisku garšu.', 'Very early variety. Medium-sized berries with excellent flavor.')">
-                    <h4>Chanticleer</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
-                </div>
-                <div class="plant-card" onclick="openPlantModal('Toro', 'Vidēji agrīna šķirne. Kompakts krūms ar milzīgām ogām.', 'Mid-early variety. Compact bush producing giant berries.')">
-                    <h4>Toro</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
-                </div>
-                <div class="plant-card" onclick="openPlantModal('Chandler', 'Vēla šķirne. Vislielākās ogas starp visām mellenēm, ilgs ražas laiks.', 'Late variety. Has the largest berries of all blueberries, long harvest.')">
-                    <h4>Chandler</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
-                </div>
-                <div class="plant-card" onclick="openPlantModal('Brigitta Blue', 'Vēla šķirne. Ļoti saldas, stingras un kraukšķīgas ogas.', 'Late variety. Very sweet, firm and crisp berries.')">
-                    <h4>Brigitta</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+            <div class="slide-content">
+                <p class="fade-in delay-1 translatable" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age">15€ - 30€ atkarībā no vecuma</p>
+                <div class="plant-grid fade-in delay-2">
+                    <div class="plant-card" onclick="openPlantModal('Patriot', 'Vidēji agrīna šķirne, izturīga pret salu. Ražo ļoti lielas un saldas ogas.', 'Mid-early variety, frost-resistant. Produces very large and sweet berries.')">
+                        <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Bluecrop', 'Viena no populārākajām šķirnēm pasaulē. Vidēji agrīna, klasiska garša.', 'One of the most popular varieties worldwide. Mid-season, classic taste.')">
+                        <h4>Bluecrop</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Chanticleer', 'Ļoti agrīna šķirne. Vidēji lielas ogas ar lielisku garšu.', 'Very early variety. Medium-sized berries with excellent flavor.')">
+                        <h4>Chanticleer</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Toro', 'Vidēji agrīna šķirne. Kompakts krūms ar milzīgām ogām.', 'Mid-early variety. Compact bush producing giant berries.')">
+                        <h4>Toro</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Chandler', 'Vēla šķirne. Vislielākās ogas starp visām mellenēm, ilgs ražas laiks.', 'Late variety. Has the largest berries of all blueberries, long harvest.')">
+                        <h4>Chandler</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Brigitta Blue', 'Vēla šķirne. Ļoti saldas, stingras un kraukšķīgas ogas.', 'Late variety. Very sweet, firm and crisp berries.')">
+                        <h4>Brigitta</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="plants-honey" class="snap-slide bg-alt">
-            <h2 class="fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
-            <p class="fade-in delay-1 translatable" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age">10€ - 20€ atkarībā no vecuma</p>
+            <h2 class="slide-title fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
             
-            <div class="plant-grid fade-in delay-2">
-                <div class="plant-card" onclick="openPlantModal('Blue Banana', 'Vidēji vēla šķirne. Ļoti saldas, interesantas banānu formas ogas.', 'Mid-late variety. Very sweet, interestingly banana-shaped berries.')">
-                    <h4>Banana</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
-                </div>
-                <div class="plant-card" onclick="openPlantModal('Boreal Beast', 'Vidēji vēla šķirne. Lieliska, salda garša, izcila šķirne apputeksnēšanai.', 'Mid-late variety. Excellent sweet taste, outstanding pollinator.')">
-                    <h4>Beast</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
-                </div>
-                <div class="plant-card" onclick="openPlantModal('Strawberry', 'Lielas, saldas ogas ar unikālām zemeņu garšas niansēm.', 'Large, sweet berries with unique hints of strawberry flavor.')">
-                    <h4>Strawberry</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
-                </div>
-                <div class="plant-card" onclick="openPlantModal('Giant\'s Heart', 'Ļoti ražīga šķirne ar milzīgām, sirds formas ogām.', 'Highly productive variety with giant, heart-shaped berries.')">
-                    <h4>Heart</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+            <div class="slide-content">
+                <p class="fade-in delay-1 translatable" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age">10€ - 20€ atkarībā no vecuma</p>
+                <div class="plant-grid fade-in delay-2">
+                    <div class="plant-card" onclick="openPlantModal('Blue Banana', 'Vidēji vēla šķirne. Ļoti saldas, interesantas banānu formas ogas.', 'Mid-late variety. Very sweet, interestingly banana-shaped berries.')">
+                        <h4>Banana</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Boreal Beast', 'Vidēji vēla šķirne. Lieliska, salda garša, izcila šķirne apputeksnēšanai.', 'Mid-late variety. Excellent sweet taste, outstanding pollinator.')">
+                        <h4>Beast</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Strawberry', 'Lielas, saldas ogas ar unikālām zemeņu garšas niansēm.', 'Large, sweet berries with unique hints of strawberry flavor.')">
+                        <h4>Strawberry</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
+                    <div class="plant-card" onclick="openPlantModal('Giant\'s Heart', 'Ļoti ražīga šķirne ar milzīgām, sirds formas ogām.', 'Highly productive variety with giant, heart-shaped berries.')">
+                        <h4>Heart</h4><p class="click-hint translatable" data-lv="Uzzināt" data-en="More">Uzzināt</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="order" class="snap-slide">
-            <div class="form-container fade-in">
-                <h2 class="translatable" data-lv="Pasūtīt Piegādi" data-en="Order Delivery">Pasūtīt Piegādi</h2>
-                
-                <form action="#" method="POST">
-                    <div class="form-group fade-in delay-1">
-                        <label class="form-label translatable" data-lv="Vārds, Uzvārds" data-en="Full Name">Vārds, Uzvārds</label>
-                        <input type="text" name="name" required>
-                    </div>
-
-                    <div class="form-group fade-in delay-1">
-                        <label class="form-label translatable" data-lv="Piegādes Adrese" data-en="Delivery Address">Piegādes Adrese</label>
-                        <input type="text" name="address" required>
-                    </div>
-
-                    <div class="form-row fade-in delay-2">
-                        <div class="form-group">
-                            <label class="form-label translatable" data-lv="Daudzums (Min 5kg)" data-en="Amount (Min 5kg)">Daudzums (Min 5kg)</label>
-                            <input type="number" name="quantity" min="5" required>
+            <h2 class="slide-title fade-in translatable" data-lv="Pasūtīt Piegādi" data-en="Order Delivery">Pasūtīt Piegādi</h2>
+            
+            <div class="slide-content">
+                <div class="form-container fade-in delay-1">
+                    <form action="#" method="POST">
+                        <div class="form-group fade-in delay-1">
+                            <label class="form-label translatable" data-lv="Vārds, Uzvārds" data-en="Full Name">Vārds, Uzvārds</label>
+                            <input type="text" name="name" required>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label translatable" data-lv="Piegādes laiks" data-en="Delivery time">Piegādes laiks</label>
-                            <input type="datetime-local" name="datetime" required>
+                        <div class="form-group fade-in delay-1">
+                            <label class="form-label translatable" data-lv="Piegādes Adrese" data-en="Delivery Address">Piegādes Adrese</label>
+                            <input type="text" name="address" required>
                         </div>
-                    </div>
-                    
-                    <div class="form-group fade-in delay-3">
-                        <label class="form-label translatable" data-lv="Apmaksas veids" data-en="Payment Method">Apmaksas veids</label>
-                        <select name="payment" required>
-                            <option value="" disabled selected class="translatable" data-lv="Izvēlieties..." data-en="Select...">Izvēlieties...</option>
-                            <option value="card" class="translatable" data-lv="Karte saņemot" data-en="Card on delivery">Karte saņemot</option>
-                            <option value="cash" class="translatable" data-lv="Skaidra nauda" data-en="Cash on delivery">Skaidra nauda</option>
-                        </select>
-                    </div>
 
-                    <button type="submit" class="translatable fade-in delay-3" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
-                </form>
+                        <div class="form-row fade-in delay-2">
+                            <div class="form-group">
+                                <label class="form-label translatable" data-lv="Daudzums (Min 5kg)" data-en="Amount (Min 5kg)">Daudzums (Min 5kg)</label>
+                                <input type="number" name="quantity" min="5" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label translatable" data-lv="Piegādes laiks" data-en="Delivery time">Piegādes laiks</label>
+                                <input type="datetime-local" name="datetime" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group fade-in delay-3">
+                            <label class="form-label translatable" data-lv="Apmaksas veids" data-en="Payment Method">Apmaksas veids</label>
+                            <select name="payment" required>
+                                <option value="" disabled selected class="translatable" data-lv="Izvēlieties..." data-en="Select...">Izvēlieties...</option>
+                                <option value="card" class="translatable" data-lv="Karte saņemot" data-en="Card on delivery">Karte saņemot</option>
+                                <option value="cash" class="translatable" data-lv="Skaidra nauda" data-en="Cash on delivery">Skaidra nauda</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="translatable fade-in delay-3" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
+                    </form>
+                </div>
             </div>
         </section>
         
