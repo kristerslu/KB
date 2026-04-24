@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalna Baložu Ogas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Permanent+Marker&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --text-color: #f4f4f4;
-            --accent-color: #4a90e2; /* Blueberry blue */
+            --bg-color: #0d1117;
+            --text-main: #f0f6fc;
+            --accent-blue: #5a9ce2;
+            --dark-overlay: rgba(13, 17, 23, 0.85);
         }
 
         * {
@@ -20,136 +21,32 @@
 
         body, html {
             height: 100%;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            color: var(--text-main);
+            overflow: hidden; /* Handled by scroll container */
         }
 
-        /* Scroll Snapping Container */
-        .container {
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-        }
+        /* Language Toggle Classes */
+        .lang-en { display: none; }
 
-        section {
-            height: 100vh;
-            scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
+        /* Typography */
+        h1, h2, .label-font {
+            font-family: 'Amatic SC', cursive;
         }
-
-        h1, h2 {
-            font-family: 'Permanent Marker', cursive;
+        
+        h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
             letter-spacing: 2px;
-            margin-bottom: 1rem;
         }
 
-        .subtitle {
-            font-family: 'Caveat', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-        }
-
-        p {
+        p, li {
             font-size: 1.1rem;
-            line-height: 1.6;
-            max-width: 800px;
+            font-weight: 300;
+            line-height: 1.8;
             margin-bottom: 1rem;
-        }
-
-        /* Hero Section */
-        #home {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('YOUR_ICLOUD_IMAGE_LINK_HERE') center/cover;
-        }
-        #home h1 {
-            font-size: 5rem;
-        }
-
-        /* Services Layout */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            width: 100%;
-            max-width: 1000px;
-        }
-        .service-card {
-            border: 2px solid white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.05);
-        }
-
-        /* Varieties Chart Layout */
-        .chart-container {
-            width: 100%;
-            max-width: 800px;
-            margin-top: 2rem;
-            text-align: left;
-        }
-        .chart-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            border-bottom: 1px dashed #555;
-            padding-bottom: 0.5rem;
-        }
-        .chart-label {
-            flex: 1;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-        .chart-bar-container {
-            flex: 3;
-            background: #222;
-            height: 20px;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-        .chart-bar {
-            height: 100%;
-            background: var(--accent-color);
-            position: absolute;
-        }
-
-        /* Form Styling */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            width: 100%;
-            max-width: 500px;
-            text-align: left;
-        }
-        input, select, button {
-            padding: 0.8rem;
-            border-radius: 5px;
-            border: none;
-            font-family: inherit;
-        }
-        input, select {
-            background: #222;
-            color: white;
-            border: 1px solid #444;
-        }
-        button {
-            background: var(--accent-color);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: #357abd;
         }
 
         /* Navigation */
@@ -157,123 +54,420 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1rem;
-            background: rgba(0,0,0,0.8);
-            z-index: 100;
+            padding: 1.5rem 3rem;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            z-index: 1000;
+        }
+        .nav-links {
+            display: flex;
             gap: 2rem;
         }
-        nav a {
-            color: white;
+        .nav-links a {
+            color: var(--text-main);
             text-decoration: none;
-            font-family: 'Permanent Marker', cursive;
-            font-size: 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+        .lang-switch {
+            background: none;
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .lang-switch:hover {
+            background: var(--text-main);
+            color: var(--bg-color);
         }
 
-        @media (max-width: 768px) {
-            #home h1 { font-size: 3rem; }
-            section { height: auto; min-height: 100vh; padding-top: 80px; }
-            .container { scroll-snap-type: none; } /* Better mobile scrolling */
+        /* Scroll Snapping Container */
+        .scroll-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        section {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 6rem 2rem 2rem 2rem;
+        }
+
+        /* Two-column layout for services */
+        .split-layout {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            gap: 4rem;
+            align-items: center;
+            z-index: 2;
+        }
+        .content-half {
+            flex: 1;
+        }
+        .image-half {
+            flex: 1;
+            height: 60vh;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .image-half img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        ul.elegant-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 1.5rem;
+        }
+        ul.elegant-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+        ul.elegant-list li::before {
+            content: '•';
+            color: var(--accent-blue);
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(var(--dark-overlay), var(--dark-overlay)), url('https://images.unsplash.com/photo-1598336040854-1eb31110edaa?auto=format&fit=crop&w=1920&q=80') center/cover;
+            text-align: center;
+            flex-direction: column;
+        }
+        #hero h1 {
+            font-size: 7rem;
+            margin-bottom: 0;
+            line-height: 1;
+            color: #ffffff;
+        }
+        #hero .subtitle {
+            font-size: 3rem;
+            color: var(--accent-blue);
+            margin-bottom: 2rem;
+        }
+
+        /* Backgrounds for Services */
+        #market { background-color: #121820; }
+        #delivery { background-color: #0d1117; }
+        #self-picking { background-color: #121820; }
+        
+        /* Plants Catalog Layout */
+        #plants {
+            background-color: #0d1117;
+            align-items: flex-start;
+            padding-top: 8rem;
+        }
+        .catalog-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .plant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .plant-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .plant-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+        .plant-card h4 {
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Premium Form */
+        #order {
+            background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1596482559092-12003d7dfd3d?auto=format&fit=crop&w=1920&q=80') center/cover;
+        }
+        .form-container {
+            background: rgba(25, 30, 40, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aaa;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 1rem;
+        }
+        button[type="submit"]:hover {
+            background: #4682c4;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .split-layout { flex-direction: column; text-align: center; }
+            ul.elegant-list li { padding-left: 0; list-style-position: inside; }
+            ul.elegant-list li::before { display: none; }
+            .image-half { height: 40vh; width: 100%; }
+            nav { padding: 1rem; flex-direction: column; gap: 1rem; }
+            #hero h1 { font-size: 4.5rem; }
+            section { padding-top: 8rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#home">Sākums</a>
-        <a href="#services">Pakalpojumi</a>
-        <a href="#varieties">Šķirnes</a>
-        <a href="#order">Pasūtīt</a>
+        <div class="nav-links">
+            <a href="#hero"><span class="lang-lv">Sākums</span><span class="lang-en">Home</span></a>
+            <a href="#market"><span class="lang-lv">Tirgus</span><span class="lang-en">Market</span></a>
+            <a href="#delivery"><span class="lang-lv">Piegāde</span><span class="lang-en">Delivery</span></a>
+            <a href="#self-picking"><span class="lang-lv">Pašlasīšana</span><span class="lang-en">U-Pick</span></a>
+            <a href="#plants"><span class="lang-lv">Stādi</span><span class="lang-en">Plants</span></a>
+            <a href="#order"><span class="lang-lv">Pasūtīt</span><span class="lang-en">Order</span></a>
+        </div>
+        <button class="lang-switch" onclick="toggleLanguage()">EN / LV</button>
     </nav>
 
-    <div class="container">
-        <section id="home">
+    <div class="scroll-container">
+        
+        <section id="hero">
             <h1>KALNA BALOŽU OGAS</h1>
-            <div class="subtitle">tikko no lauka</div>
-            <p>Welcome to our family blueberry farm in Aizkraukle, Latvia. We grow premium Patriot and Bluecrop blueberries, alongside a wide variety of blueberry and honeyberry crops. Freshness, quality, and nature are at the heart of what we do.</p>
+            <div class="subtitle label-font">tikko no lauka</div>
+            <p style="max-width: 600px; text-align: center;">
+                <span class="lang-lv">Mūsu ģimenes saimniecība Aizkrauklē piedāvā augstākās kvalitātes mellenes un sausseržus, kas audzēti ar rūpēm par dabu un jūsu veselību.</span>
+                <span class="lang-en">Our family farm in Aizkraukle offers the highest quality blueberries and honeyberries, grown with care for nature and your health.</span>
+            </p>
         </section>
 
-        <section id="services">
-            <h2>Mūsu Pakalpojumi</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Zemnieku Nakts Tirgus</h3>
-                    <p>Find us in Riga every day from 15:00. Berries are transported in refrigerated vans for maximum freshness. Cash & Card accepted.</p>
+        <section id="market">
+            <div class="split-layout">
+                <div class="content-half">
+                    <h2><span class="lang-lv">Zemnieku Nakts Tirgus</span><span class="lang-en">Farmers Night Market</span></h2>
+                    [span_0](start_span)<p><span class="lang-lv">Satieciet mūs Rīgā katru dienu! Mēs piegādājam ogas ar īpašu refrižeratoru furgonu, lai garantētu nevainojamu svaigumu[span_0](end_span).</span><span class="lang-en">Meet us in Riga every day! We deliver berries in a specialized refrigerated van to guarantee perfect freshness.</span></p>
+                    <ul class="elegant-list">
+                        <li><span class="lang-lv"><strong>Darba laiks:</strong> Katru dienu no 15:00 līdz pēdējai ogai.</span><span class="lang-en"><strong>Hours:</strong> Every day from 15:00 until sold out.</span></li>
+                        <li><span class="lang-lv"><strong>Šķirnes:</strong> Patriot un Bluecrop.</span><span class="lang-en"><strong>Varieties:</strong> Patriot and Bluecrop.</span></li>
+                        <li><span class="lang-lv"><strong>Apmaksa:</strong> Skaidrā naudā vai ar karti.</span><span class="lang-en"><strong>Payment:</strong> Cash and card accepted.</span></li>
+                    </ul>
                 </div>
-                <div class="service-card">
-                    <h3>Delivery</h3>
-                    <p>€6.50/kg (Min 5kg). Free delivery in Riga and the Aizkraukle-Riga route. Delivered directly to your home or office.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Self-Picking</h3>
-                    <p>€4.50/kg. Bring your own bucket to our farm in Aizkraukle! We weigh your bucket, you pick the largest berries, and we weigh it again. Easy and eco-friendly.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Plant Sales</h3>
-                    <p>Blueberry crops (€15-€30) and Honeyberry crops (€10-€20). Over 15 varieties available for farm pickup or home delivery.</p>
+                <div class="image-half">
+                    <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=1000&q=80" alt="Farmers Market">
                 </div>
             </div>
         </section>
 
-        <section id="varieties">
-            <h2>Šķirnes & Ražas Laiks</h2>
-            <p>We offer a diverse selection of crops. Here is a timeline of when some of our popular varieties are ripe for picking.</p>
-            
-            <div class="chart-container">
-                <div class="chart-row">
-                    <div class="chart-label">Chanticleer (Early)</div>
-                    <div class="chart-bar-container">
-                        <div class="chart-bar" style="left: 10%; width: 20%;"></div>
-                    </div>
+        <section id="delivery">
+            <div class="split-layout">
+                <div class="image-half" style="order: -1;">
+                    <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=1000&q=80" alt="Fresh Delivery">
                 </div>
-                <div class="chart-row">
-                    <div class="chart-label">Patriot (Mid-Early)</div>
-                    <div class="chart-bar-container">
-                        <div class="chart-bar" style="left: 30%; width: 25%;"></div>
-                    </div>
-                </div>
-                <div class="chart-row">
-                    <div class="chart-label">Bluecrop (Mid)</div>
-                    <div class="chart-bar-container">
-                        <div class="chart-bar" style="left: 45%; width: 30%;"></div>
-                    </div>
-                </div>
-                <div class="chart-row">
-                    <div class="chart-label">Elliott (Late)</div>
-                    <div class="chart-bar-container">
-                        <div class="chart-bar" style="left: 70%; width: 25%;"></div>
-                    </div>
+                <div class="content-half">
+                    <h2><span class="lang-lv">Ogu Piegāde</span><span class="lang-en">Berry Delivery</span></h2>
+                    <p><span class="lang-lv">Ērta un ātra piegāde tieši uz mājām vai biroju tajā pašā refrižeratoru furgonā.</span><span class="lang-en">Convenient and fast delivery straight to your home or office in our refrigerated van.</span></p>
+                    <ul class="elegant-list">
+                        <li><span class="lang-lv"><strong>Cena:</strong> 6.50€/kg (Minimālais pasūtījums: 5kg).</span><span class="lang-en"><strong>Price:</strong> €6.50/kg (Min. order: 5kg).</span></li>
+                        <li><span class="lang-lv"><strong>Bezmaksas piegāde:</strong> Rīgas reģionā vai maršrutā Aizkraukle-Rīga.</span><span class="lang-en"><strong>Free Delivery:</strong> In Riga region or along the Aizkraukle-Riga route.</span></li>
+                        <li><span class="lang-lv"><strong>Apmaksa:</strong> Skaidrā naudā vai ar karti saņemot.</span><span class="lang-en"><strong>Payment:</strong> Cash or card upon delivery.</span></li>
+                    </ul>
                 </div>
             </div>
-            <p style="margin-top: 1rem; font-size: 0.9rem;">* We also sell honeyberries (Sausserdis) like Blue Banana, Boreal Beast, and Strawberry Sensation!</p>
+        </section>
+
+        <section id="self-picking">
+            <div class="split-layout">
+                <div class="content-half">
+                    <h2><span class="lang-lv">Pašlasīšana</span><span class="lang-en">Self-Picking</span></h2>
+                    <p><span class="lang-lv">Izbaudiet dabu un atbrauciet uz mūsu saimniecību Aizkrauklē! Mēs atbalstām zaļo domāšanu, tāpēc aicinām ņemt līdzi savus traukus.</span><span class="lang-en">Enjoy nature and visit our farm in Aizkraukle! We support eco-friendly thinking, so we encourage you to bring your own buckets.</span></p>
+                    <ul class="elegant-list">
+                        <li><span class="lang-lv"><strong>Cena:</strong> Tikai 4.50€/kg.</span><span class="lang-en"><strong>Price:</strong> Only €4.50/kg.</span></li>
+                        <li><span class="lang-lv"><strong>Process:</strong> Nosveriet tukšo trauku svēršanas stacijā, lasiet lielākās ogas, un nosveriet pilno trauku!</span><span class="lang-en"><strong>Process:</strong> Weigh empty bucket at the station, pick the largest berries, weigh again!</span></li>
+                        <li><span class="lang-lv"><strong>Apmaksa:</strong> Skaidrā naudā vai ar karti.</span><span class="lang-en"><strong>Payment:</strong> Cash and card accepted.</span></li>
+                    </ul>
+                </div>
+                <div class="image-half">
+                    <img src="https://images.unsplash.com/photo-1563152206-69d67ce7a9d0?auto=format&fit=crop&w=1000&q=80" alt="Self Picking Blueberries">
+                </div>
+            </div>
+        </section>
+
+        <section id="plants" style="min-height: 100vh; height: auto; scroll-snap-align: start;">
+            <div class="catalog-container">
+                <h2 style="text-align: center;"><span class="lang-lv">Melleņu un Sausseržu Stādi</span><span class="lang-en">Blueberry & Honeyberry Plants</span></h2>
+                <p style="text-align: center; margin-bottom: 3rem;">
+                    <span class="lang-lv">Iegādājieties stādus uz vietas saimniecībā vai ar piegādi uz mājām.</span>
+                    <span class="lang-en">Purchase plants on-site at the farm or with home delivery.</span>
+                </p>
+
+                <h3 style="color: white; border-bottom: 1px solid #333; padding-bottom: 0.5rem;"><span class="lang-lv">Melleņu Stādi (15€ - 30€)</span><span class="lang-en">Blueberry Plants (€15 - €30)</span></h3>
+                <div class="plant-grid" style="margin-bottom: 3rem;">
+                    <div class="plant-card"><h4>Chanticleer</h4><p>Agrīna šķirne / Early variety</p></div>
+                    <div class="plant-card"><h4>Earliblue</h4><p>Agrīna, salda / Early, sweet</p></div>
+                    <div class="plant-card"><h4>Patriot</h4><p>Lielas ogas / Large berries</p></div>
+                    <div class="plant-card"><h4>Hannah's Choice</h4><p>Ļoti salda / Very sweet</p></div>
+                    <div class="plant-card"><h4>Bluecrop</h4><p>Vidēji agrīna / Mid-season</p></div>
+                    <div class="plant-card"><h4>Toro</h4><p>Liela raža / High yield</p></div>
+                    <div class="plant-card"><h4>Goldtraube</h4><p>Klasiska garša / Classic taste</p></div>
+                    <div class="plant-card"><h4>Denise Blue</h4><p>Lieliska garša / Excellent flavor</p></div>
+                    <div class="plant-card"><h4>Brigitta Blue</h4><p>Vēla, kraukšķīga / Late, crisp</p></div>
+                    <div class="plant-card"><h4>Chandler</h4><p>Milzīgas ogas / Giant berries</p></div>
+                    <div class="plant-card"><h4>Darrow</h4><p>Lielas, vēlas / Large, late</p></div>
+                    <div class="plant-card"><h4>Eliott</h4><p>Ļoti vēla / Very late</p></div>
+                </div>
+
+                <h3 style="color: white; border-bottom: 1px solid #333; padding-bottom: 0.5rem;"><span class="lang-lv">Sausseržu Stādi (10€ - 20€)</span><span class="lang-en">Honeyberry Plants (€10 - €20)</span></h3>
+                <div class="plant-grid">
+                    <div class="plant-card"><h4>Blue Banana</h4><p>Salda, banānu forma / Sweet, banana shape</p></div>
+                    <div class="plant-card"><h4>Blue Treasure</h4><p>Vēla, sulīga / Late, juicy</p></div>
+                    <div class="plant-card"><h4>Boreal Beast</h4><p>Lieliska apputeksnēšanai / Great pollinator</p></div>
+                    <div class="plant-card"><h4>Boreal Blizzard</h4><p>Milzīgas ogas / Giant berries</p></div>
+                    <div class="plant-card"><h4>Giant's Heart</h4><p>Sirds formas / Heart-shaped</p></div>
+                    <div class="plant-card"><h4>Honeybee</h4><p>Ļoti ražīga / Highly productive</p></div>
+                    <div class="plant-card"><h4>Strawberry Sensation</h4><p>Zemeņu nianses / Strawberry hints</p></div>
+                    <div class="plant-card"><h4>Vostorg</h4><p>Agrīna, kraukšķīga / Early, crisp</p></div>
+                </div>
+            </div>
         </section>
 
         <section id="order">
-            <h2>Pasūtīt Ogas</h2>
-            <p>Fill out the form below to schedule a delivery. Minimum order is 5kg.</p>
-            
-            <form action="#" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <input type="text" name="address" placeholder="Delivery Address" required>
-                <input type="number" name="quantity" placeholder="Quantity (kg) - Min 5kg" min="5" required>
+            <div class="form-container">
+                <h2 style="text-align: center; font-size: 3rem;"><span class="lang-lv">Pasūtīt Piegādi</span><span class="lang-en">Order Delivery</span></h2>
+                <p style="text-align: center; margin-bottom: 2rem; font-size: 0.9rem; color: #ccc;">
+                    <span class="lang-lv">Aizpildiet formu, lai rezervētu piegādi savā adresē.</span>
+                    <span class="lang-en">Fill out the form to schedule delivery to your address.</span>
+                </p>
                 
-                <label style="color:#aaa; font-size:0.9rem;">Preferred Delivery Date & Time:</label>
-                <input type="datetime-local" name="datetime" required>
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label><span class="lang-lv">Vārds, Uzvārds</span><span class="lang-en">Full Name</span></label>
+                        <input type="text" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><span class="lang-lv">Piegādes Adrese</span><span class="lang-en">Delivery Address</span></label>
+                        <input type="text" name="address" required>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="form-group" style="flex: 1;">
+                            <label><span class="lang-lv">Daudzums (Min 5kg)</span><span class="lang-en">Amount (Min 5kg)</span></label>
+                            <input type="number" name="quantity" min="5" required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label><span class="lang-lv">Vēlamais Datums / Laiks</span><span class="lang-en">Preferred Date / Time</span></label>
+                            <input type="datetime-local" name="datetime" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="lang-lv">Apmaksas Veids</span><span class="lang-en">Payment Method</span></label>
+                        <select name="payment" required>
+                            <option value="card_delivery" class="lang-lv">Karte saņemot</option>
+                            <option value="card_delivery" class="lang-en">Card on delivery</option>
+                            <option value="cash_delivery" class="lang-lv">Skaidra nauda saņemot</option>
+                            <option value="cash_delivery" class="lang-en">Cash on delivery</option>
+                            <option value="online" class="lang-lv">Tiešsaistē (Drīzumā)</option>
+                            <option value="online" class="lang-en">Online (Coming Soon)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit">
+                        <span class="lang-lv">Apstiprināt Pasūtījumu</span>
+                        <span class="lang-en">Confirm Order</span>
+                    </button>
+                </form>
                 
-                <select name="payment" required>
-                    <option value="" disabled selected>Select Payment Method</option>
-                    <option value="online">Online Payment (Coming Soon)</option>
-                    <option value="card_delivery">Card on Delivery</option>
-                    <option value="cash_delivery">Cash on Delivery</option>
-                </select>
-                
-                <button type="submit">Submit Order</button>
-            </form>
-            <p style="margin-top: 2rem;">📞 29 459 247 | ✉️ kalnabalozi@inbox.lv</p>
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: #aaa;">
+                    [span_1](start_span)📞 29 459 247[span_1](end_span) | [span_2](start_span)✉️ kalnabalozi@inbox.lv[span_2](end_span)
+                </div>
+            </div>
         </section>
+
     </div>
 
+    <script>
+        let isLatvian = true;
+        function toggleLanguage() {
+            isLatvian = !isLatvian;
+            const lvElements = document.querySelectorAll('.lang-lv');
+            const enElements = document.querySelectorAll('.lang-en');
+            
+            if (isLatvian) {
+                lvElements.forEach(el => el.style.display = ''); // Reverts to default display
+                enElements.forEach(el => el.style.display = 'none');
+            } else {
+                lvElements.forEach(el => el.style.display = 'none');
+                enElements.forEach(el => el.style.display = ''); // Reverts to default display
+            }
+        }
+    </script>
 </body>
 </html>
