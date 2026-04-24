@@ -26,7 +26,7 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             height: 100%;
-            overflow: hidden; /* Locks the body, lets snap-container handle scrolling */
+            overflow: hidden; 
         }
 
         button, a, input, select {
@@ -62,7 +62,7 @@
 
         /* --- INDIVIDUAL SCREENS (Slides) --- */
         .snap-slide {
-            min-height: 100vh; /* min-height allows for mobile keyboard popup in the form */
+            min-height: 100vh; 
             width: 100vw;
             scroll-snap-align: start;
             scroll-snap-stop: always;
@@ -74,7 +74,6 @@
             position: relative;
         }
 
-        /* Alternate background colors for clear section breaks */
         .bg-alt { background-color: var(--bg-alt); }
         
         #hero {
@@ -94,6 +93,19 @@
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+        .scroll-arrow {
+            font-size: 2.5rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 2rem;
+            animation: bounce 2s infinite;
+            display: block;
+        }
 
         /* --- Navigation --- */
         nav {
@@ -162,19 +174,6 @@
         .hero-logo { max-width: 90vw; width: 500px; height: auto; margin-bottom: 2rem; }
 
         /* --- Icons & Feature Layouts --- */
-        .big-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            height: 100px;
-            width: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,255,255,0.03);
-            border-radius: 50%;
-            border: 2px solid var(--accent-blue);
-            box-shadow: 0 0 20px rgba(90, 156, 226, 0.2);
-        }
         .feature-img {
             width: 100%;
             max-width: 400px;
@@ -183,6 +182,61 @@
             border-radius: 15px;
             margin-bottom: 1.5rem;
             border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- Zigzag U-Pick Layout --- */
+        .zigzag-timeline {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 1.5rem auto 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .zigzag-line {
+            position: absolute;
+            top: 15%; /* Aligns with center of top icon */
+            left: 0;
+            width: 100%;
+            height: 70%; /* Stretches down to bottom icon */
+            z-index: 0;
+            pointer-events: none;
+        }
+        .z-step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1;
+            width: 85%;
+        }
+        .z-step.left { align-self: flex-start; }
+        .z-step.right { align-self: flex-end; flex-direction: row-reverse; text-align: right; }
+        
+        .z-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            background: var(--bg-alt);
+            border: 2px dashed var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(90, 156, 226, 0.2);
+        }
+        .z-content h3 {
+            font-family: 'Amatic SC', cursive;
+            font-size: 1.8rem;
+            color: var(--accent-blue);
+            margin-bottom: 0.2rem;
+        }
+        .z-content p {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #ccc;
+            text-align: inherit;
         }
 
         /* --- Plants Catalog --- */
@@ -214,7 +268,7 @@
             color: var(--accent-blue);
         }
         .plant-card p.click-hint {
-            font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase;
+            font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase; margin-bottom: 0;
         }
 
         /* --- Form --- */
@@ -256,7 +310,7 @@
             color: #888; background: none; border: none; padding: 0; margin: 0;
         }
 
-        /* --- Mobile Nav --- */
+        /* --- Mobile Nav & Adjustments --- */
         @media (max-width: 900px) {
             .hamburger { display: block; }
             .nav-links {
@@ -265,6 +319,11 @@
                 transition: left 0.3s ease; padding: 2rem 0; gap: 2rem;
             }
             .nav-links.active { left: 0; }
+            
+            .z-step { width: 95%; gap: 0.5rem; }
+            .z-icon { width: 50px; height: 50px; font-size: 1.2rem; }
+            .z-content h3 { font-size: 1.5rem; }
+            .z-content p { font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -276,7 +335,7 @@
             <div class="nav-links" id="nav-links">
                 <a href="#hero" class="translatable nav-item" data-lv="Sākums" data-en="Home">Sākums</a>
                 <a href="#market" class="translatable nav-item" data-lv="Tirgus un Piegāde" data-en="Market & Delivery">Tirgus un Piegāde</a>
-                <a href="#upick-1" class="translatable nav-item" data-lv="Pašlasīšana" data-en="U-Pick">Pašlasīšana</a>
+                <a href="#upick" class="translatable nav-item" data-lv="Pašlasīšana" data-en="U-Pick">Pašlasīšana</a>
                 <a href="#plants-blue" class="translatable nav-item" data-lv="Stādi" data-en="Plants">Stādi</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
@@ -294,9 +353,7 @@
                data-en="A family blueberry farm in Aizkraukle.">
                Ģimenes melleņu saimniecība Aizkrauklē.
             </p>
-            <p class="fade-in delay-2" style="font-size: 0.8rem; margin-top: 3rem; opacity: 0.5;">
-                <span class="translatable" data-lv="Ritiniet uz leju" data-en="Scroll down">Ritiniet uz leju</span> ↓
-            </p>
+            <div class="scroll-arrow fade-in delay-2">↓</div>
         </section>
 
         <section id="market" class="snap-slide bg-alt">
@@ -315,34 +372,38 @@
             <p class="fade-in delay-2">❄️ <span class="translatable" data-lv="Refrižeratoru furgons" data-en="Refrigerated Van">Refrižeratoru furgons</span></p>
         </section>
 
-        <section id="upick-1" class="snap-slide bg-alt">
-            <div class="big-icon fade-in">🪣</div>
-            <h2 class="fade-in delay-1 translatable" data-lv="1. Nosver tukšu trauku" data-en="1. Weigh your bucket">1. Nosver tukšu trauku</h2>
-            <p class="fade-in delay-2 translatable" style="max-width: 400px;" 
-               data-lv="Pašlasīšana (4.50€/kg). Sekojiet zīmēm uz svēršanas staciju. Aicinām ņemt savus traukus!" 
-               data-en="U-Pick (€4.50/kg). Follow signs to the weighing station. We encourage bringing your own bucket!">
-               Pašlasīšana (4.50€/kg). Sekojiet zīmēm uz svēršanas staciju. Aicinām ņemt savus traukus!
-            </p>
-        </section>
+        <section id="upick" class="snap-slide bg-alt">
+            <h2 class="fade-in translatable" data-lv="Kā darbojas pašlasīšana?" data-en="How U-Pick Works?">Kā darbojas pašlasīšana?</h2>
+            
+            <div class="zigzag-timeline">
+                <svg class="zigzag-line fade-in delay-1" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <path d="M 15 15 L 85 50 L 15 85" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="4, 6" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                </svg>
 
-        <section id="upick-2" class="snap-slide">
-            <div class="big-icon fade-in">🫐</div>
-            <h2 class="fade-in delay-1 translatable" data-lv="2. Lasi ogas" data-en="2. Pick berries">2. Lasi ogas</h2>
-            <p class="fade-in delay-2 translatable" style="max-width: 400px;"
-               data-lv="Dodies uz lauku un salasi lielākās un svaigākās mellenes!" 
-               data-en="Head into the fields and pick the largest, freshest blueberries!">
-               Dodies uz lauku un salasi lielākās un svaigākās mellenes!
-            </p>
-        </section>
+                <div class="z-step left fade-in delay-1">
+                    <div class="z-icon">🪣</div>
+                    <div class="z-content">
+                        <h3 class="translatable" data-lv="1. Nosver" data-en="1. Weigh">1. Nosver</h3>
+                        <p class="translatable" data-lv="Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!" data-en="Empty bucket at the station. Bring your own!">Tukšu trauku svēršanas stacijā. Aicinām ņemt savus!</p>
+                    </div>
+                </div>
 
-        <section id="upick-3" class="snap-slide bg-alt">
-            <div class="big-icon fade-in">⚖️</div>
-            <h2 class="fade-in delay-1 translatable" data-lv="3. Nosver un maksā" data-en="3. Weigh & Pay">3. Nosver un maksā</h2>
-            <p class="fade-in delay-2 translatable" style="max-width: 400px;"
-               data-lv="Nāc atpakaļ, nosver pilno trauku un norēķinies (skaidrā naudā vai ar karti)." 
-               data-en="Come back, weigh your full bucket, and pay (cash or card).">
-               Nāc atpakaļ, nosver pilno trauku un norēķinies (skaidrā naudā vai ar karti).
-            </p>
+                <div class="z-step right fade-in delay-2">
+                    <div class="z-icon">🫐</div>
+                    <div class="z-content">
+                        <h3 class="translatable" data-lv="2. Lasi" data-en="2. Pick">2. Lasi</h3>
+                        <p class="translatable" data-lv="Svaigākās ogas laukā." data-en="Freshest berries in the field.">Svaigākās ogas laukā.</p>
+                    </div>
+                </div>
+
+                <div class="z-step left fade-in delay-3">
+                    <div class="z-icon">⚖️</div>
+                    <div class="z-content">
+                        <h3 class="translatable" data-lv="3. Maksā" data-en="3. Pay">3. Maksā</h3>
+                        <p class="translatable" data-lv="Tikai 4.50€/kg (Skaidrā/Karte)." data-en="Only €4.50/kg (Cash/Card).">Tikai 4.50€/kg (Skaidrā/Karte).</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="plants-blue" class="snap-slide">
