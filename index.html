@@ -18,12 +18,23 @@
             padding: 0;
         }
 
+        /* --- Snap Scrolling Setup --- */
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
         body, html {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             overflow-x: hidden;
-            scroll-behavior: smooth;
+        }
+
+        /* --- Fix for sticky focus/highlights --- */
+        button, a, input, select {
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
         }
 
         h1, h2, h3, .label-font {
@@ -105,18 +116,22 @@
         .lang-switch {
             background: transparent;
             border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
             padding: 0.4rem 1rem;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
             transition: 0.3s;
             font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+        }
+
+        .lang-switch span {
+            transition: 0.3s;
         }
 
         .lang-switch:hover {
-            background: var(--accent-blue);
-            color: white;
+            background: rgba(90, 156, 226, 0.1);
         }
 
         .hamburger {
@@ -128,31 +143,27 @@
             cursor: pointer;
         }
 
-        /* --- Sections --- */
+        /* --- Sections (Snap Targets) --- */
         section {
             padding: 6rem 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
         }
 
         /* --- Hero Section --- */
         #hero {
-            min-height: 100vh;
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1598336040854-1eb31110edaa?auto=format&fit=crop&w=1920&q=80') center/cover;
-            justify-content: center;
             text-align: center;
         }
         .hero-logo {
             max-width: 90vw;
-            width: 600px; /* Adjust based on your cropped image */
+            width: 600px;
             height: auto;
-            margin-bottom: 1rem;
-            /* Put the link to your cropped PDF image below */
-        }
-        #hero .subtitle {
-            font-size: 3rem;
-            color: var(--accent-blue);
             margin-bottom: 2rem;
         }
 
@@ -195,8 +206,8 @@
             position: relative;
             max-width: 800px;
             width: 100%;
-            margin: 3rem auto;
-            padding: 2rem 0;
+            margin: 2rem auto;
+            padding: 1rem 0;
         }
         .trail-line {
             position: absolute;
@@ -215,18 +226,18 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
         .trail-icon {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             background: var(--bg-color);
             border: 3px solid var(--accent-blue);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             box-shadow: 0 0 20px rgba(90, 156, 226, 0.3);
             transition: transform 0.3s;
@@ -236,34 +247,46 @@
         }
         .trail-content {
             background: rgba(0,0,0,0.5);
-            padding: 1rem 2rem;
+            padding: 1rem 1.5rem;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);
             max-width: 400px;
         }
 
-        /* --- Plants Catalog --- */
+        /* --- Smaller Plants Catalog --- */
         .plant-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            max-width: 900px;
             width: 100%;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         .plant-card {
             background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
+            padding: 1rem 0.5rem;
             border-radius: 10px;
             text-align: center;
             border: 1px solid transparent;
             transition: 0.3s;
+            cursor: pointer;
         }
-        .plant-card:hover { border-color: var(--accent-blue); }
+        .plant-card:hover { 
+            border-color: var(--accent-blue); 
+            transform: translateY(-3px);
+            background: rgba(90, 156, 226, 0.1);
+        }
         .plant-card h4 {
             font-family: 'Amatic SC', cursive;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--accent-blue);
+        }
+        .plant-card p.click-hint {
+            font-size: 0.7rem;
+            color: #888;
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+            text-transform: uppercase;
         }
 
         /* --- Form --- */
@@ -285,7 +308,7 @@
             border-radius: 5px;
             font-family: inherit;
         }
-        button {
+        button[type="submit"] {
             background: var(--accent-blue);
             font-weight: bold;
             cursor: pointer;
@@ -294,41 +317,68 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        button:hover { background: #4682c4; }
+        button[type="submit"]:hover { background: #4682c4; }
 
-        /* --- Mobile Responsiveness for Nav & Content --- */
+        /* --- Modal (Plant Info) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1; pointer-events: auto;
+        }
+        .modal-content {
+            background: var(--bg-color);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--accent-blue);
+            max-width: 450px; width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute; top: 10px; right: 15px;
+            font-size: 2rem; cursor: pointer; color: #888;
+            background: none; border: none; width: auto; padding: 0; margin: 0;
+            transition: 0.3s;
+        }
+        .modal-close:hover { color: white; }
+
+        /* --- Mobile Responsiveness --- */
         @media (max-width: 900px) {
-            .hamburger {
-                display: block;
-            }
+            .hamburger { display: block; }
             .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                flex-direction: column;
-                background: rgba(13, 17, 23, 0.98);
-                width: 100%;
-                text-align: center;
-                transition: left 0.3s ease;
-                padding: 2rem 0;
-                gap: 2rem;
+                position: fixed; top: 70px; left: -100%; flex-direction: column;
+                background: rgba(13, 17, 23, 0.98); width: 100%; text-align: center;
+                transition: left 0.3s ease; padding: 2rem 0; gap: 2rem;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             }
-            .nav-links.active {
-                left: 0;
-            }
+            .nav-links.active { left: 0; }
             .nav-brand { display: block; }
             
             .trail-line { left: 10%; }
             .trail-step { flex-direction: row; text-align: left; gap: 1rem; }
-            .trail-icon { width: 80px; height: 80px; font-size: 2rem; flex-shrink: 0; margin-bottom: 0; }
+            .trail-icon { width: 70px; height: 70px; font-size: 1.8rem; flex-shrink: 0; margin-bottom: 0; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#hero" class="nav-brand">KBO</a> <div class="nav-right-container">
+        <a href="#hero" class="nav-brand">KBO</a> 
+        <div class="nav-right-container">
             <div class="nav-links" id="nav-links">
                 <a href="#hero" class="translatable nav-item" data-lv="Sākums" data-en="Home">Sākums</a>
                 <a href="#market" class="translatable nav-item" data-lv="Tirgus un Piegāde" data-en="Market & Delivery">Tirgus un Piegāde</a>
@@ -336,16 +386,20 @@
                 <a href="#plants" class="translatable nav-item" data-lv="Stādi" data-en="Plants">Stādi</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            <button class="lang-switch" onclick="toggleLanguage()">EN</button>
+            
+            <button class="lang-switch" onclick="toggleLanguage()">
+                <span id="lang-lv-label" style="color: white;">LV</span> | 
+                <span id="lang-en-label" style="color: #666;">EN</span>
+            </button>
+            
             <button class="hamburger" onclick="toggleMenu()">☰</button>
         </div>
     </nav>
 
     <section id="hero">
-<img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
+        <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
         
-        <div class="subtitle label-font fade-in" style="transition-delay: 0.2s;">tikko no lauka</div>
-        <p class="fade-in translatable" style="transition-delay: 0.4s; max-width: 600px;" 
+        <p class="fade-in translatable" style="transition-delay: 0.2s; max-width: 600px;" 
            data-lv="Ģimenes melleņu saimniecība Aizkrauklē." 
            data-en="A family blueberry farm in Aizkraukle.">
            Ģimenes melleņu saimniecība Aizkrauklē.
@@ -410,22 +464,44 @@
     <section id="plants">
         <h2 class="fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
         <p class="fade-in translatable" style="margin-bottom: 2rem;" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age">15€ - 30€ atkarībā no vecuma</p>
-        <div class="plant-grid">
-            <div class="plant-card fade-in"><h4>Patriot</h4></div>
-            <div class="plant-card fade-in"><h4>Bluecrop</h4></div>
-            <div class="plant-card fade-in"><h4>Chanticleer</h4></div>
-            <div class="plant-card fade-in"><h4>Toro</h4></div>
-            <div class="plant-card fade-in"><h4>Chandler</h4></div>
-            <div class="plant-card fade-in"><h4>Brigitta Blue</h4></div>
+        
+        <div class="plant-grid fade-in">
+            <div class="plant-card" onclick="openPlantModal('Patriot', 'Vidēji agrīna šķirne, izturīga pret salu. Ražo ļoti lielas un saldas ogas.', 'Mid-early variety, frost-resistant. Produces very large and sweet berries.')">
+                <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
+            <div class="plant-card" onclick="openPlantModal('Bluecrop', 'Viena no populārākajām šķirnēm pasaulē. Vidēji agrīna, klasiska garša, ļoti ražīga.', 'One of the most popular varieties worldwide. Mid-season, classic taste, highly productive.')">
+                <h4>Bluecrop</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
+            <div class="plant-card" onclick="openPlantModal('Chanticleer', 'Ļoti agrīna šķirne. Vidēji lielas ogas ar lielisku garšu.', 'Very early variety. Medium-sized berries with excellent flavor.')">
+                <h4>Chanticleer</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
+            <div class="plant-card" onclick="openPlantModal('Toro', 'Vidēji agrīna šķirne. Kompakts krūms ar milzīgām ogām.', 'Mid-early variety. Compact bush producing giant berries.')">
+                <h4>Toro</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
+            <div class="plant-card" onclick="openPlantModal('Chandler', 'Vēla šķirne. Vislielākās ogas starp visām mellenēm, ilgs ražas laiks.', 'Late variety. Has the largest berries of all blueberries, long harvest period.')">
+                <h4>Chandler</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
+            <div class="plant-card" onclick="openPlantModal('Brigitta Blue', 'Vēla šķirne. Ļoti saldas, stingras un kraukšķīgas ogas, labi uzglabājas.', 'Late variety. Very sweet, firm and crisp berries, stores excellently.')">
+                <h4>Brigitta Blue</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
         </div>
 
-        <h2 class="fade-in translatable" style="margin-top: 3rem;" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
+        <h2 class="fade-in translatable" style="margin-top: 2rem;" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
         <p class="fade-in translatable" style="margin-bottom: 2rem;" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age">10€ - 20€ atkarībā no vecuma</p>
-        <div class="plant-grid">
-            <div class="plant-card fade-in"><h4>Blue Banana</h4></div>
-            <div class="plant-card fade-in"><h4>Boreal Beast</h4></div>
-            <div class="plant-card fade-in"><h4>Strawberry Sensation</h4></div>
-            <div class="plant-card fade-in"><h4>Giant's Heart</h4></div>
+        
+        <div class="plant-grid fade-in">
+            <div class="plant-card" onclick="openPlantModal('Blue Banana', 'Vidēji vēla šķirne. Ļoti saldas, interesantas banānu formas ogas.', 'Mid-late variety. Very sweet, interestingly banana-shaped berries.')">
+                <h4>Blue Banana</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
+            <div class="plant-card" onclick="openPlantModal('Boreal Beast', 'Vidēji vēla šķirne. Lieliska, salda garša, izcila šķirne apputeksnēšanai.', 'Mid-late variety. Excellent sweet taste, outstanding pollinator.')">
+                <h4>Boreal Beast</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
+            <div class="plant-card" onclick="openPlantModal('Strawberry Sensation', 'Lielas, saldas ogas ar unikālām zemeņu garšas niansēm.', 'Large, sweet berries with unique hints of strawberry flavor.')">
+                <h4>Strawberry Sensation</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
+            <div class="plant-card" onclick="openPlantModal('Giant\'s Heart', 'Ļoti ražīga šķirne ar milzīgām, sirds formas ogām.', 'Highly productive variety with giant, heart-shaped berries.')">
+                <h4>Giant's Heart</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+            </div>
         </div>
     </section>
 
@@ -449,36 +525,79 @@
         </div>
     </section>
 
+    <div class="modal-overlay" id="plantModal" onclick="closePlantModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closePlantModal(event)">&times;</button>
+            <h3 id="modalTitle" style="font-family: 'Amatic SC', cursive; font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem;">Variety</h3>
+            <p id="modalDescLv" style="display: block;">Apraksts</p>
+            <p id="modalDescEn" style="display: none;">Description</p>
+        </div>
+    </div>
+
     <script>
-        // Hamburger Menu Toggle
+        // --- Prevent sticky focus highlighting ---
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', function() {
+                this.blur();
+            });
+        });
+
+        // --- Hamburger Menu Toggle ---
         function toggleMenu() {
             const navLinks = document.getElementById('nav-links');
             navLinks.classList.toggle('active');
         }
 
-        // Close menu when a link is clicked (for mobile)
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', () => {
                 document.getElementById('nav-links').classList.remove('active');
             });
         });
 
-        // Language Toggle Script
+        // --- Language Toggle Logic ---
         let currentLang = 'lv';
         function toggleLanguage() {
+            // Swap Language
             currentLang = currentLang === 'lv' ? 'en' : 'lv';
-            document.querySelector('.lang-switch').innerText = currentLang === 'lv' ? 'EN' : 'LV';
             
+            // Update UI switch highlight
+            document.getElementById('lang-lv-label').style.color = currentLang === 'lv' ? 'white' : '#666';
+            document.getElementById('lang-en-label').style.color = currentLang === 'en' ? 'white' : '#666';
+            
+            // Translate text elements
             document.querySelectorAll('.translatable').forEach(el => {
                 el.innerText = el.getAttribute(`data-${currentLang}`);
             });
 
+            // Translate placeholders
             document.querySelectorAll('.translatable-placeholder').forEach(el => {
                 el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`);
             });
+
+            // Translate active modal if it is open
+            document.getElementById('modalDescLv').style.display = currentLang === 'lv' ? 'block' : 'none';
+            document.getElementById('modalDescEn').style.display = currentLang === 'en' ? 'block' : 'none';
         }
 
-        // Scroll Animation Script (Intersection Observer)
+        // --- Modal Logic ---
+        function openPlantModal(title, descLv, descEn) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDescLv').innerText = descLv;
+            document.getElementById('modalDescEn').innerText = descEn;
+            
+            // Show correct language description
+            document.getElementById('modalDescLv').style.display = currentLang === 'lv' ? 'block' : 'none';
+            document.getElementById('modalDescEn').style.display = currentLang === 'en' ? 'block' : 'none';
+
+            document.getElementById('plantModal').classList.add('active');
+        }
+
+        function closePlantModal(event) {
+            if(event) event.preventDefault();
+            document.getElementById('plantModal').classList.remove('active');
+        }
+
+        // --- Scroll Animation Script ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
