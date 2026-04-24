@@ -93,7 +93,7 @@
             flex-grow: 1; 
             width: 100%;
             height: 100%; 
-            padding-bottom: 2rem; 
+            padding-bottom: 5rem; /* INCREASED: Lifts content significantly up from the bottom */
         }
 
         /* --- Animations --- */
@@ -111,7 +111,7 @@
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
 
-        /* --- Modern Elegant Bouncing Arrow --- */
+        /* --- Modern Elegant Bouncing Chevron --- */
         @keyframes scroll-drop {
             0% { transform: translateY(0); opacity: 1; }
             70% { transform: translateY(20px); opacity: 0; }
@@ -121,8 +121,8 @@
             margin-top: 2.5rem;
             animation: scroll-drop 2s infinite ease-in-out;
             display: block;
-            width: 30px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
         }
 
         /* --- Navigation --- */
@@ -202,6 +202,32 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
+        /* --- Reusable Card Payment Logos --- */
+        .card-logos-inline {
+            display: inline-flex;
+            gap: 6px;
+            vertical-align: middle;
+            margin-left: 8px;
+            align-items: center;
+        }
+        .card-logos-inline svg { height: 14px; width: auto; }
+
+        /* --- App Button Layouts --- */
+        .app-links {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+        }
+        .app-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
+            padding: 5px 10px; border-radius: 6px; color: white;
+            text-decoration: none; font-size: 0.75rem; font-weight: 600;
+            transition: 0.3s;
+        }
+        .app-btn img { filter: invert(1); } /* Makes the black CDN icons white */
+        .app-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); }
+
         /* --- Zigzag U-Pick Layout (4 Steps) --- */
         .zigzag-timeline {
             position: relative;
@@ -209,7 +235,7 @@
             max-width: 500px;
             display: flex;
             flex-direction: column;
-            gap: 1.8rem; /* Tighter gap for 4 steps to fit */
+            gap: 1.8rem; 
         }
         .zigzag-line {
             position: absolute;
@@ -265,29 +291,7 @@
             text-align: inherit;
             margin: 0;
         }
-        /* App link buttons */
-        .app-links {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.4rem;
-        }
         .z-step.right .app-links { justify-content: flex-end; }
-        .app-btn {
-            display: inline-flex; align-items: center; gap: 4px;
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
-            padding: 4px 8px; border-radius: 5px; color: white;
-            text-decoration: none; font-size: 0.7rem; font-weight: 600;
-            transition: 0.3s;
-        }
-        .app-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); }
-
-        /* Card Logos */
-        .card-logos {
-            display: flex;
-            gap: 6px;
-            margin-top: 0.4rem;
-        }
-        .z-step.right .card-logos { justify-content: flex-end; }
 
         /* --- Plants Catalog --- */
         .plant-grid {
@@ -347,15 +351,16 @@
             text-align: left;
         }
         .form-label {
-            display: block;
+            display: flex;
+            align-items: center;
             font-size: 0.7rem;
             color: #aaa;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         
-        /* FONT SIZE STRICTLY 16PX TO PREVENT IOS ZOOMING */
+        /* Strict 16px to prevent iOS auto-zooming */
         input, select, button {
             width: 100%; 
             height: 44px; 
@@ -365,7 +370,7 @@
             color: white; 
             border-radius: 8px; 
             font-family: inherit; 
-            font-size: 16px !important; /* <--- Prevents edge-overflow zooming! */
+            font-size: 16px !important; 
             appearance: none; 
             box-sizing: border-box; 
         }
@@ -427,7 +432,7 @@
             .z-content h3 { font-size: 1.4rem; }
             .z-content p { font-size: 0.75rem; }
             
-            .slide-content { padding-bottom: 3rem; }
+            .slide-content { padding-bottom: 6rem; } /* Pushes content even higher up on mobile */
         }
     </style>
 </head>
@@ -458,9 +463,8 @@
                    data-en="A family blueberry farm in Aizkraukle.">
                    Ģimenes melleņu saimniecība Aizkrauklē.
                 </p>
-                <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 50" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="0" x2="12" y2="40"></line>
-                    <polyline points="5 33 12 40 19 33"></polyline>
+                <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="4 8 12 16 20 8"></polyline>
                 </svg>
             </div>
         </section>
@@ -471,7 +475,23 @@
                 <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=600&q=80" alt="Market" class="feature-img fade-in delay-1">
                 <p class="fade-in delay-2">📍 <span class="translatable" data-lv="Rīga" data-en="Riga">Rīga</span></p>
                 <p class="fade-in delay-2">🕒 <span class="translatable" data-lv="Katru dienu no 15:00" data-en="Every day from 15:00">Katru dienu no 15:00</span></p>
-                <p class="fade-in delay-2">💳 <span class="translatable" data-lv="Skaidrā naudā / Karte" data-en="Cash / Card">Skaidrā naudā / Karte</span></p>
+                
+                <p class="fade-in delay-2" style="display: flex; align-items: center; justify-content: center;">
+                    💳 <span class="translatable" data-lv="Skaidrā naudā / Karte" data-en="Cash / Card" style="margin-left: 5px;">Skaidrā naudā / Karte</span>
+                    <span class="card-logos-inline">
+                        <svg viewBox="0 0 24 16"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                        <svg viewBox="0 0 32 12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                    </span>
+                </p>
+
+                <div class="app-links fade-in delay-2" style="justify-content: center; margin-top: 0.8rem;">
+                    <a href="https://waze.com/ul?q=Zemnieku+Nakts+Tirgus+Riga" target="_blank" class="app-btn">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/waze.svg" width="14" height="14"> Waze
+                    </a>
+                    <a href="https://maps.google.com/?q=Zemnieku+Nakts+Tirgus+Riga" target="_blank" class="app-btn">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlemaps.svg" width="14" height="14"> Maps
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -482,6 +502,14 @@
                 <p class="fade-in delay-2">🚚 <span class="translatable" data-lv="Bezmaksas piegāde (Rīga-Aizkraukle)" data-en="Free Delivery (Riga-Aizkraukle)">Bezmaksas piegāde (Rīga-Aizkraukle)</span></p>
                 <p class="fade-in delay-2">📦 <span class="translatable" data-lv="Min. 5kg (6.50€/kg)" data-en="Min 5kg (€6.50/kg)">Min. 5kg (6.50€/kg)</span></p>
                 <p class="fade-in delay-2">❄️ <span class="translatable" data-lv="Piegādātas refrižeratorā, saglabājot svaigumu" data-en="Delivered in a refrigerated van, preserving freshness">Piegādātas refrižeratorā, saglabājot svaigumu</span></p>
+                
+                <p class="fade-in delay-2" style="display: flex; align-items: center; justify-content: center; margin-top: 5px;">
+                    💳 <span class="translatable" data-lv="Apmaksa saņemot: Skaidrā / Karte" data-en="Payment on delivery: Cash / Card" style="margin-left: 5px;">Apmaksa saņemot: Skaidrā / Karte</span>
+                    <span class="card-logos-inline">
+                        <svg viewBox="0 0 24 16"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                        <svg viewBox="0 0 32 12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                    </span>
+                </p>
             </div>
         </section>
 
@@ -491,7 +519,7 @@
             <div class="slide-content">
                 <div class="zigzag-timeline">
                     <svg class="zigzag-line fade-in delay-1" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path d="M 15 5 C 80 15, 85 25, 85 35 C 85 45, 15 55, 15 65 C 15 75, 85 85, 85 95" stroke="rgba(255,255,255,0.8)" stroke-width="3" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                        <path d="M 15 5 C 150 -10, 150 40, 85 30 C 0 20, -50 70, 15 65 C 100 50, 120 100, 85 95" stroke="rgba(255,255,255,0.8)" stroke-width="3" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
                     </svg>
 
                     <div class="z-step left fade-in delay-1">
@@ -501,10 +529,10 @@
                             <p class="translatable" data-lv="Atrodi mūs Aizkrauklē." data-en="Find us in Aizkraukle.">Atrodi mūs Aizkrauklē.</p>
                             <div class="app-links">
                                 <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="app-btn">
-                                    🚗 Waze
+                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/waze.svg" width="14" height="14"> Waze
                                 </a>
                                 <a href="https://www.google.com/maps/search/?api=1&query=Kalna+Baložu+Ogas" target="_blank" class="app-btn">
-                                    🗺️ Maps
+                                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlemaps.svg" width="14" height="14"> Maps
                                 </a>
                             </div>
                         </div>
@@ -530,15 +558,12 @@
                         <div class="z-icon">⚖️</div>
                         <div class="z-content">
                             <h3 class="translatable" data-lv="4. Norēķinies" data-en="4. Pay">4. Norēķinies</h3>
-                            <p class="translatable" data-lv="Tikai 4.50€/kg." data-en="Only €4.50/kg.">Tikai 4.50€/kg.</p>
-                            <div class="card-logos">
-                                <svg viewBox="0 0 24 16" width="30" height="16">
-                                    <circle cx="8" cy="8" r="8" fill="#EB001B"/>
-                                    <circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/>
-                                </svg>
-                                <svg viewBox="0 0 32 12" width="30" height="12" style="margin-top:2px;">
-                                    <text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text>
-                                </svg>
+                            <div style="display: flex; align-items: center; justify-content: flex-end;">
+                                <p class="translatable" data-lv="Tikai 4.50€/kg." data-en="Only €4.50/kg." style="margin: 0; display: inline-block;">Tikai 4.50€/kg.</p>
+                                <span class="card-logos-inline" style="margin-left: 8px;">
+                                    <svg viewBox="0 0 24 16"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                                    <svg viewBox="0 0 32 12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -597,9 +622,15 @@
         </section>
 
         <section id="order" class="snap-slide">
-            <h2 class="slide-title fade-in translatable" data-lv="Pasūtīt Piegādi" data-en="Order Delivery">Pasūtīt Piegādi</h2>
+            <h2 class="slide-title fade-in translatable" data-lv="Pasūtīt uz mājām vai ofisu" data-en="Order to Home or Office">Pasūtīt uz mājām vai ofisu</h2>
             
             <div class="slide-content">
+                <p class="fade-in delay-1 translatable" style="font-size: 0.85rem; color: #aaa; margin-bottom: 1rem; max-width: 500px;" 
+                   data-lv="* Šī forma paredzēta tikai melleņu piegādei. Stādu iegādei, lūdzu, sazinieties ar mums atsevišķi." 
+                   data-en="* This form is for blueberry delivery only. For plants, please contact us directly.">
+                   * Šī forma paredzēta tikai melleņu piegādei. Stādu iegādei, lūdzu, sazinieties ar mums atsevišķi.
+                </p>
+
                 <div class="form-container fade-in delay-1">
                     <form action="#" method="POST">
                         <div class="form-group fade-in delay-1">
@@ -625,7 +656,13 @@
                         </div>
                         
                         <div class="form-group fade-in delay-3">
-                            <label class="form-label translatable" data-lv="Apmaksas veids" data-en="Payment Method">Apmaksas veids</label>
+                            <label class="form-label translatable" data-lv="Apmaksas veids" data-en="Payment Method">
+                                Apmaksas veids
+                                <span class="card-logos-inline" style="margin-left: 10px;">
+                                    <svg viewBox="0 0 24 16"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
+                                    <svg viewBox="0 0 32 12"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                </span>
+                            </label>
                             <select name="payment" required>
                                 <option value="" disabled selected class="translatable" data-lv="Izvēlieties..." data-en="Select...">Izvēlieties...</option>
                                 <option value="card" class="translatable" data-lv="Karte saņemot" data-en="Card on delivery">Karte saņemot</option>
@@ -641,7 +678,7 @@
         
     </div> <div class="modal-overlay" id="plantModal" onclick="closePlantModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closePlantModal(event)">&times;</button>
+            <button class="modal-close" onclick="closePlantModal(event)">×</button>
             <h3 id="modalTitle" style="font-family: 'Amatic SC', cursive; font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem;">Variety</h3>
             <p id="modalDescLv" style="display: block;">Apraksts</p>
             <p id="modalDescEn" style="display: none;">Description</p>
