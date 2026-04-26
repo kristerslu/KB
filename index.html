@@ -11,7 +11,7 @@
             --bg-alt: #0c111c;
             --text-main: #f8fafc; 
             --accent-blue: #8ba5d3; 
-            --accent-lime: #c5f04a; /* Strictly ONLY used for the price text */
+            --accent-lime: #c5f04a; 
             --nav-height: 70px;
         }
 
@@ -73,7 +73,11 @@
         .bg-alt { background-color: var(--bg-alt); }
 
         /* Pure black background for Hero to blend seamlessly with the image */
-        #hero { background-color: #000000; }
+        #hero { 
+            background: #000000 !important; 
+            padding-top: var(--nav-height);
+            justify-content: center;
+        }
 
         .slide-title {
             font-size: 3.5rem;
@@ -103,6 +107,8 @@
             justify-content: center;
             padding-bottom: 3rem;
             padding-top: 0;
+            height: auto;
+            flex-grow: 0;
         }
 
         /* Fitment fixes for heavy pages */
@@ -175,13 +181,12 @@
         }
 
         /* --- Hero --- */
-        /* Removed buggy blend-mode. Now cleanly sits on black background. */
         .hero-logo { max-width: 90vw; width: 450px; height: auto; margin-bottom: 2rem; }
         .hero-subtitle {
             font-family: 'Caveat', cursive; 
             font-size: 2.8rem; 
             line-height: 1.2;
-            color: var(--text-main); /* Strictly White */
+            color: var(--text-main); 
             max-width: 600px; 
             margin-bottom: 0;
         }
@@ -265,7 +270,6 @@
         .z-content h3 { font-family: 'Caveat', cursive; font-size: 2rem; color: var(--text-main); margin-bottom: 0.1rem; line-height: 1; }
         .z-content p { font-size: 0.85rem; line-height: 1.3; color: #ccc; text-align: inherit; margin: 0; }
         
-        /* The ONLY place Neon Lime is used */
         .price-exaggerated {
             font-size: 1.6rem !important; font-family: 'Caveat', cursive; color: var(--accent-lime) !important;
             letter-spacing: 2px; margin-bottom: 0.2rem !important; display: block; transform: rotate(-3deg);
@@ -530,11 +534,11 @@
             <div class="slide-content">
                 <div class="zigzag-timeline">
                     <svg class="zigzag-line fade-in delay-4" viewBox="0 0 100 100" preserveAspectRatio="none" style="z-index: 1;">
-                        <path d="M 10 14 
-                                 C 80 35, 20 15, 90 38 
-                                 C 20 60, 80 40, 10 63 
-                                 C 80 85, 20 65, 90 88" 
-                              stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-dasharray="5, 7" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                        <path d="M 50 12 
+                                 C 150 25, -50 25, 50 37 
+                                 C -50 50, 150 50, 50 62 
+                                 C 150 75, -50 75, 50 87" 
+                              stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
                     </svg>
 
                     <div class="z-step left fade-in delay-1">
@@ -587,7 +591,7 @@
                                 <span class="translatable" style="font-size: 0.75rem; color: #ccc;" data-lv="Tiešsaistē / Skaidrā / Karte" data-en="Online / Cash / Card">Tiešsaistē / Skaidrā / Karte</span>
                                 <span class="card-logos-inline">
                                     <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                                    <svg viewBox="0 0 45 16" width="28" height="12" overflow="visible"><text x="0" y="14" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                    <svg viewBox="0 0 45 16" width="28" height="12" overflow="visible"><text x="0" y="14" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                                 </span>
                             </div>
                         </div>
