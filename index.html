@@ -72,7 +72,6 @@
 
         .bg-alt { background-color: var(--bg-alt); }
 
-        /* Pure black background for Hero to blend seamlessly with the image */
         #hero { 
             background: #000000 !important; 
             padding-top: var(--nav-height);
@@ -102,7 +101,6 @@
             padding-top: 1rem;
         }
 
-        /* Hero centering */
         #hero .slide-content {
             justify-content: center;
             padding-bottom: 3rem;
@@ -111,10 +109,39 @@
             flex-grow: 0;
         }
 
-        /* Fitment fixes for heavy pages */
         #order .slide-content, #growing .slide-content {
             justify-content: center; 
             padding-bottom: 2rem;
+        }
+
+        /* --- Custom Buttons (Call to Actions) --- */
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            z-index: 10;
+        }
+        
+        .cta-btn, .cta-btn-outline {
+            display: inline-flex; align-items: center; justify-content: center;
+            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            padding: 0.8rem 1.8rem; border-radius: 25px; transition: 0.3s; text-decoration: none;
+        }
+        
+        .cta-btn {
+            background: var(--text-main); color: #000; border: 2px solid var(--text-main);
+        }
+        
+        .cta-btn-outline {
+            background: transparent; color: var(--text-main); border: 2px solid var(--text-main);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .cta-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); color: white; transform: scale(1.05); }
+            .cta-btn-outline:hover { background: var(--text-main); color: black; transform: scale(1.05); }
         }
 
         /* --- "Sketchy" Hand-Drawn Box Effect --- */
@@ -377,6 +404,10 @@
             
             .slide-title { font-size: 2.8rem; margin-bottom: 0.3rem; }
             
+            /* Fitting Hero Buttons */
+            .hero-buttons { margin-top: 1rem; flex-direction: column; width: 100%; max-width: 250px; gap: 0.8rem; }
+            .cta-btn, .cta-btn-outline { padding: 0.8rem; font-size: 0.85rem; width: 100%; margin-top: 0;}
+
             /* Fitting U-Pick */
             .z-step { width: 100%; gap: 0.5rem; }
             .z-content h3 { font-size: 1.6rem; }
@@ -440,8 +471,13 @@
                    data-en="Fresh, home-grown berries from our family farm.">
                    Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības.
                 </p>
+
+                <div class="hero-buttons fade-in delay-2">
+                    <a href="#order" class="cta-btn translatable" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
+                    <a href="#plants-blue" class="cta-btn-outline translatable" data-lv="Stādi" data-en="Plants">Stādi</a>
+                </div>
             </div>
-            <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="scroll-arrow-svg fade-in delay-3" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 4v16m-6-6l6 6 6-6"/>
             </svg>
         </section>
@@ -519,6 +555,8 @@
                         </div>
                     </div>
                 </div>
+
+                <a href="#order" class="cta-btn fade-in delay-3 translatable" data-lv="Pasūtīt" data-en="Order" style="margin-top: 1.5rem;">Pasūtīt</a>
             </div>
         </section>
 
@@ -591,7 +629,7 @@
                                 <span class="translatable" style="font-size: 0.75rem; color: #ccc;" data-lv="Tiešsaistē / Skaidrā / Karte" data-en="Online / Cash / Card">Tiešsaistē / Skaidrā / Karte</span>
                                 <span class="card-logos-inline">
                                     <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                                    <svg viewBox="0 0 45 16" width="28" height="12" overflow="visible"><text x="0" y="14" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                    <svg viewBox="0 0 45 16" width="28" height="12" overflow="visible"><text x="0" y="14" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                                 </span>
                             </div>
                         </div>
@@ -604,7 +642,7 @@
             <h2 class="slide-title fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
             
             <div class="slide-content">
-                <p class="fade-in delay-1 translatable handwritten" data-lv="15€ - 30€ atkarībā no vecuma" data-en="€15 - €30 based on age" style="margin-bottom: 1rem; font-size: 1.8rem; color: var(--text-main);">15€ - 30€ atkarībā no vecuma</p>
+                <p class="fade-in delay-1 translatable handwritten" data-lv="15€ - 30€" data-en="€15 - €30" style="margin-bottom: 1rem; font-size: 1.8rem; color: var(--text-main);">15€ - 30€</p>
                 <div class="plant-grid fade-in delay-2">
                     <div class="plant-card sketchy-box" onclick="openPlantModal('Patriot', '• Vidēji agrīna\n• Ļoti augsta salizturība\n• Lielas, saldas ogas\n• Stāvs krūms', '• Mid-early\n• Highly frost-resistant\n• Large, sweet berries\n• Upright bush')">
                         <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
@@ -632,7 +670,7 @@
             <h2 class="slide-title fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
             
             <div class="slide-content">
-                <p class="fade-in delay-1 translatable handwritten" data-lv="10€ - 20€ atkarībā no vecuma" data-en="€10 - €20 based on age" style="margin-bottom: 1rem; font-size: 1.8rem; color: var(--text-main);">10€ - 20€ atkarībā no vecuma</p>
+                <p class="fade-in delay-1 translatable handwritten" data-lv="10€ - 20€" data-en="€10 - €20" style="margin-bottom: 1rem; font-size: 1.8rem; color: var(--text-main);">10€ - 20€</p>
                 <div class="plant-grid fade-in delay-2">
                     <div class="plant-card sketchy-box" onclick="openPlantModal('Blue Banana', '• Vidēji vēla\n• Banānu formas ogas\n• Ļoti saldas un sulīgas\n• Augsta ražība', '• Mid-late\n• Banana-shaped berries\n• Very sweet & juicy\n• High yield')">
                         <h4>Banana</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
