@@ -161,7 +161,7 @@
         .nav-links a {
             color: var(--text-main);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -172,7 +172,6 @@
         .lang-switch {
             background: transparent;
             border: 1px solid var(--accent-blue);
-            padding: 0.4rem 1rem;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
@@ -180,10 +179,16 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
             color: white;
-            width: 50px;
-            text-align: center;
+            width: 55px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center; 
         }
-        .lang-switch:hover { background: rgba(90, 156, 226, 0.2); }
+        @media (hover: hover) {
+            .lang-switch:hover { background: rgba(80, 114, 167, 0.2); }
+        }
+
         .hamburger {
             display: none; font-size: 2rem; background: none; border: none;
             color: var(--text-main); cursor: pointer;
@@ -260,7 +265,7 @@
             display: flex; flex-direction: column; gap: 1.8rem; 
         }
         .zigzag-line {
-            position: absolute; top: 5%; left: 0; width: 100%; height: 90%; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             z-index: 0; pointer-events: none;
         }
         .z-step {
@@ -312,6 +317,26 @@
         .plant-card h4 { font-family: 'Amatic SC', cursive; font-size: 1.6rem; color: var(--accent-blue); }
         .plant-card p.click-hint { font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase; margin-bottom: 0; }
 
+        /* --- Growing Guide (New Slide) --- */
+        .grow-card {
+            background: rgba(255, 255, 255, 0.03); padding: 1.2rem;
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+            width: 100%; max-width: 600px; margin-bottom: 1rem; text-align: left;
+        }
+        .grow-card h3 {
+            font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: var(--accent-blue); margin-bottom: 0.5rem;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .grow-card p { font-size: 0.85rem; line-height: 1.4; color: #ddd; text-align: left; margin-bottom: 0;}
+        .peat-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.8rem;
+        }
+        .peat-box {
+            background: rgba(80, 114, 167, 0.15); padding: 0.8rem 0.5rem; border-radius: 8px; text-align: center; border: 1px solid rgba(80, 114, 167, 0.3);
+        }
+        .peat-box h4 { font-size: 0.75rem; color: var(--text-main); margin-bottom: 0.2rem; text-transform: uppercase;}
+        .peat-box span { font-size: 1.2rem; font-weight: bold; color: var(--accent-blue); }
+
         /* --- Modern Form --- */
         .form-container {
             background: rgba(255, 255, 255, 0.03); padding: 1.2rem 1.5rem; 
@@ -361,24 +386,24 @@
             color: #888; background: none; border: none; padding: 0; margin: 0;
         }
         
-        /* Format detailed modal descriptions with proper bullet point stacking */
         #modalDescLv, #modalDescEn {
-            font-size: 0.95rem; line-height: 1.6; color: #ccc; text-align: left;
-            white-space: pre-line; /* Essential for bullet point rendering */
+            font-size: 0.95rem; line-height: 1.6; color: #ccc; text-align: left; white-space: pre-line; 
         }
 
+        /* --- Mobile Nav (Drops from top) & Adjustments --- */
         @media (max-width: 900px) {
-            .hamburger { display: block; }
+            .hamburger { display: block; z-index: 1001; }
             .nav-links {
-                position: fixed; top: var(--nav-height); left: -100%; flex-direction: column;
+                position: fixed; top: -100vh; left: 0; flex-direction: column;
                 background: rgba(13, 17, 23, 0.98); width: 100%; text-align: center;
-                transition: left 0.3s ease; padding: 2rem 0; gap: 2rem;
+                transition: top 0.4s ease-in-out; padding: calc(var(--nav-height) + 2rem) 0 2rem 0; gap: 2rem;
+                z-index: -1; border-bottom: 1px solid rgba(255,255,255,0.1);
             }
-            .nav-links.active { left: 0; }
+            .nav-links.active { top: 0; }
             
-            .slide-title { font-size: 2.8rem; }
+            .slide-title { font-size: 2.6rem; }
             .z-step { width: 100%; gap: 0.4rem; }
-            .slide-content { padding-bottom: 6rem; }
+            .slide-content { padding-bottom: 5rem; }
             #order .slide-content { padding-bottom: 2rem; }
         }
     </style>
@@ -390,12 +415,13 @@
         <div class="nav-right-container">
             <div class="nav-links" id="nav-links">
                 <a href="#hero" class="translatable nav-item" data-lv="Sākums" data-en="Home">Sākums</a>
-                <a href="#market" class="translatable nav-item" data-lv="Tirgus un Piegāde" data-en="Market & Delivery">Tirgus un Piegāde</a>
+                <a href="#market" class="translatable nav-item" data-lv="Tirgus" data-en="Market">Tirgus</a>
                 <a href="#upick" class="translatable nav-item" data-lv="Pašlasīšana" data-en="U-Pick">Pašlasīšana</a>
                 <a href="#plants-blue" class="translatable nav-item" data-lv="Stādi" data-en="Plants">Stādi</a>
+                <a href="#growing" class="translatable nav-item" data-lv="Audzēšana" data-en="Growing">Audzēšana</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">LV</button>
+            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">EN</button>
             <button class="hamburger" onclick="toggleMenu(); this.blur()">☰</button>
         </div>
     </nav>
@@ -511,7 +537,7 @@
             <div class="slide-content">
                 <div class="zigzag-timeline">
                     <svg class="zigzag-line fade-in delay-4" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path d="M 15 5 C 130 -10, 130 40, 85 35 C 30 30, -30 70, 15 65 C 80 60, 130 95, 85 95" stroke="rgba(255,255,255,0.7)" stroke-width="3" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                        <path d="M 20 10 C 130 0, 130 35, 80 35 C -10 35, -10 65, 20 65 C 130 65, 130 90, 80 90" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
                     </svg>
 
                     <div class="z-step left fade-in delay-1">
@@ -623,7 +649,56 @@
             </div>
         </section>
 
-        <section id="order" class="snap-slide">
+        <section id="growing" class="snap-slide">
+            <h2 class="slide-title fade-in translatable" data-lv="Stādīšana un Kopšana" data-en="Planting & Care">Stādīšana un Kopšana</h2>
+            
+            <div class="slide-content">
+                
+                <div class="grow-card fade-in delay-1">
+                    <h3>
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        <span class="translatable" data-lv="Auduma Podi" data-en="Fabric Pots">Auduma Podi</span>
+                    </h3>
+                    <p class="translatable" data-lv="Pieejami 25 litru un 42 litru tilpumos. Izgatavoti no elpojoša materiāla, kas ir lieliski piemērots veselīgai sakņu attīstībai. Aprīkoti ar 2 rokturiem ļoti ērtai pārvietošanai." data-en="Available in 25L and 42L volumes. Made of breathable material, perfect for healthy root development. Equipped with 2 handles for very easy moving.">
+                        Pieejami 25 litru un 42 litru tilpumos. Izgatavoti no elpojoša materiāla, kas ir lieliski piemērots veselīgai sakņu attīstībai. Aprīkoti ar 2 rokturiem ļoti ērtai pārvietošanai.
+                    </p>
+                </div>
+
+                <div class="grow-card fade-in delay-2">
+                    <h3>
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 4.2c.86.63 1.34 1.62 1.34 2.69v11.3A2.12 2.12 0 0 1 16.88 23H7.12A2.12 2.12 0 0 1 5 20.88V9.58c0-1.07.48-2.06 1.34-2.69L12 2.69z"/><path d="M12 2.69V23"/></svg>
+                        <span class="translatable" data-lv="Kā Stādīt?" data-en="How to Plant?">Kā Stādīt?</span>
+                    </h3>
+                    <p class="translatable" data-lv="Stādīšanai nepieciešama skāba kūdra (pH 3.5 - 4.5). Mēslojiet pavasarī (pirms ziedēšanas) un vasaras sākumā ar speciālu melleņu mēslojumu. Neaizmirstiet par regulāru laistīšanu!" data-en="Use acidic peat (pH 3.5 - 4.5) for planting. Fertilize in spring (before blooming) and early summer with specific blueberry fertilizer. Don't forget regular watering!">
+                        Stādīšanai nepieciešama skāba kūdra (pH 3.5 - 4.5). Mēslojiet pavasarī (pirms ziedēšanas) un vasaras sākumā ar speciālu melleņu mēslojumu. Neaizmirstiet par regulāru laistīšanu!
+                    </p>
+                </div>
+
+                <div class="grow-card fade-in delay-3" style="margin-bottom: 0;">
+                    <h3 style="font-size: 1.4rem;">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span class="translatable" data-lv="Nepieciešamais kūdras apjoms" data-en="Required Peat Volume">Nepieciešamais kūdras apjoms</span>
+                    </h3>
+                    <div class="peat-grid">
+                        <div class="peat-box">
+                            <h4 class="translatable" data-lv="Minimālais" data-en="Minimum">Minimālais</h4>
+                            <span>50L</span>
+                        </div>
+                        <div class="peat-box" style="background: rgba(80, 114, 167, 0.3);">
+                            <h4 class="translatable" data-lv="Vidējais" data-en="Average">Vidējais</h4>
+                            <span>80L</span>
+                        </div>
+                        <div class="peat-box">
+                            <h4 class="translatable" data-lv="Perfektais" data-en="Perfect">Perfektais</h4>
+                            <span>150L+</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="order" class="snap-slide bg-alt">
             <h2 class="slide-title fade-in translatable" data-lv="Melleņu piegāde uz mājām vai ofisu" data-en="Blueberry delivery to home or office">Melleņu piegāde uz mājām vai ofisu</h2>
             
             <div class="slide-content">
@@ -683,7 +758,6 @@
     </div>
 
     <script>
-        // --- Slider Initialization Script ---
         function initSliders() {
             document.querySelectorAll('.slider-container, .bg-slider-wrapper').forEach(container => {
                 const images = container.querySelectorAll('.slide-img, .bg-slide-img');
@@ -698,7 +772,6 @@
         }
         initSliders();
 
-        // --- Hamburger Menu Toggle ---
         function toggleMenu() {
             document.getElementById('nav-links').classList.toggle('active');
         }
@@ -709,11 +782,15 @@
             });
         });
 
-        // --- Language Toggle Logic ---
+        // Initialize state to Latvian. Button shows 'EN' to switch to English.
         let currentLang = 'lv';
+        
         function toggleLanguage() {
+            // Flip the language
             currentLang = currentLang === 'lv' ? 'en' : 'lv';
-            document.getElementById('langBtn').innerText = currentLang.toUpperCase();
+            
+            // If current page is LV, button should offer EN. If EN, offer LV.
+            document.getElementById('langBtn').innerText = currentLang === 'lv' ? 'EN' : 'LV';
             
             document.querySelectorAll('.translatable').forEach(el => {
                 el.innerText = el.getAttribute(`data-${currentLang}`);
@@ -726,7 +803,6 @@
             document.getElementById('modalDescEn').style.display = currentLang === 'en' ? 'block' : 'none';
         }
 
-        // --- Modal Logic ---
         function openPlantModal(title, descLv, descEn) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalDescLv').innerText = descLv;
@@ -743,7 +819,6 @@
             document.getElementById('plantModal').classList.remove('active');
         }
 
-        // --- Scroll Animation Script ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
