@@ -11,7 +11,7 @@
             --bg-alt: #0c111c;
             --text-main: #f8fafc; 
             --accent-blue: #8ba5d3; 
-            --accent-lime: #c5f04a; /* Strictly used ONLY for the price */
+            --accent-lime: #c5f04a; 
             --nav-height: 70px;
         }
 
@@ -42,7 +42,7 @@
         }
 
         p {
-            font-size: 1rem;
+            font-size: 1.1rem;
             line-height: 1.5;
             margin-bottom: 0.5rem;
             text-align: center;
@@ -66,7 +66,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: calc(var(--nav-height) + 1rem) 1.5rem 0 1.5rem; 
+            padding: calc(var(--nav-height) + 1.5rem) 1.5rem 0 1.5rem; 
             position: relative;
         }
 
@@ -95,11 +95,26 @@
             padding-top: 1rem;
         }
 
-        /* Hero centering fix */
+        /* Special Centering Fix for the Cover Page */
+        #hero {
+            padding-top: var(--nav-height);
+            justify-content: center;
+        }
         #hero .slide-content {
             justify-content: center;
-            padding-bottom: 2rem;
+            padding-bottom: 3rem;
             padding-top: 0;
+            height: auto;
+            flex-grow: 0;
+        }
+
+        /* Adjustments to prevent overlap on specific heavy slides */
+        #order .slide-content {
+            padding-bottom: 2rem;
+        }
+        #growing .slide-content {
+            justify-content: flex-start; 
+            padding-top: 1rem;
         }
 
         /* --- "Sketchy" Hand-Drawn Box Effect --- */
@@ -127,7 +142,7 @@
             100% { transform: translateY(0); opacity: 0; }
         }
         .scroll-arrow-svg {
-            margin-top: auto; margin-bottom: 2rem;
+            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
             animation: scroll-drop 2s infinite ease-in-out;
             display: block; width: 40px; height: 40px;
         }
@@ -161,17 +176,29 @@
         }
         @media (hover: hover) and (pointer: fine) { .lang-switch:hover { background: rgba(80, 114, 167, 0.2); } }
 
-        .hamburger { display: none; font-size: 2rem; background: none; border: none; color: var(--text-main); cursor: pointer; }
+        .hamburger {
+            display: none; font-size: 2rem; background: none; border: none; color: var(--text-main); cursor: pointer;
+        }
 
         /* --- Hero --- */
-        /* Mix-blend-mode perfectly removes the black background from your logo! */
-        .hero-logo { mix-blend-mode: screen; max-width: 90vw; width: 450px; height: auto; margin-bottom: 2rem; }
-        .hero-subtitle { font-size: 1.2rem; max-width: 600px; color: #ddd; margin-bottom: 1rem; }
+        .hero-logo { 
+            /* Magic trick to delete the black background from the image */
+            mix-blend-mode: screen; 
+            filter: contrast(1.5) grayscale(1); 
+            max-width: 90vw; 
+            width: 450px; 
+            height: auto; 
+            margin-bottom: 2.5rem; 
+        }
+        .hero-subtitle {
+            font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 1.3rem; 
+            letter-spacing: 1px; max-width: 700px; color: #ddd; margin-bottom: 0;
+        }
 
         /* --- Image Sliders --- */
         .slider-container {
             position: relative; width: 100%; max-width: 400px; height: 180px;
-            margin-bottom: 1rem; overflow: hidden;
+            margin-bottom: 1.5rem; overflow: hidden;
             border: 2px solid rgba(255,255,255,0.8); border-radius: 1% 98% 2% 98% / 98% 2% 98% 2%; 
         }
         .slide-img {
@@ -193,12 +220,13 @@
         }
         .bg-slide-img.active { opacity: 1; }
 
-        /* --- Info Lists --- */
+        /* --- Clean Left-Aligned Info Lists --- */
         .info-list {
-            display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start; margin: 0 auto; width: fit-content; max-width: 100%;
+            display: flex; flex-direction: column; gap: 0.8rem;
+            align-items: flex-start; margin: 0 auto; width: fit-content; max-width: 100%;
         }
         .info-row {
-            display: flex; align-items: flex-start; text-align: left; gap: 10px; width: 100%;
+            display: flex; align-items: flex-start; text-align: left; gap: 12px; width: 100%;
         }
         .icon-svg {
             display: inline-flex; align-items: center; justify-content: center; color: var(--accent-blue); margin-top: 2px;
@@ -206,7 +234,7 @@
         .info-row-content { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.9rem;}
         .card-logos-inline { display: inline-flex; gap: 4px; align-items: center; }
 
-        .app-links { display: flex; gap: 0.5rem; margin-top: 0.5rem; justify-content: center; }
+        .app-links { display: flex; gap: 0.5rem; margin-top: 0.8rem; justify-content: center; }
         .app-btn {
             display: inline-flex; align-items: center; gap: 6px;
             background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.4);
@@ -219,14 +247,14 @@
         /* --- Zigzag U-Pick Layout --- */
         .zigzag-timeline {
             position: relative; width: 100%; max-width: 500px;
-            display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1rem;
+            display: flex; flex-direction: column; gap: 1.8rem; margin-top: 1rem;
         }
         .zigzag-line {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             z-index: 0; pointer-events: none;
         }
         .z-step {
-            display: flex; align-items: center; gap: 0.8rem; z-index: 2; width: 85%;
+            display: flex; align-items: center; gap: 1rem; z-index: 2; width: 85%;
         }
         .z-step.left { align-self: flex-start; }
         .z-step.right { align-self: flex-end; flex-direction: row-reverse; text-align: right; }
@@ -236,12 +264,14 @@
             border: 2px dashed var(--text-main); border-radius: 50%; display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; z-index: 3; color: var(--text-main);
         }
+        #upick .z-icon { background: #080c11; }
         
         .z-content {
             padding: 0.6rem 1rem; z-index: 3; width: 100%; text-align: inherit;
         }
+        #upick .z-content { background: #080c11; } 
         
-        .z-content h3 { font-size: 2rem; color: var(--text-main); margin-bottom: 0; line-height: 1; }
+        .z-content h3 { font-size: 2rem; color: var(--text-main); margin-bottom: 0.1rem; line-height: 1; }
         .z-content p { font-size: 0.8rem; line-height: 1.3; color: #ccc; text-align: inherit; margin: 0; }
         .price-exaggerated {
             font-size: 1.6rem !important; font-family: 'Caveat', cursive; color: var(--accent-lime) !important;
@@ -252,7 +282,7 @@
         /* --- Plants Catalog --- */
         .plant-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 0.6rem; max-width: 800px; width: 100%;
+            gap: 0.8rem; max-width: 800px; width: 100%;
         }
         .plant-card {
             padding: 0.8rem 0.5rem; text-align: center; cursor: pointer; transition: 0.3s;
@@ -267,7 +297,7 @@
         .grow-card {
             padding: 1rem; width: 100%; max-width: 600px; margin-bottom: 0.8rem; text-align: left;
         }
-        .grow-card h3 { font-size: 2rem; color: var(--text-main); margin-bottom: 0.3rem; display: flex; align-items: center; gap: 8px; }
+        .grow-card h3 { font-size: 2.2rem; color: var(--accent-lime); margin-bottom: 0.3rem; display: flex; align-items: center; gap: 10px; }
         .grow-card p { font-size: 0.85rem; line-height: 1.4; color: #ddd; text-align: left; margin-bottom: 0;}
         .peat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.5rem; }
         .peat-box { padding: 0.5rem; text-align: center; border: 1px dashed rgba(255,255,255,0.3); border-radius: 5px; }
@@ -286,8 +316,8 @@
         }
         @media (hover: hover) and (pointer: fine) { .news-link:hover { background: transparent; color: var(--text-main); border-color: var(--text-main); } }
         
-        .contact-info { display: flex; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 1.5rem; }
-        .contact-info a { color: var(--text-main); font-family: 'Caveat', cursive; font-size: 1.8rem; display: flex; align-items: center; gap: 5px; }
+        .contact-info { display: flex; gap: 1.2rem; justify-content: center; align-items: center; margin-bottom: 1.5rem; }
+        .contact-info a { color: var(--accent-lime); font-family: 'Caveat', cursive; font-size: 2rem; display: flex; align-items: center; gap: 5px; }
 
         /* --- Modern Form --- */
         .form-container {
@@ -336,7 +366,7 @@
         }
         #modalDescLv, #modalDescEn { font-size: 0.9rem; line-height: 1.6; color: #ccc; text-align: left; white-space: pre-line; }
 
-        /* --- Mobile Nav & Adjustments (Perfect Mobile Fitment) --- */
+        /* --- Mobile Nav (Drops from top smoothly) & Adjustments --- */
         @media (max-width: 900px) {
             .hamburger { display: block; z-index: 1001; }
             .nav-links {
@@ -348,37 +378,24 @@
             .nav-links.active { top: 0; }
             .nav-links a { font-size: 1.2rem; font-family: 'Caveat', cursive; letter-spacing: 2px; }
             
-            .slide-title { font-size: 2.8rem; margin-bottom: 0.3rem; }
-            
-            /* Fitting U-Pick */
+            .slide-title { font-size: 3rem; margin-bottom: 0.5rem; }
             .z-step { width: 100%; gap: 0.5rem; }
+            .slide-content { padding-bottom: 2rem; justify-content: flex-start; padding-top: 1rem;}
+            
             .z-content h3 { font-size: 1.6rem; }
             .z-content p { font-size: 0.75rem; }
             .price-exaggerated { font-size: 1.4rem !important; }
-            
-            /* Aggressively fitting Growing slide */
-            .grow-card { padding: 0.6rem 1rem; margin-bottom: 0.5rem; }
-            .grow-card h3 { font-size: 1.4rem; margin-bottom: 0.2rem; }
-            .grow-card p { font-size: 0.75rem; line-height: 1.3; }
-            .peat-grid { margin-top: 0.4rem; }
-            .peat-box { padding: 0.4rem 0.2rem; }
+            .grow-card h3 { font-size: 1.8rem; margin-bottom: 0.2rem; }
+            .grow-card p { font-size: 0.75rem; }
             .peat-box h4 { font-size: 0.55rem; }
-            .peat-box span { font-size: 1rem; }
+            .peat-box span { font-size: 1.2rem; }
             
-            /* Aggressively fitting Order slide */
-            .form-container { padding: 1rem; }
-            .form-row { margin-bottom: 0.4rem; }
-            .form-group { margin-bottom: 0.4rem; }
-            .form-label { font-size: 0.6rem; margin-bottom: 0.2rem; }
-            input, select, button { height: 38px; }
-            
-            /* Aggressively fitting News slide */
-            .news-card { padding: 1rem; }
-            .news-card h3 { font-size: 1.8rem; }
-            .news-img { height: 140px; }
-
-            .slide-content { padding-bottom: 2rem; justify-content: flex-start; padding-top: 0.5rem;}
-            #order .slide-content, #growing .slide-content, #news .slide-content { justify-content: center; padding-bottom: 1rem; }
+            .form-container { padding: 0.8rem; }
+            input, select, button { height: 40px; }
+            .contact-info { gap: 0.8rem; margin-bottom: 1rem; }
+            .contact-info a { font-size: 1.5rem; }
+            .contact-info svg { width: 20px; height: 20px; }
+            .news-img { height: 130px !important; }
         }
     </style>
 </head>
@@ -396,7 +413,7 @@
                 <a href="#news" class="translatable nav-item" data-lv="Jaunumi" data-en="News">Jaunumi</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">LV</button>
+            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">EN</button>
             <button class="hamburger" onclick="toggleMenu(); this.blur()">☰</button>
         </div>
     </nav>
@@ -407,19 +424,18 @@
             <div class="slide-content">
                 <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
                 
-                <p class="hero-subtitle handwritten fade-in delay-1 translatable" style="font-size: 2.2rem;"
+                <p class="hero-subtitle handwritten fade-in delay-1 translatable" style="font-size: 2.2rem; color: var(--accent-lime);"
                    data-lv="Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības." 
                    data-en="Fresh, home-grown berries from our family farm.">
                    Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības.
                 </p>
-
-                <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 4v16m-6-6l6 6 6-6"/>
-                </svg>
             </div>
+            <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 4v16m-6-6l6 6 6-6"/>
+            </svg>
         </section>
 
-        <section id="market" class="snap-slide">
+        <section id="market" class="snap-slide bg-alt">
             <h2 class="slide-title fade-in translatable" data-lv="Zemnieku Nakts Tirgus" data-en="Farmers Night Market">Zemnieku Nakts Tirgus</h2>
             <div class="slide-content">
                 <div class="slider-container sketchy-box fade-in delay-1">
@@ -443,7 +459,7 @@
                             <span class="translatable" data-lv="Apmaksa: Skaidrā / Karte" data-en="Payment: Cash / Card">Apmaksa: Skaidrā / Karte</span>
                             <span class="card-logos-inline">
                                 <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                                <svg viewBox="0 0 32 12" width="24" height="10"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                <svg viewBox="0 0 45 16" width="28" height="12" overflow="visible"><text x="0" y="14" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                             </span>
                         </div>
                     </div>
@@ -460,7 +476,7 @@
             </div>
         </section>
 
-        <section id="delivery" class="snap-slide bg-alt">
+        <section id="delivery" class="snap-slide">
             <h2 class="slide-title fade-in translatable" data-lv="Ogu Piegāde" data-en="Berry Delivery">Ogu Piegāde</h2>
             <div class="slide-content">
                 <div class="slider-container sketchy-box fade-in delay-1">
@@ -487,7 +503,7 @@
                             <span class="translatable" data-lv="Apmaksa: Tiešsaistē / Skaidrā / Karte" data-en="Payment: Online / Cash / Card">Apmaksa: Tiešsaistē / Skaidrā / Karte</span>
                             <span class="card-logos-inline">
                                 <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                                <svg viewBox="0 0 32 12" width="24" height="10"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                <svg viewBox="0 0 45 16" width="28" height="12" overflow="visible"><text x="0" y="14" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                             </span>
                         </div>
                     </div>
@@ -495,7 +511,7 @@
             </div>
         </section>
 
-        <section id="upick" class="snap-slide">
+        <section id="upick" class="snap-slide bg-alt">
             <div class="bg-slider-wrapper">
                 <img src="3.jpg" class="bg-slide-img active">
                 <img src="4.jpg" class="bg-slide-img">
@@ -506,20 +522,20 @@
             
             <div class="slide-content">
                 <div class="zigzag-timeline">
-                    <svg class="zigzag-line fade-in delay-4" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <svg class="zigzag-line fade-in delay-4" viewBox="0 0 100 100" preserveAspectRatio="none" style="z-index: 1;">
                         <path d="M 15 12 
-                                 C 70 15, 70 28, 50 28 
-                                 C 30 28, 30 38, 85 38 
-                                 C 30 40, 30 53, 50 53 
-                                 C 70 53, 70 63, 15 63 
-                                 C 70 65, 70 78, 50 78 
-                                 C 30 78, 30 88, 85 88" 
-                              stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-dasharray="6, 6" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                                 C 40 12, 60 5, 50 25 
+                                 C 40 45, 90 20, 85 38 
+                                 C 80 55, 30 45, 50 60 
+                                 C 70 75, 10 55, 15 65 
+                                 C 20 75, 60 70, 50 85 
+                                 C 40 100, 90 85, 85 90" 
+                              stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-dasharray="5, 7" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
                     </svg>
 
                     <div class="z-step left fade-in delay-1">
                         <div class="z-icon">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
                         <div class="z-content sketchy-box">
                             <h3 class="translatable" data-lv="1. Brauc ciemos" data-en="1. Arrive">1. Brauc ciemos</h3>
@@ -537,7 +553,7 @@
 
                     <div class="z-step right fade-in delay-2">
                         <div class="z-icon">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18l-1.5 13H4.5z"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18l-1.5 13H4.5z"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg>
                         </div>
                         <div class="z-content sketchy-box">
                             <h3 class="translatable" data-lv="2. Nosver" data-en="2. Weigh">2. Nosver</h3>
@@ -547,7 +563,7 @@
 
                     <div class="z-step left fade-in delay-3">
                         <div class="z-icon">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="14" r="3"/><circle cx="14" cy="16" r="3"/><circle cx="11" cy="9" r="4"/><path d="M11 5v4"/><path d="M11 5c2-2 5-1 5-1"/></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="14" r="3"/><circle cx="14" cy="16" r="3"/><circle cx="11" cy="9" r="4"/><path d="M11 5v4"/><path d="M11 5c2-2 5-1 5-1"/></svg>
                         </div>
                         <div class="z-content sketchy-box">
                             <h3 class="translatable" data-lv="3. Lasi" data-en="3. Pick">3. Lasi</h3>
@@ -557,7 +573,7 @@
 
                     <div class="z-step right fade-in delay-4">
                         <div class="z-icon">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M3 21h18"/><path d="M12 3l-9 7v2"/><path d="M12 3l9 7v2"/><path d="M3 12h18"/></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M3 21h18"/><path d="M12 3l-9 7v2"/><path d="M12 3l9 7v2"/><path d="M3 12h18"/></svg>
                         </div>
                         <div class="z-content sketchy-box">
                             <h3 class="translatable" data-lv="4. Norēķinies" data-en="4. Pay">4. Norēķinies</h3>
@@ -567,7 +583,7 @@
                                 <span class="translatable" style="font-size: 0.75rem; color: #ccc;" data-lv="Tiešsaistē / Skaidrā / Karte" data-en="Online / Cash / Card">Tiešsaistē / Skaidrā / Karte</span>
                                 <span class="card-logos-inline">
                                     <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                                    <svg viewBox="0 0 32 12" width="24" height="10"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                    <svg viewBox="0 0 45 16" width="28" height="12" overflow="visible"><text x="0" y="14" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                                 </span>
                             </div>
                         </div>
@@ -576,7 +592,7 @@
             </div>
         </section>
 
-        <section id="plants-blue" class="snap-slide bg-alt">
+        <section id="plants-blue" class="snap-slide">
             <h2 class="slide-title fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
             
             <div class="slide-content">
@@ -604,7 +620,7 @@
             </div>
         </section>
 
-        <section id="plants-honey" class="snap-slide">
+        <section id="plants-honey" class="snap-slide bg-alt">
             <h2 class="slide-title fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
             
             <div class="slide-content">
@@ -626,13 +642,13 @@
             </div>
         </section>
 
-        <section id="growing" class="snap-slide bg-alt">
+        <section id="growing" class="snap-slide">
             <h2 class="slide-title fade-in translatable" data-lv="Stādīšana un Kopšana" data-en="Planting & Care">Stādīšana un Kopšana</h2>
             
             <div class="slide-content">
                 <div class="grow-card sketchy-box fade-in delay-1">
                     <h3>
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--accent-lime)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><path d="M6 8h12l-1.5 13H7.5z"/><path d="M16 8v-2a4 4 0 00-8 0v2"/></svg>
                         <span class="translatable" data-lv="Auduma Podi" data-en="Fabric Pots">Auduma Podi</span>
                     </h3>
                     <p class="translatable" data-lv="Mūsu stādi tiek pārdoti jau iestādīti elpojošos auduma podos.
@@ -646,7 +662,7 @@
 
                 <div class="grow-card sketchy-box fade-in delay-2">
                     <h3>
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 4.2c.86.63 1.34 1.62 1.34 2.69v11.3A2.12 2.12 0 0 1 16.88 23H7.12A2.12 2.12 0 0 1 5 20.88V9.58c0-1.07.48-2.06 1.34-2.69L12 2.69z"/></svg>
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--accent-lime)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 22l8-8"/></svg>
                         <span class="translatable" data-lv="Kā Kopt?" data-en="How to Care?">Kā Kopt?</span>
                     </h3>
                     <p class="translatable" data-lv="• Pārstādīšanai izmantojiet skābu kūdru (pH 3.5 - 4.5)
@@ -677,11 +693,10 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <section id="news" class="snap-slide">
+        <section id="news" class="snap-slide bg-alt">
             <h2 class="slide-title fade-in translatable" data-lv="Jaunumi un Saziņa" data-en="News & Contact">Jaunumi un Saziņa</h2>
             
             <div class="slide-content">
@@ -709,7 +724,7 @@
             </div>
         </section>
 
-        <section id="order" class="snap-slide bg-alt">
+        <section id="order" class="snap-slide">
             <h2 class="slide-title fade-in translatable" data-lv="Melleņu piegāde uz mājām vai ofisu" data-en="Blueberry delivery to home or office">Melleņu piegāde uz mājām vai ofisu</h2>
             
             <div class="slide-content">
@@ -742,7 +757,7 @@
                                 Apmaksas veids
                                 <span class="card-logos-inline" style="margin-left: 8px;">
                                     <svg viewBox="0 0 24 16" width="20" height="12"><circle cx="8" cy="8" r="8" fill="#EB001B"/><circle cx="16" cy="8" r="8" fill="#F79E1B" opacity="0.9"/></svg>
-                                    <svg viewBox="0 0 32 12" width="24" height="10"><text x="0" y="11" font-family="Arial" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
+                                    <svg viewBox="0 0 45 16" width="28" height="12" overflow="visible"><text x="0" y="14" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" fill="white" font-size="14">VISA</text></svg>
                                 </span>
                             </label>
                             <select name="payment" required>
@@ -755,6 +770,10 @@
 
                         <button type="submit" class="translatable fade-in delay-3" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
                     </form>
+                    
+                    <p class="translatable fade-in delay-4" data-lv="Vai pasūtiet zvanot: +371 29459247" data-en="Or order by calling: +371 29459247" style="font-size: 0.8rem; margin-top: 0.8rem; color: #aaa;">
+                        Vai pasūtiet zvanot: <a href="tel:+37129459247" style="color: var(--text-main); font-weight: bold; text-decoration: underline;">+371 29459247</a>
+                    </p>
                 </div>
             </div>
         </section>
@@ -795,13 +814,11 @@
             });
         });
 
-        // Initialize state to Latvian. 
+        // Initialize state to Latvian. Button always displays current active language
         let currentLang = 'lv';
         
         function toggleLanguage() {
             currentLang = currentLang === 'lv' ? 'en' : 'lv';
-            
-            // Updates button text to show what is currently active
             document.getElementById('langBtn').innerText = currentLang.toUpperCase();
             
             document.querySelectorAll('.translatable').forEach(el => {
