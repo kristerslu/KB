@@ -26,6 +26,7 @@
             color: var(--text-main);
             height: 100%;
             overflow: hidden; 
+            -webkit-tap-highlight-color: transparent; /* Globally prevents sticky tap highlights */
         }
 
         button, a, input, select {
@@ -94,12 +95,11 @@
             padding-bottom: 5rem; 
         }
 
-        /* Adjustments to prevent overlap on specific heavy slides */
         #order .slide-content {
             padding-bottom: 2rem;
         }
         #growing .slide-content {
-            justify-content: flex-start; /* Stops center-alignment from pushing content into the title */
+            justify-content: flex-start; 
             padding-top: 1rem;
         }
 
@@ -174,21 +174,31 @@
         }
         .nav-links a:hover { color: var(--accent-blue); }
 
+        /* PERFECTLY CENTERED LANGUAGE SWITCH */
         .lang-switch {
             background: transparent;
             border: 1px solid var(--accent-blue);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
+            border-radius: 50%;
             cursor: pointer;
             font-weight: 600;
             transition: 0.3s;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
             color: white;
-            width: 50px;
-            text-align: center;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            padding: 0;
+            margin: 0;
         }
-        .lang-switch:hover { background: rgba(90, 156, 226, 0.2); }
+        
+        /* Strict hover rule only applies to actual mice, preventing sticky mobile buttons */
+        @media (hover: hover) and (pointer: fine) {
+            .lang-switch:hover { background: rgba(80, 114, 167, 0.2); }
+        }
+
         .hamburger {
             display: none; font-size: 2rem; background: none; border: none;
             color: var(--text-main); cursor: pointer;
@@ -257,7 +267,9 @@
             text-decoration: none; font-size: 0.75rem; font-weight: 600; transition: 0.3s;
         }
         .app-btn img { filter: invert(1); } 
-        .app-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); }
+        @media (hover: hover) and (pointer: fine) {
+            .app-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); }
+        }
 
         /* --- Zigzag U-Pick Layout --- */
         .zigzag-timeline {
@@ -311,8 +323,10 @@
             border-radius: 10px; text-align: center; border: 1px solid transparent;
             transition: 0.3s; cursor: pointer;
         }
-        .plant-card:hover { 
-            border-color: var(--accent-blue); transform: translateY(-3px); background: rgba(80, 114, 167, 0.1);
+        @media (hover: hover) and (pointer: fine) {
+            .plant-card:hover { 
+                border-color: var(--accent-blue); transform: translateY(-3px); background: rgba(80, 114, 167, 0.1);
+            }
         }
         .plant-card h4 { font-family: 'Amatic SC', cursive; font-size: 1.6rem; color: var(--accent-blue); }
         .plant-card p.click-hint { font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase; margin-bottom: 0; }
@@ -327,7 +341,7 @@
             font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: var(--accent-blue); margin-bottom: 0.5rem;
             display: flex; align-items: center; gap: 8px;
         }
-        .grow-card p { font-size: 0.85rem; line-height: 1.4; color: #ddd; text-align: left; margin-bottom: 0;}
+        .grow-card p { font-size: 0.85rem; line-height: 1.5; color: #ddd; text-align: left; margin-bottom: 0;}
         .peat-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.8rem;
         }
@@ -365,7 +379,9 @@
             background: var(--accent-blue); font-weight: 600; cursor: pointer; border: none; 
             transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.2rem; height: 44px;
         }
-        button[type="submit"]:hover { background: #3f5d8a; transform: translateY(-2px); }
+        @media (hover: hover) and (pointer: fine) {
+            button[type="submit"]:hover { background: #3f5d8a; transform: translateY(-2px); }
+        }
 
         /* --- Modal --- */
         .modal-overlay {
@@ -406,10 +422,10 @@
             .slide-content { padding-bottom: 5rem; }
             #order .slide-content { padding-bottom: 2rem; }
 
-            /* Compress Growing slide specifically for mobile so it doesn't overlap */
+            /* Compress Growing slide explicitly for perfect mobile fitment */
             .grow-card { padding: 0.8rem 1rem; margin-bottom: 0.6rem; }
-            .grow-card h3 { font-size: 1.5rem; margin-bottom: 0.2rem; }
-            .grow-card p { font-size: 0.75rem; line-height: 1.3; }
+            .grow-card h3 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+            .grow-card p { font-size: 0.8rem; line-height: 1.4; }
             .peat-grid { margin-top: 0.5rem; }
             .peat-box { padding: 0.6rem 0.3rem; }
             .peat-box h4 { font-size: 0.65rem; }
@@ -430,7 +446,7 @@
                 <a href="#growing" class="translatable nav-item" data-lv="Audzēšana" data-en="Growing">Audzēšana</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">EN</button>
+            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">LV</button>
             <button class="hamburger" onclick="toggleMenu(); this.blur()">☰</button>
         </div>
     </nav>
@@ -546,12 +562,16 @@
             <div class="slide-content">
                 <div class="zigzag-timeline">
                     <svg class="zigzag-line fade-in delay-4" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path d="M 15 15 C 90 -10, 120 45, 85 38 C 20 35, -20 65, 15 63 C 90 50, 120 95, 85 88" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                        <path d="M 12 16 
+                                 C 80 0, 130 50, 88 38 
+                                 C 20 20, -30 80, 12 62 
+                                 C 80 50, 130 100, 88 84" 
+                              stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
                     </svg>
 
                     <div class="z-step left fade-in delay-1">
                         <div class="z-icon">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" overflow="visible" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
                         <div class="z-content">
                             <h3 class="translatable" data-lv="1. Brauc ciemos" data-en="1. Arrive">1. Brauc ciemos</h3>
@@ -569,7 +589,7 @@
 
                     <div class="z-step right fade-in delay-2">
                         <div class="z-icon">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h20l-2 15H4z"/><path d="M18 7V5a6 6 0 0 0-12 0v2"/></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" overflow="visible" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h20l-2 15H4z"/><path d="M18 7V5a6 6 0 0 0-12 0v2"/></svg>
                         </div>
                         <div class="z-content">
                             <h3 class="translatable" data-lv="2. Nosver" data-en="2. Weigh">2. Nosver</h3>
@@ -579,7 +599,7 @@
 
                     <div class="z-step left fade-in delay-3">
                         <div class="z-icon">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="14" r="3"/><circle cx="14" cy="16" r="3"/><circle cx="11" cy="9" r="4"/><path d="M11 5v4"/><path d="M11 5c2-2 5-1 5-1"/></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" overflow="visible" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="14" r="3"/><circle cx="14" cy="16" r="3"/><circle cx="11" cy="9" r="4"/><path d="M11 5v4"/><path d="M11 5c2-2 5-1 5-1"/></svg>
                         </div>
                         <div class="z-content">
                             <h3 class="translatable" data-lv="3. Lasi" data-en="3. Pick">3. Lasi</h3>
@@ -589,7 +609,7 @@
 
                     <div class="z-step right fade-in delay-4">
                         <div class="z-icon">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M3 21h18"/><path d="M12 3l-9 7v2"/><path d="M12 3l9 7v2"/><path d="M3 12h18"/><circle cx="7.5" cy="15" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" overflow="visible" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M3 21h18"/><path d="M12 3l-9 7v2"/><path d="M12 3l9 7v2"/><path d="M3 12h18"/><circle cx="7.5" cy="15" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/></svg>
                         </div>
                         <div class="z-content">
                             <h3 class="translatable" data-lv="4. Norēķinies" data-en="4. Pay">4. Norēķinies</h3>
@@ -667,18 +687,18 @@
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                         <span class="translatable" data-lv="Auduma Podi" data-en="Fabric Pots">Auduma Podi</span>
                     </h3>
-                    <p class="translatable" data-lv="Pieejami 25 litru un 42 litru tilpumos. Izgatavoti no elpojoša materiāla, kas ir lieliski piemērots veselīgai sakņu attīstībai. Aprīkoti ar 2 rokturiem ļoti ērtai pārvietošanai." data-en="Available in 25L and 42L volumes. Made of breathable material, perfect for healthy root development. Equipped with 2 handles for very easy moving.">
-                        Pieejami 25 litru un 42 litru tilpumos. Izgatavoti no elpojoša materiāla, kas ir lieliski piemērots veselīgai sakņu attīstībai. Aprīkoti ar 2 rokturiem ļoti ērtai pārvietošanai.
+                    <p class="translatable" data-lv="Mūsu stādi tiek pārdoti jau iestādīti elpojošos auduma podos.&#10;• Pieejami 25L un 42L tilpumos&#10;• 2 rokturi ērtai pārvietošanai&#10;• Nodrošina izcilu sakņu aerāciju" data-en="Our plants are sold already planted in breathable fabric pots.&#10;• Available in 25L and 42L&#10;• 2 handles for easy moving&#10;• Ensures excellent root aeration">
+                        Mūsu stādi tiek pārdoti jau iestādīti elpojošos auduma podos.<br>• Pieejami 25L un 42L tilpumos<br>• 2 rokturi ērtai pārvietošanai<br>• Nodrošina izcilu sakņu aerāciju
                     </p>
                 </div>
 
                 <div class="grow-card fade-in delay-2">
                     <h3>
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 4.2c.86.63 1.34 1.62 1.34 2.69v11.3A2.12 2.12 0 0 1 16.88 23H7.12A2.12 2.12 0 0 1 5 20.88V9.58c0-1.07.48-2.06 1.34-2.69L12 2.69z"/><path d="M12 2.69V23"/></svg>
-                        <span class="translatable" data-lv="Kā Stādīt?" data-en="How to Plant?">Kā Stādīt?</span>
+                        <span class="translatable" data-lv="Kā Kopt?" data-en="How to Care?">Kā Kopt?</span>
                     </h3>
-                    <p class="translatable" data-lv="Stādīšanai nepieciešama skāba kūdra (pH 3.5 - 4.5). Mēslojiet pavasarī (pirms ziedēšanas) un vasaras sākumā ar speciālu melleņu mēslojumu. Neaizmirstiet par regulāru laistīšanu!" data-en="Use acidic peat (pH 3.5 - 4.5) for planting. Fertilize in spring (before blooming) and early summer with specific blueberry fertilizer. Don't forget regular watering!">
-                        Stādīšanai nepieciešama skāba kūdra (pH 3.5 - 4.5). Mēslojiet pavasarī (pirms ziedēšanas) un vasaras sākumā ar speciālu melleņu mēslojumu. Neaizmirstiet par regulāru laistīšanu!
+                    <p class="translatable" data-lv="• Pārstādīšanai izmantojiet skābu kūdru (pH 3.5 - 4.5)&#10;• Mēslojiet pavasarī un vasaras sākumā&#10;• Nodrošiniet regulāru un bagātīgu laistīšanu" data-en="• Use acidic peat (pH 3.5 - 4.5) if transplanting&#10;• Fertilize in spring and early summer&#10;• Ensure regular and generous watering">
+                        • Pārstādīšanai izmantojiet skābu kūdru (pH 3.5 - 4.5)<br>• Mēslojiet pavasarī un vasaras sākumā<br>• Nodrošiniet regulāru un bagātīgu laistīšanu
                     </p>
                 </div>
 
@@ -756,7 +776,9 @@
             </div>
         </section>
         
-    </div> <div class="modal-overlay" id="plantModal" onclick="closePlantModal(event)">
+    </div> 
+
+    <div class="modal-overlay" id="plantModal" onclick="closePlantModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closePlantModal(event)">×</button>
             <h3 id="modalTitle" style="font-family: 'Amatic SC', cursive; font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem;">Variety</h3>
@@ -790,18 +812,20 @@
             });
         });
 
-        // Initialize state to Latvian. Button shows 'EN' to switch to English.
+        // Initialize state to Latvian. Button always displays current language.
         let currentLang = 'lv';
         
         function toggleLanguage() {
-            // Flip the language
             currentLang = currentLang === 'lv' ? 'en' : 'lv';
-            
-            // If current page is LV, button should offer EN. If EN, offer LV.
-            document.getElementById('langBtn').innerText = currentLang === 'lv' ? 'EN' : 'LV';
+            document.getElementById('langBtn').innerText = currentLang.toUpperCase();
             
             document.querySelectorAll('.translatable').forEach(el => {
-                el.innerText = el.getAttribute(`data-${currentLang}`);
+                // For regular text blocks we use innerHTML so we can process <br> tags properly!
+                if(el.tagName === 'P' || el.tagName === 'SPAN' || el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'H4' || el.tagName === 'LABEL' || el.tagName === 'OPTION' || el.tagName === 'BUTTON' || el.tagName === 'A') {
+                    el.innerHTML = el.getAttribute(`data-${currentLang}`);
+                } else {
+                    el.innerText = el.getAttribute(`data-${currentLang}`);
+                }
             });
             document.querySelectorAll('.translatable-placeholder').forEach(el => {
                 el.placeholder = el.getAttribute(`data-${currentLang}-placeholder`);
