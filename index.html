@@ -94,8 +94,13 @@
             padding-bottom: 5rem; 
         }
 
+        /* Adjustments to prevent overlap on specific heavy slides */
         #order .slide-content {
             padding-bottom: 2rem;
+        }
+        #growing .slide-content {
+            justify-content: flex-start; /* Stops center-alignment from pushing content into the title */
+            padding-top: 1rem;
         }
 
         /* --- Animations --- */
@@ -161,7 +166,7 @@
         .nav-links a {
             color: var(--text-main);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -172,6 +177,7 @@
         .lang-switch {
             background: transparent;
             border: 1px solid var(--accent-blue);
+            padding: 0.4rem 1rem;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
@@ -179,16 +185,10 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
             color: white;
-            width: 55px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center; 
+            width: 50px;
+            text-align: center;
         }
-        @media (hover: hover) {
-            .lang-switch:hover { background: rgba(80, 114, 167, 0.2); }
-        }
-
+        .lang-switch:hover { background: rgba(90, 156, 226, 0.2); }
         .hamburger {
             display: none; font-size: 2rem; background: none; border: none;
             color: var(--text-main); cursor: pointer;
@@ -317,7 +317,7 @@
         .plant-card h4 { font-family: 'Amatic SC', cursive; font-size: 1.6rem; color: var(--accent-blue); }
         .plant-card p.click-hint { font-size: 0.6rem; color: #888; margin-top: 0.5rem; text-transform: uppercase; margin-bottom: 0; }
 
-        /* --- Growing Guide (New Slide) --- */
+        /* --- Growing Guide --- */
         .grow-card {
             background: rgba(255, 255, 255, 0.03); padding: 1.2rem;
             border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
@@ -401,10 +401,19 @@
             }
             .nav-links.active { top: 0; }
             
-            .slide-title { font-size: 2.6rem; }
+            .slide-title { font-size: 2.6rem; margin-bottom: 0.5rem; }
             .z-step { width: 100%; gap: 0.4rem; }
             .slide-content { padding-bottom: 5rem; }
             #order .slide-content { padding-bottom: 2rem; }
+
+            /* Compress Growing slide specifically for mobile so it doesn't overlap */
+            .grow-card { padding: 0.8rem 1rem; margin-bottom: 0.6rem; }
+            .grow-card h3 { font-size: 1.5rem; margin-bottom: 0.2rem; }
+            .grow-card p { font-size: 0.75rem; line-height: 1.3; }
+            .peat-grid { margin-top: 0.5rem; }
+            .peat-box { padding: 0.6rem 0.3rem; }
+            .peat-box h4 { font-size: 0.65rem; }
+            .peat-box span { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -537,7 +546,7 @@
             <div class="slide-content">
                 <div class="zigzag-timeline">
                     <svg class="zigzag-line fade-in delay-4" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path d="M 20 10 C 130 0, 130 35, 80 35 C -10 35, -10 65, 20 65 C 130 65, 130 90, 80 90" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                        <path d="M 15 15 C 90 -10, 120 45, 85 38 C 20 35, -20 65, 15 63 C 90 50, 120 95, 85 88" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
                     </svg>
 
                     <div class="z-step left fade-in delay-1">
@@ -653,7 +662,6 @@
             <h2 class="slide-title fade-in translatable" data-lv="Stādīšana un Kopšana" data-en="Planting & Care">Stādīšana un Kopšana</h2>
             
             <div class="slide-content">
-                
                 <div class="grow-card fade-in delay-1">
                     <h3>
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
