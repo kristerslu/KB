@@ -11,7 +11,7 @@
             --bg-alt: #0c111c;
             --text-main: #f8fafc; 
             --accent-blue: #8ba5d3; 
-            --accent-lime: #c5f04a; /* Strictly ONLY used for the price text */
+            --accent-lime: #c5f04a; 
             --nav-height: 70px;
         }
 
@@ -73,7 +73,11 @@
         .bg-alt { background-color: var(--bg-alt); }
 
         /* Pure black background for Hero to blend seamlessly with the image */
-        #hero { background-color: #000000; }
+        #hero { 
+            background: #000000 !important; 
+            padding-top: var(--nav-height);
+            justify-content: center;
+        }
 
         .slide-title {
             font-size: 3.5rem;
@@ -98,17 +102,47 @@
             padding-top: 1rem;
         }
 
-        /* Hero centering */
         #hero .slide-content {
             justify-content: center;
             padding-bottom: 3rem;
             padding-top: 0;
+            height: auto;
+            flex-grow: 0;
         }
 
-        /* Fitment fixes for heavy pages */
         #order .slide-content, #growing .slide-content {
             justify-content: center; 
             padding-bottom: 2rem;
+        }
+
+        /* --- Custom Buttons --- */
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            z-index: 10;
+        }
+        
+        .cta-btn, .cta-btn-outline {
+            display: inline-flex; align-items: center; justify-content: center;
+            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            padding: 0.8rem 1.8rem; border-radius: 25px; transition: 0.3s; text-decoration: none;
+        }
+        
+        .cta-btn {
+            background: var(--text-main); color: #000; border: 2px solid var(--text-main);
+        }
+        
+        .cta-btn-outline {
+            background: transparent; color: var(--text-main); border: 2px solid var(--text-main);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .cta-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); color: white; transform: scale(1.05); }
+            .cta-btn-outline:hover { background: var(--text-main); color: black; transform: scale(1.05); }
         }
 
         /* --- "Sketchy" Hand-Drawn Box Effect --- */
@@ -150,7 +184,7 @@
             border-bottom: 1px dashed rgba(255,255,255,0.2);
         }
         .nav-brand {
-            font-family: 'Caveat', cursive; font-size: 2rem; color: var(--text-main);
+            font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--text-main);
             letter-spacing: 1px; white-space: nowrap;
         }
         .nav-right-container { display: flex; align-items: center; gap: 1rem; }
@@ -175,11 +209,10 @@
         }
 
         /* --- Hero --- */
-        /* Cleanly sits on black background. */
         .hero-logo { max-width: 90vw; width: 450px; height: auto; margin-bottom: 2rem; }
         .hero-subtitle {
             font-family: 'Caveat', cursive; 
-            font-size: 2.8rem; 
+            font-size: 2.2rem; /* Reduced for elegance */
             line-height: 1.2;
             color: var(--text-main); 
             max-width: 600px; 
@@ -361,7 +394,7 @@
         /* --- Strict Mobile Fitment --- */
         @media (max-width: 900px) {
             .hamburger { display: block; z-index: 1001; }
-            .nav-brand { font-size: 1.4rem; } /* Shrunk for mobile header fit */
+            .nav-brand { font-size: 1.4rem; } 
             
             .nav-links {
                 position: fixed; top: -100vh; left: 0; flex-direction: column;
@@ -374,11 +407,16 @@
             
             .slide-title { font-size: 2.8rem; margin-bottom: 0.3rem; }
             
+            /* Fitting Hero */
+            .hero-subtitle { font-size: 1.6rem; }
+            .hero-buttons { margin-top: 1rem; flex-direction: column; width: 100%; max-width: 250px; gap: 0.8rem; }
+            .cta-btn, .cta-btn-outline { padding: 0.8rem; font-size: 0.85rem; width: 100%; margin-top: 0;}
+
             /* Fitting U-Pick */
             .z-step { width: 100%; gap: 0.5rem; }
             .z-content h3 { font-size: 1.6rem; }
             .z-content p { font-size: 0.75rem; }
-            .price-exaggerated { font-size: 1.6rem !important; }
+            .price-exaggerated { font-size: 1.4rem !important; }
             
             /* Aggressively fitting Growing slide */
             .grow-card { padding: 0.6rem 0.8rem; margin-bottom: 0.5rem; }
@@ -421,7 +459,7 @@
                 <a href="#news" class="translatable nav-item" data-lv="Jaunumi" data-en="News">Jaunumi</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">EN</button>
+            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">LV</button>
             <button class="hamburger" onclick="toggleMenu(); this.blur()">☰</button>
         </div>
     </nav>
@@ -432,13 +470,18 @@
             <div class="slide-content">
                 <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
                 
-                <p class="hero-subtitle fade-in delay-1 translatable" 
+                <p class="hero-subtitle handwritten fade-in delay-1 translatable" 
                    data-lv="Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības." 
                    data-en="Fresh, home-grown berries from our family farm.">
                    Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības.
                 </p>
+
+                <div class="hero-buttons fade-in delay-2">
+                    <a href="#order" class="cta-btn translatable" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
+                    <a href="#plants-blue" class="cta-btn-outline translatable" data-lv="Stādi" data-en="Plants">Stādi</a>
+                </div>
             </div>
-            <svg class="scroll-arrow-svg fade-in delay-2" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="scroll-arrow-svg fade-in delay-3" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 4v16m-6-6l6 6 6-6"/>
             </svg>
         </section>
@@ -516,6 +559,8 @@
                         </div>
                     </div>
                 </div>
+
+                <a href="#order" class="cta-btn fade-in delay-3 translatable" data-lv="Pasūtīt" data-en="Order" style="margin-top: 1.5rem;">Pasūtīt</a>
             </div>
         </section>
 
@@ -565,7 +610,7 @@
                             <svg viewBox="0 0 24 24" width="22" height="22" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18l-1.5 13H4.5z"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg>
                         </div>
                         <div class="z-content sketchy-box">
-                            <h3 class="translatable" data-lv="2. Nosver" data-en="2. Weigh">2. Nosver</h3>
+                            <h3 class="translatable" data-lv="2. Nosver trauku" data-en="2. Weigh container">2. Nosver trauku</h3>
                             <p class="translatable" data-lv="Tukšu trauku svēršanas stacijā.<br>Aicinām ņemt savus!" data-en="Empty bucket at the station.<br>Bring your own!">Tukšu trauku svēršanas stacijā.<br>Aicinām ņemt savus!</p>
                         </div>
                     </div>
@@ -585,7 +630,7 @@
                             <svg viewBox="0 0 24 24" width="22" height="22" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M3 21h18"/><path d="M12 3l-9 7v2"/><path d="M12 3l9 7v2"/><path d="M3 12h18"/></svg>
                         </div>
                         <div class="z-content sketchy-box">
-                            <h3 class="translatable" data-lv="4. Norēķinies" data-en="4. Pay">4. Norēķinies</h3>
+                            <h3 class="translatable" data-lv="4. Nosver un norēķinies" data-en="4. Weigh & Pay">4. Nosver un norēķinies</h3>
                             
                             <div class="info-row-content" style="justify-content: flex-end; margin-top: 5px;">
                                 <span class="translatable" style="font-size: 0.75rem; color: #ccc;" data-lv="Tiešsaistē / Skaidrā / Karte" data-en="Online / Cash / Card">Tiešsaistē / Skaidrā / Karte</span>
