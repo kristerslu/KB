@@ -72,7 +72,7 @@
 
         .bg-alt { background-color: var(--bg-alt); }
 
-        /* Restored the beautiful dark blueberry background! */
+        /* RESTORED: Beautiful Photoroom background image with a dark gradient overlay */
         #hero { 
             background: linear-gradient(rgba(8, 11, 19, 0.7), rgba(8, 11, 19, 0.95)), url('Photoroom_20260426_155141.jpeg') center/cover no-repeat !important; 
             padding-top: var(--nav-height);
@@ -117,14 +117,6 @@
             padding-bottom: 2rem;
         }
 
-        /* --- "Sketchy" Hand-Drawn Box Effect --- */
-        .sketchy-box {
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 2% 95% 3% 95% / 95% 4% 92% 5%; 
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(5px);
-        }
-
         /* --- Custom Buttons --- */
         .hero-buttons {
             display: flex;
@@ -153,6 +145,14 @@
         @media (hover: hover) and (pointer: fine) {
             .cta-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); color: white; transform: scale(1.05); }
             .cta-btn-outline:hover { background: var(--text-main); color: black; transform: scale(1.05); }
+        }
+
+        /* --- "Sketchy" Hand-Drawn Box Effect --- */
+        .sketchy-box {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 2% 95% 3% 95% / 95% 4% 92% 5%; 
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(5px);
         }
 
         /* --- Animations --- */
@@ -212,8 +212,7 @@
 
         /* --- Hero --- */
         .hero-logo { 
-            mix-blend-mode: screen; /* Deletes the black background from the logo */
-            filter: grayscale(1) contrast(1.5); /* Ensures the black is pure so it drops out cleanly */
+            mix-blend-mode: screen; /* Flawlessly deletes the black background from the logo */
             max-width: 90vw; 
             width: 450px; 
             height: auto; 
@@ -226,6 +225,7 @@
             color: var(--text-main); 
             max-width: 600px; 
             margin-bottom: 0;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
 
         /* --- Image Sliders --- */
@@ -236,7 +236,7 @@
         }
         .slide-img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;
+            object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;
         }
         .slide-img.active { opacity: 1; }
 
@@ -468,7 +468,7 @@
                 <a href="#news" class="translatable nav-item" data-lv="Jaunumi" data-en="News">Jaunumi</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">EN</button>
+            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">LV</button>
             <button class="hamburger" onclick="toggleMenu(); this.blur()">☰</button>
         </div>
     </nav>
@@ -833,7 +833,7 @@
                         <button type="submit" class="translatable fade-in delay-3" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
                     </form>
                     
-                    <p class="translatable fade-in delay-4" data-lv="Vai pasūtiet zvanot: +371 29459247" data-en="Or order by calling: +371 29459247" style="font-size: 0.8rem; margin-top: 0.8rem; margin-bottom: 0; color: #ccc;">
+                    <p class="translatable" data-lv="Vai pasūtiet zvanot: +371 29459247" data-en="Or order by calling: +371 29459247" style="font-size: 0.8rem; margin-top: 0.8rem; margin-bottom: 0; color: #ccc;">
                         Vai pasūtiet zvanot: <a href="tel:+37129459247" style="color: var(--text-main); font-weight: bold; text-decoration: underline;">+371 29459247</a>
                     </p>
                 </div>
@@ -924,8 +924,7 @@
         
         function toggleLanguage() {
             currentLang = currentLang === 'lv' ? 'en' : 'lv';
-            
-            document.getElementById('langBtn').innerText = currentLang === 'lv' ? 'EN' : 'LV';
+            document.getElementById('langBtn').innerText = currentLang.toUpperCase();
             
             document.querySelectorAll('.translatable').forEach(el => {
                 if(el.tagName === 'P' || el.tagName === 'SPAN' || el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'H4' || el.tagName === 'LABEL' || el.tagName === 'OPTION' || el.tagName === 'BUTTON' || el.tagName === 'A') {
