@@ -11,7 +11,7 @@
             --bg-alt: #0c111c;
             --text-main: #f8fafc; 
             --accent-blue: #8ba5d3; 
-            --accent-lime: #c5f04a; 
+            --accent-lime: #c5f04a; /* Strictly ONLY used for the price text */
             --nav-height: 70px;
         }
 
@@ -72,9 +72,9 @@
 
         .bg-alt { background-color: var(--bg-alt); }
 
-        /* Pure black background for Hero to blend seamlessly with the image */
+        /* Restored the beautiful dark blueberry background! */
         #hero { 
-            background: #000000 !important; 
+            background: linear-gradient(rgba(8, 11, 19, 0.7), rgba(8, 11, 19, 0.95)), url('Photoroom_20260426_155141.jpeg') center/cover no-repeat !important; 
             padding-top: var(--nav-height);
             justify-content: center;
         }
@@ -117,6 +117,14 @@
             padding-bottom: 2rem;
         }
 
+        /* --- "Sketchy" Hand-Drawn Box Effect --- */
+        .sketchy-box {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 2% 95% 3% 95% / 95% 4% 92% 5%; 
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(5px);
+        }
+
         /* --- Custom Buttons --- */
         .hero-buttons {
             display: flex;
@@ -145,14 +153,6 @@
         @media (hover: hover) and (pointer: fine) {
             .cta-btn:hover { background: var(--accent-blue); border-color: var(--accent-blue); color: white; transform: scale(1.05); }
             .cta-btn-outline:hover { background: var(--text-main); color: black; transform: scale(1.05); }
-        }
-
-        /* --- "Sketchy" Hand-Drawn Box Effect --- */
-        .sketchy-box {
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 2% 95% 3% 95% / 95% 4% 92% 5%; 
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(5px);
         }
 
         /* --- Animations --- */
@@ -211,7 +211,14 @@
         }
 
         /* --- Hero --- */
-        .hero-logo { max-width: 90vw; width: 450px; height: auto; margin-bottom: 2rem; }
+        .hero-logo { 
+            mix-blend-mode: screen; /* Deletes the black background from the logo */
+            filter: grayscale(1) contrast(1.5); /* Ensures the black is pure so it drops out cleanly */
+            max-width: 90vw; 
+            width: 450px; 
+            height: auto; 
+            margin-bottom: 2rem; 
+        }
         .hero-subtitle {
             font-family: 'Caveat', cursive; 
             font-size: 2.2rem; 
@@ -461,7 +468,7 @@
                 <a href="#news" class="translatable nav-item" data-lv="Jaunumi" data-en="News">Jaunumi</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">LV</button>
+            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">EN</button>
             <button class="hamburger" onclick="toggleMenu(); this.blur()">☰</button>
         </div>
     </nav>
@@ -912,11 +919,13 @@
             });
         });
 
+        // Initialize language
         let currentLang = 'lv';
         
         function toggleLanguage() {
             currentLang = currentLang === 'lv' ? 'en' : 'lv';
-            document.getElementById('langBtn').innerText = currentLang.toUpperCase();
+            
+            document.getElementById('langBtn').innerText = currentLang === 'lv' ? 'EN' : 'LV';
             
             document.querySelectorAll('.translatable').forEach(el => {
                 if(el.tagName === 'P' || el.tagName === 'SPAN' || el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'H4' || el.tagName === 'LABEL' || el.tagName === 'OPTION' || el.tagName === 'BUTTON' || el.tagName === 'A') {
