@@ -156,14 +156,12 @@
         }
 
         /* --- Animations --- */
-        /* Slides up while fading in */
         .fade-in {
             opacity: 0; transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* Only fades in (No movement, fixes blend modes and box clipping) */
         .fade-in-still {
             opacity: 0;
             transition: opacity 0.6s ease-out;
@@ -479,7 +477,7 @@
                 <a href="#news" class="translatable nav-item" data-lv="Jaunumi" data-en="News">Jaunumi</a>
                 <a href="#order" class="translatable nav-item" data-lv="Pasūtīt" data-en="Order">Pasūtīt</a>
             </div>
-            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">LV</button>
+            <button class="lang-switch" id="langBtn" onclick="toggleLanguage(); this.blur()">EN</button>
             <button class="hamburger" onclick="toggleMenu(); this.blur()">☰</button>
         </div>
     </nav>
@@ -488,7 +486,7 @@
         
         <section id="hero" class="snap-slide">
             <div class="slide-content">
-                <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in-still">
+                <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo">
                 
                 <p class="hero-subtitle fade-in delay-1 translatable" 
                    data-lv="Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības." 
