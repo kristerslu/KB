@@ -11,7 +11,7 @@
             --bg-alt: #0c111c;
             --text-main: #f8fafc; 
             --accent-blue: #8ba5d3; 
-            --accent-lime: #c5f04a; 
+            --accent-lime: #c5f04a; /* Strictly ONLY used for the price text */
             --nav-height: 70px;
         }
 
@@ -72,8 +72,10 @@
 
         .bg-alt { background-color: var(--bg-alt); }
 
+        /* --- HERO SECTION --- */
+        /* TRULY RESTORED: Beautiful Photoroom background image with a dark gradient overlay */
         #hero { 
-            background: #000000 !important; 
+            background: linear-gradient(rgba(8, 11, 19, 0.7), rgba(8, 11, 19, 0.95)), url('Photoroom_20260426_155141.jpeg') center/cover no-repeat !important; 
             padding-top: var(--nav-height);
             justify-content: center;
         }
@@ -101,6 +103,7 @@
             padding-top: 1rem;
         }
 
+        /* Hero centering */
         #hero .slide-content {
             justify-content: center;
             padding-bottom: 3rem;
@@ -109,6 +112,7 @@
             flex-grow: 0;
         }
 
+        /* Fitment fixes for heavy pages */
         #order .slide-content, #growing .slide-content {
             justify-content: center; 
             padding-bottom: 2rem;
@@ -163,13 +167,14 @@
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
 
+        /* ARROW ANIMATION FIX: Centers the arrow on the X axis natively inside the keyframe */
         @keyframes scroll-drop {
-            0% { transform: translateY(0); opacity: 1; }
-            70% { transform: translateY(20px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 0; }
+            0% { transform: translate(-50%, 0); opacity: 1; }
+            70% { transform: translate(-50%, 20px); opacity: 0; }
+            100% { transform: translate(-50%, 0); opacity: 0; }
         }
         .scroll-arrow-svg {
-            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            position: absolute; bottom: 2rem; left: 50%;
             animation: scroll-drop 2s infinite ease-in-out;
             display: block; width: 40px; height: 40px;
         }
@@ -208,7 +213,14 @@
         }
 
         /* --- Hero --- */
-        .hero-logo { max-width: 90vw; width: 450px; height: auto; margin-bottom: 2rem; }
+        .hero-logo { 
+            mix-blend-mode: screen; /* Flawlessly deletes the black background from the logo */
+            filter: grayscale(1) contrast(1.5); /* Ensures the black is pure so it drops out cleanly */
+            max-width: 90vw; 
+            width: 450px; 
+            height: auto; 
+            margin-bottom: 2rem; 
+        }
         .hero-subtitle {
             font-family: 'Caveat', cursive; 
             font-size: 2.2rem; 
@@ -216,6 +228,7 @@
             color: var(--text-main); 
             max-width: 600px; 
             margin-bottom: 0;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
 
         /* --- Image Sliders --- */
@@ -239,7 +252,7 @@
         }
         .bg-slide-img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0; transition: opacity 2s ease-in-out; z-index: 0;
+            object-fit: cover; opacity: 0; transition: opacity 1.5s ease-in-out; z-index: 0;
         }
         .bg-slide-img.active { opacity: 1; }
 
@@ -469,7 +482,7 @@
             <div class="slide-content">
                 <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
                 
-                <p class="hero-subtitle handwritten fade-in delay-1 translatable" 
+                <p class="hero-subtitle fade-in delay-1 translatable" 
                    data-lv="Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības." 
                    data-en="Fresh, home-grown berries from our family farm.">
                    Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības.
@@ -823,7 +836,7 @@
                         <button type="submit" class="translatable fade-in delay-3" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
                     </form>
                     
-                    <p class="translatable fade-in" data-lv="Vai pasūtiet zvanot: +371 29459247" data-en="Or order by calling: +371 29459247" style="font-size: 0.8rem; margin-top: 0.8rem; margin-bottom: 0; color: #ccc;">
+                    <p class="translatable fade-in delay-4" data-lv="Vai pasūtiet zvanot: +371 29459247" data-en="Or order by calling: +371 29459247" style="font-size: 0.8rem; margin-top: 0.8rem; margin-bottom: 0; color: #ccc;">
                         Vai pasūtiet zvanot: <a href="tel:+37129459247" style="color: var(--text-main); font-weight: bold; text-decoration: underline;">+371 29459247</a>
                     </p>
                 </div>
