@@ -11,7 +11,7 @@
             --bg-alt: #0c111c;
             --text-main: #f8fafc; 
             --accent-blue: #8ba5d3; 
-            --accent-lime: #c5f04a; /* Strictly ONLY used for the price text */
+            --accent-lime: #c5f04a; 
             --nav-height: 70px;
         }
 
@@ -73,7 +73,6 @@
         .bg-alt { background-color: var(--bg-alt); }
 
         /* --- HERO SECTION --- */
-        /* TRULY RESTORED: Beautiful Photoroom background image with a dark gradient overlay */
         #hero { 
             background: linear-gradient(rgba(8, 11, 19, 0.7), rgba(8, 11, 19, 0.95)), url('Photoroom_20260426_155141.jpeg') center/cover no-repeat !important; 
             padding-top: var(--nav-height);
@@ -157,17 +156,26 @@
         }
 
         /* --- Animations --- */
+        /* Slides up while fading in */
         .fade-in {
             opacity: 0; transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* Only fades in (No movement, fixes blend modes and box clipping) */
+        .fade-in-still {
+            opacity: 0;
+            transition: opacity 0.6s ease-out;
+        }
+        .fade-in-still.visible { opacity: 1; }
+
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
 
-        /* ARROW ANIMATION FIX: Centers the arrow on the X axis natively inside the keyframe */
+        /* ARROW ANIMATION FIX */
         @keyframes scroll-drop {
             0% { transform: translate(-50%, 0); opacity: 1; }
             70% { transform: translate(-50%, 20px); opacity: 0; }
@@ -214,8 +222,8 @@
 
         /* --- Hero --- */
         .hero-logo { 
-            mix-blend-mode: screen; /* Flawlessly deletes the black background from the logo */
-            filter: grayscale(1) contrast(1.5); /* Ensures the black is pure so it drops out cleanly */
+            mix-blend-mode: screen; 
+            filter: grayscale(1) contrast(1.5); 
             max-width: 90vw; 
             width: 450px; 
             height: auto; 
@@ -480,7 +488,7 @@
         
         <section id="hero" class="snap-slide">
             <div class="slide-content">
-                <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
+                <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in-still">
                 
                 <p class="hero-subtitle fade-in delay-1 translatable" 
                    data-lv="Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības." 
@@ -836,7 +844,7 @@
                         <button type="submit" class="translatable fade-in delay-3" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
                     </form>
                     
-                    <p class="translatable fade-in delay-4" data-lv="Vai pasūtiet zvanot: +371 29459247" data-en="Or order by calling: +371 29459247" style="font-size: 0.8rem; margin-top: 0.8rem; margin-bottom: 0; color: #ccc;">
+                    <p class="translatable fade-in-still delay-4" data-lv="Vai pasūtiet zvanot: +371 29459247" data-en="Or order by calling: +371 29459247" style="font-size: 0.8rem; margin-top: 0.8rem; margin-bottom: 0; color: #ccc;">
                         Vai pasūtiet zvanot: <a href="tel:+37129459247" style="color: var(--text-main); font-weight: bold; text-decoration: underline;">+371 29459247</a>
                     </p>
                 </div>
@@ -976,7 +984,6 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 } else {
-                    // Remove class when out of view, so it animates again when scrolling back
                     entry.target.classList.remove('visible'); 
                 }
             });
@@ -985,7 +992,8 @@
             threshold: 0.1 
         });
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        // Both animated classes are now observed!
+        document.querySelectorAll('.fade-in, .fade-in-still').forEach(el => observer.observe(el));
 
         // Ensure page always starts at the top on reload without hash in URL
         window.onload = function() {
