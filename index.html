@@ -11,7 +11,7 @@
             --bg-alt: #0c111c;
             --text-main: #f8fafc; 
             --accent-blue: #8ba5d3; 
-            --accent-lime: #c5f04a; /* Strictly ONLY used for the price text */
+            --accent-lime: #c5f04a; 
             --nav-height: 70px;
         }
 
@@ -72,9 +72,8 @@
 
         .bg-alt { background-color: var(--bg-alt); }
 
-        /* RESTORED: Beautiful Photoroom background image with a dark gradient overlay */
         #hero { 
-            background: linear-gradient(rgba(8, 11, 19, 0.7), rgba(8, 11, 19, 0.95)), url('Photoroom_20260426_155141.jpeg') center/cover no-repeat !important; 
+            background: #000000 !important; 
             padding-top: var(--nav-height);
             justify-content: center;
         }
@@ -102,7 +101,6 @@
             padding-top: 1rem;
         }
 
-        /* Hero centering */
         #hero .slide-content {
             justify-content: center;
             padding-bottom: 3rem;
@@ -111,7 +109,6 @@
             flex-grow: 0;
         }
 
-        /* Fitment fixes for heavy pages */
         #order .slide-content, #growing .slide-content {
             justify-content: center; 
             padding-bottom: 2rem;
@@ -211,13 +208,7 @@
         }
 
         /* --- Hero --- */
-        .hero-logo { 
-            mix-blend-mode: screen; /* Flawlessly deletes the black background from the logo */
-            max-width: 90vw; 
-            width: 450px; 
-            height: auto; 
-            margin-bottom: 2rem; 
-        }
+        .hero-logo { max-width: 90vw; width: 450px; height: auto; margin-bottom: 2rem; }
         .hero-subtitle {
             font-family: 'Caveat', cursive; 
             font-size: 2.2rem; 
@@ -225,7 +216,6 @@
             color: var(--text-main); 
             max-width: 600px; 
             margin-bottom: 0;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
 
         /* --- Image Sliders --- */
@@ -236,7 +226,7 @@
         }
         .slide-img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;
+            object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;
         }
         .slide-img.active { opacity: 1; }
 
@@ -249,7 +239,7 @@
         }
         .bg-slide-img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0; transition: opacity 1.5s ease-in-out; z-index: 0;
+            object-fit: cover; opacity: 0; transition: opacity 2s ease-in-out; z-index: 0;
         }
         .bg-slide-img.active { opacity: 1; }
 
@@ -479,7 +469,7 @@
             <div class="slide-content">
                 <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in">
                 
-                <p class="hero-subtitle fade-in delay-1 translatable" 
+                <p class="hero-subtitle handwritten fade-in delay-1 translatable" 
                    data-lv="Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības." 
                    data-en="Fresh, home-grown berries from our family farm.">
                    Svaigas, pašu audzētas ogas no mūsu ģimenes saimniecības.
@@ -833,7 +823,7 @@
                         <button type="submit" class="translatable fade-in delay-3" data-lv="Sūtīt" data-en="Submit">Sūtīt</button>
                     </form>
                     
-                    <p class="translatable" data-lv="Vai pasūtiet zvanot: +371 29459247" data-en="Or order by calling: +371 29459247" style="font-size: 0.8rem; margin-top: 0.8rem; margin-bottom: 0; color: #ccc;">
+                    <p class="translatable fade-in" data-lv="Vai pasūtiet zvanot: +371 29459247" data-en="Or order by calling: +371 29459247" style="font-size: 0.8rem; margin-top: 0.8rem; margin-bottom: 0; color: #ccc;">
                         Vai pasūtiet zvanot: <a href="tel:+37129459247" style="color: var(--text-main); font-weight: bold; text-decoration: underline;">+371 29459247</a>
                     </p>
                 </div>
@@ -913,8 +903,18 @@
             document.getElementById('nav-links').classList.toggle('active');
         }
 
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
+        // --- PREVENT URL HASH APPENDING & SMOOTH SCROLL ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // Close mobile menu if it's open
                 document.getElementById('nav-links').classList.remove('active');
             });
         });
@@ -957,10 +957,14 @@
             document.getElementById('plantModal').classList.remove('active');
         }
 
+        // --- FIX ANIMATIONS TO FIRE EVERY TIME THEY SCROLL INTO VIEW ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                } else {
+                    // Remove class when out of view, so it animates again when scrolling back
+                    entry.target.classList.remove('visible'); 
                 }
             });
         }, { 
@@ -969,6 +973,14 @@
         });
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Ensure page always starts at the top on reload without hash in URL
+        window.onload = function() {
+            if (window.location.hash) {
+                window.history.replaceState(null, null, window.location.pathname + window.location.search);
+            }
+            document.querySelector('.snap-container').scrollTo(0, 0);
+        }
     </script>
 </body>
 </html>
