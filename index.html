@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Kalna Baložu Ogas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #000000; /* Pure black for seamless logo blending */
-            --bg-alt: #080b13; /* Deep navy for alternating sections */
-            --text-main: #f8fafc; 
-            --accent-blue: #8ba5d3; 
-            --accent-lime: #c5f04a; /* Action color! Used for Order buttons and pricing */
-            --nav-height: 70px;
+            /* Fresh, bright, premium palette */
+            --bg-color: #FAFAFA; /* Crisp off-white */
+            --bg-alt: #F0F2F5; /* Soft, cool grey-blue tint for alternating sections */
+            --text-main: #14213D; /* Deep blueberry navy for text (softer than pure black) */
+            --text-muted: #5C6B89;
+            --accent-blue: #3A506B; 
+            --accent-berry: #D81E5B; /* A vibrant, juicy berry color for high-conversion buttons/prices */
+            --accent-leaf: #4CAF50; /* Fresh green for secondary trust elements */
+            --nav-height: 75px;
         }
 
         * {
@@ -32,11 +35,13 @@
 
         button, a, input, select { outline: none !important; text-decoration: none; }
 
-        h1, h2, h3, h4, .handwritten {
-            font-family: 'Caveat', cursive; font-weight: 700; letter-spacing: 1px;
+        /* Elegant Serif for all headings */
+        h1, h2, h3, h4, .elegant-serif {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
 
-        p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 0.5rem; text-align: center; }
+        p { font-size: 1.05rem; line-height: 1.6; margin-bottom: 0.5rem; text-align: center; color: var(--text-muted); }
 
         /* --- SNAP SCROLLING CONTAINER --- */
         .snap-container {
@@ -48,63 +53,66 @@
             height: 100vh; height: 100dvh; width: 100vw;
             scroll-snap-align: start; scroll-snap-stop: always;
             display: flex; flex-direction: column; align-items: center;
-            padding: calc(var(--nav-height) + 1.5rem) 1.5rem 0 1.5rem; position: relative;
+            padding: calc(var(--nav-height) + 2rem) 1.5rem 0 1.5rem; position: relative;
         }
 
         .bg-alt { background-color: var(--bg-alt); }
 
         .slide-title {
-            font-size: 3.5rem; color: var(--text-main); text-align: center;
+            font-size: 3.2rem; color: var(--text-main); text-align: center;
             margin-top: 0; margin-bottom: 0; width: 100%; flex-shrink: 0; 
-            text-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
 
         .slide-content {
             display: flex; flex-direction: column; align-items: center;
             justify-content: flex-start; flex-grow: 1; width: 100%; height: 100%; 
-            padding-bottom: 3rem; padding-top: 1rem;
+            padding-bottom: 4rem; padding-top: 1.5rem;
         }
 
         /* --- SPA View Toggling --- */
         .view-section { display: none; }
         .view-section.active { display: block; }
 
-        /* --- "Sketchy" Hand-Drawn Box Effect --- */
-        .sketchy-box {
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 2% 95% 3% 95% / 95% 4% 92% 5%; 
-            background: rgba(255,255,255,0.03); backdrop-filter: blur(5px);
+        /* --- Modern Floating Card Effect --- */
+        .modern-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(20, 33, 61, 0.08);
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
         }
 
         /* --- Navigation --- */
         nav {
             position: fixed; top: 0; width: 100%; height: var(--nav-height);
-            padding: 0 1.5rem; background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px); z-index: 1000;
+            padding: 0 2rem; background: rgba(250, 250, 250, 0.9);
+            backdrop-filter: blur(15px); z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px dashed rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
         }
         .nav-brand {
-            font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--text-main);
-            letter-spacing: 1px; white-space: nowrap; cursor: pointer;
+            font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--text-main);
+            font-weight: 700; white-space: nowrap; cursor: pointer;
         }
-        .nav-right-container { display: flex; align-items: center; gap: 1rem; }
+        .nav-right-container { display: flex; align-items: center; gap: 1.2rem; }
         
-        /* The Global Order Button - Engineered to stand out */
+        /* The Global Order Button - High Conversion Red/Berry */
         .global-order-btn {
-            background: var(--accent-lime); color: #000; font-family: 'Montserrat', sans-serif;
-            font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;
-            padding: 0.6rem 1.2rem; border-radius: 20px; border: none; cursor: pointer;
-            box-shadow: 0 0 15px rgba(197, 240, 74, 0.4); transition: 0.3s;
+            background: var(--accent-berry); color: #fff; font-family: 'Montserrat', sans-serif;
+            font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+            padding: 0.7rem 1.4rem; border-radius: 30px; border: none; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(216, 30, 91, 0.3); transition: 0.3s;
         }
         @media (hover: hover) and (pointer: fine) {
-            .global-order-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(197, 240, 74, 0.6); }
+            .global-order-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(216, 30, 91, 0.5); }
         }
 
         .lang-switch {
-            background: transparent; border: 1px solid var(--accent-blue); border-radius: 50%; 
-            cursor: pointer; font-weight: 600; transition: 0.3s; font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem; color: white; width: 40px; height: 40px;
+            background: transparent; border: 2px solid var(--accent-blue); border-radius: 50%; 
+            cursor: pointer; font-weight: 700; transition: 0.3s; font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem; color: var(--accent-blue); width: 40px; height: 40px;
             display: flex; align-items: center; justify-content: center; 
         }
 
@@ -112,190 +120,229 @@
         .hamburger { display: none; font-size: 2rem; background: none; border: none; color: var(--text-main); cursor: pointer; }
         .nav-links { display: flex; gap: 1.5rem; align-items: center; }
         .nav-links a {
-            color: var(--text-main); font-size: 0.8rem; font-weight: 600; cursor: pointer;
+            color: var(--text-muted); font-size: 0.85rem; font-weight: 600; cursor: pointer;
             text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
         }
-        .nav-links a:hover { color: var(--accent-lime); }
+        .nav-links a:hover { color: var(--accent-berry); }
 
         /* --- HERO SPLIT SCREEN --- */
-        #hero { padding-top: var(--nav-height); justify-content: center; }
-        #hero .slide-content { justify-content: center; padding-bottom: 4rem; padding-top: 0; height: auto; flex-grow: 0;}
-        .hero-logo { mix-blend-mode: screen; filter: grayscale(1) contrast(1.5); max-width: 90vw; width: 450px; height: auto; margin-bottom: 1.5rem; }
-        .hero-subtitle { font-family: 'Caveat', cursive; font-size: 2.2rem; line-height: 1.2; color: var(--text-main); max-width: 600px; margin-bottom: 2rem; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+        #hero { 
+            padding-top: var(--nav-height); justify-content: center;
+            background: url('Photoroom_20260426_155141.jpeg') center/cover no-repeat;
+            position: relative;
+        }
+        /* Soft light overlay over the image to keep it bright but text readable */
+        #hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(250, 250, 250, 0.75); backdrop-filter: blur(4px); z-index: 0;
+        }
         
-        .split-buttons {
-            display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 600px;
+        #hero .slide-content { justify-content: center; padding-bottom: 2rem; padding-top: 0; height: auto; flex-grow: 0; z-index: 1;}
+        
+        .hero-card {
+            background: rgba(255, 255, 255, 0.85); padding: 3rem 2rem; border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,1);
+            display: flex; flex-direction: column; align-items: center; max-width: 700px; width: 100%;
         }
+
+        /* MAGIC: Inverts the white text to black, then multiplies to remove the black background! */
+        .hero-logo { mix-blend-mode: multiply; filter: invert(1); max-width: 90vw; width: 400px; height: auto; margin-bottom: 1rem; }
+        
+        .hero-subtitle { font-size: 1.8rem; line-height: 1.3; color: var(--accent-blue); max-width: 500px; margin-bottom: 2rem; font-style: italic; }
+        
+        .split-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; width: 100%; }
         .path-btn {
-            flex: 1; min-width: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 1.5rem; border: 2px dashed rgba(255,255,255,0.4); border-radius: 12px;
-            background: rgba(255,255,255,0.05); color: var(--text-main); cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px);
+            flex: 1; min-width: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 1.2rem; border-radius: 16px; background: var(--text-main); color: #fff; 
+            cursor: pointer; transition: 0.3s; border: none; box-shadow: 0 10px 20px rgba(20, 33, 61, 0.2);
         }
-        .path-btn span.emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .path-btn span.title { font-family: 'Caveat', cursive; font-size: 2.2rem; line-height: 1; }
+        .path-btn span.emoji { font-size: 2rem; margin-bottom: 0.3rem; }
+        .path-btn span.title { font-size: 1.2rem; font-family: 'Montserrat', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
+        
+        .path-btn.alt-btn { background: #fff; color: var(--text-main); border: 2px solid var(--text-main); box-shadow: none; }
+        
         @media (hover: hover) and (pointer: fine) {
-            .path-btn:hover { background: rgba(197, 240, 74, 0.1); border-color: var(--accent-lime); color: var(--accent-lime); transform: translateY(-5px); }
+            .path-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(20, 33, 61, 0.3); }
+            .path-btn.alt-btn:hover { background: var(--bg-alt); }
         }
 
         /* --- Image Sliders --- */
         .slider-container {
-            position: relative; width: 100%; max-width: 400px; height: 180px;
+            position: relative; width: 100%; max-width: 450px; height: 220px;
             margin-bottom: 1.5rem; overflow: hidden; cursor: pointer; touch-action: pan-y;
-            border: 2px solid rgba(255,255,255,0.8); border-radius: 1% 98% 2% 98% / 98% 2% 98% 2%; 
         }
-        .slide-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out; }
+        .slide-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out; }
         .slide-img.active { opacity: 1; }
 
-        .bg-slider-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
-        .bg-slider-wrapper::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(8, 11, 19, 0.92); z-index: 1; }
-        .bg-slide-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.5s ease-in-out; z-index: 0; }
-        .bg-slide-img.active { opacity: 1; }
-
         /* --- Info Lists --- */
-        .info-list { display: flex; flex-direction: column; gap: 0.8rem; align-items: flex-start; margin: 0 auto; width: fit-content; max-width: 100%; }
+        .info-list { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; margin: 0 auto; width: fit-content; max-width: 100%; }
         .info-row { display: flex; align-items: flex-start; text-align: left; gap: 12px; width: 100%; }
-        .icon-svg { display: inline-flex; align-items: center; justify-content: center; color: var(--accent-blue); margin-top: 2px; }
-        .info-row-content { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.9rem;}
+        .icon-svg { display: inline-flex; align-items: center; justify-content: center; color: var(--accent-berry); margin-top: 2px; }
+        .info-row-content { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 1rem; color: var(--text-main); font-weight: 600;}
         .card-logos-inline { display: inline-flex; gap: 4px; align-items: center; }
 
-        .app-links { display: flex; gap: 0.5rem; margin-top: 0.8rem; justify-content: center; }
+        .app-links { display: flex; gap: 0.8rem; margin-top: 1rem; justify-content: center; }
         .app-btn {
-            display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.4);
-            padding: 5px 12px; border-radius: 8px; color: white; font-size: 0.75rem; font-weight: 600; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd;
+            padding: 8px 16px; border-radius: 20px; color: var(--text-main); font-size: 0.8rem; font-weight: 700; transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-transform: uppercase;
         }
-        .app-btn img { filter: invert(1); } 
+        @media (hover: hover) and (pointer: fine) { .app-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); transform: translateY(-2px);} }
 
-        /* --- Zigzag U-Pick Layout --- */
-        .zigzag-timeline { position: relative; width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 1.2rem; margin-top: 0.5rem; }
+        /* --- Smooth Elegant Timeline --- */
+        .zigzag-timeline { position: relative; width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1rem; }
         .zigzag-line { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .z-step { display: flex; align-items: center; gap: 1rem; z-index: 2; width: 85%; }
+        .z-step { display: flex; align-items: center; gap: 1.2rem; z-index: 2; width: 85%; }
         .z-step.left { align-self: flex-start; }
         .z-step.right { align-self: flex-end; flex-direction: row-reverse; text-align: right; }
-        .z-icon { width: 45px; height: 45px; background: var(--bg-alt); border: 2px dashed var(--text-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 3; color: var(--text-main); }
-        #upick .z-icon { background: #080c11; }
-        .z-content { padding: 0.6rem 1rem; z-index: 3; width: 100%; text-align: inherit; }
-        #upick .z-content { background: #080c11; } 
-        .z-content h3 { font-family: 'Caveat', cursive; font-size: 2rem; color: var(--text-main); margin-bottom: 0.1rem; line-height: 1; }
-        .z-content p { font-size: 0.85rem; line-height: 1.3; color: #ccc; text-align: inherit; margin: 0; }
-        .price-exaggerated { font-size: 2.2rem !important; font-family: 'Caveat', cursive; color: var(--accent-lime) !important; letter-spacing: 2px; transform: rotate(-3deg); display: inline-block; text-shadow: 0 0 10px rgba(197, 240, 74, 0.2); }
+        .z-icon { width: 50px; height: 50px; background: #fff; border: 2px solid var(--accent-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 3; color: var(--accent-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.05);}
+        .z-content { padding: 1rem 1.2rem; z-index: 3; width: 100%; text-align: inherit; }
+        .z-content h3 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 0.2rem; line-height: 1.2; }
+        .z-content p { font-size: 0.9rem; line-height: 1.4; color: var(--text-muted); text-align: inherit; margin: 0; }
+        
+        /* Vibrant Price Badge */
+        .price-badge {
+            display: inline-block; background: var(--accent-berry); color: white;
+            padding: 8px 16px; border-radius: 20px; font-size: 1.4rem; font-weight: 700;
+            box-shadow: 0 5px 15px rgba(216, 30, 91, 0.3); margin-top: 0.5rem;
+        }
+        .z-step.right .app-links, .z-step.right .info-row-content { justify-content: flex-end; }
 
         /* --- Plants Catalog --- */
-        .plant-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.8rem; max-width: 800px; width: 100%; }
-        .plant-card { padding: 0.8rem 0.5rem; text-align: center; cursor: pointer; transition: 0.3s; }
-        .plant-card h4 { font-family: 'Caveat', cursive; font-size: 2rem; color: var(--text-main); margin-bottom: 0;}
-        .plant-card p.click-hint { font-size: 0.6rem; color: #888; margin-top: 0.2rem; text-transform: uppercase; margin-bottom: 0; }
+        .plant-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; max-width: 800px; width: 100%; }
+        .plant-card { padding: 1.2rem 0.5rem; text-align: center; cursor: pointer; }
+        @media (hover: hover) and (pointer: fine) {
+            .plant-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(20, 33, 61, 0.1); border-color: var(--accent-blue); }
+        }
+        .plant-card h4 { font-size: 1.6rem; color: var(--accent-blue); margin-bottom: 0;}
+        .plant-card p.click-hint { font-size: 0.65rem; color: #888; margin-top: 0.4rem; text-transform: uppercase; margin-bottom: 0; font-weight: 600;}
 
         /* --- Growing Guide --- */
-        .grow-card { padding: 1rem; width: 100%; max-width: 600px; margin-bottom: 0.8rem; text-align: left; }
-        .grow-card h3 { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--text-main); margin-bottom: 0.3rem; display: flex; align-items: center; gap: 10px; }
-        .grow-card p { font-size: 0.85rem; line-height: 1.4; color: #ddd; text-align: left; margin-bottom: 0;}
-        .peat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.5rem; }
-        .peat-box { padding: 0.5rem; text-align: center; border: 1px dashed rgba(255,255,255,0.3); border-radius: 5px; }
-        .peat-box h4 { font-size: 0.65rem; color: #aaa; margin-bottom: 0.1rem; text-transform: uppercase; font-family: 'Montserrat', sans-serif;}
-        .peat-box span { font-size: 1.4rem; font-family: 'Caveat', cursive; color: var(--text-main); }
+        .grow-card { padding: 1.5rem; width: 100%; max-width: 600px; margin-bottom: 1rem; text-align: left; }
+        .grow-card h3 { font-size: 1.8rem; color: var(--accent-blue); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; }
+        .grow-card p { font-size: 0.95rem; line-height: 1.5; color: var(--text-muted); text-align: left; margin-bottom: 0;}
+        .peat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 1rem; }
+        .peat-box { padding: 0.8rem; text-align: center; background: var(--bg-alt); border-radius: 12px; }
+        .peat-box h4 { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.2rem; text-transform: uppercase; font-family: 'Montserrat', sans-serif;}
+        .peat-box span { font-size: 1.6rem; font-weight: 700; color: var(--accent-blue); }
 
-        /* --- News Page --- */
+        /* --- News Page & Socials --- */
         .news-card { width: 100%; max-width: 500px; padding: 1.5rem; text-align: center; display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
-        .news-card h3 { font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--text-main); line-height: 1; margin: 0; }
-        .news-card p { font-size: 0.9rem; color: #ccc; font-style: italic; }
-        .news-link { background: var(--text-main); color: #000; font-weight: bold; font-size: 1rem; text-transform: uppercase; padding: 0.8rem 1.5rem; border-radius: 20px; border: 2px solid transparent; transition: 0.3s; font-family: 'Montserrat', sans-serif; }
+        .news-card h3 { font-size: 2.2rem; color: var(--text-main); line-height: 1.2; margin: 0; }
+        .news-card p { font-size: 1rem; color: var(--text-muted); font-style: italic; }
+        .news-link {
+            background: #fff; color: var(--accent-blue); font-weight: 700; font-size: 0.9rem; text-transform: uppercase;
+            padding: 0.8rem 1.5rem; border-radius: 25px; border: 2px solid var(--accent-blue); transition: 0.3s;
+        }
+        @media (hover: hover) and (pointer: fine) { .news-link:hover { background: var(--accent-blue); color: #fff; } }
         
-        .contact-info { display: flex; gap: 1.2rem; justify-content: center; align-items: center; margin-bottom: 0.5rem; }
-        .contact-info a { color: var(--text-main); font-family: 'Caveat', cursive; font-size: 2rem; display: flex; align-items: center; gap: 6px; }
+        .contact-info { display: flex; gap: 1.5rem; justify-content: center; align-items: center; margin-bottom: 1rem; }
+        .contact-info a { color: var(--accent-blue); font-size: 2rem; display: flex; align-items: center; gap: 6px; transition: 0.3s; }
+        @media (hover: hover) and (pointer: fine) { .contact-info a:hover { transform: scale(1.1); color: var(--accent-berry); } }
 
         /* --- THE GLOBAL ORDER MODAL --- */
         .order-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(8px);
+            background: rgba(20, 33, 61, 0.8); backdrop-filter: blur(8px);
             display: flex; justify-content: center; align-items: center;
             z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .order-modal-overlay.active { opacity: 1; pointer-events: auto; }
         
         .order-modal-content {
-            background: var(--bg-color); padding: 2rem 1.5rem; width: 95%; max-width: 450px;
-            border-radius: 20px; border: 1px dashed rgba(255,255,255,0.3);
+            background: #fff; padding: 2.5rem 2rem; width: 95%; max-width: 450px;
+            border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.2);
             text-align: center; position: relative; transform: translateY(50px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             max-height: 90vh; overflow-y: auto;
         }
         .order-modal-overlay.active .order-modal-content { transform: translateY(0); }
         
         .close-order-btn {
-            position: absolute; top: 10px; right: 15px; font-size: 2.5rem; cursor: pointer;
-            color: #888; background: none; border: none; padding: 0; font-family: 'Caveat', cursive; line-height: 1;
+            position: absolute; top: 15px; right: 20px; font-size: 2.5rem; cursor: pointer;
+            color: #ccc; background: none; border: none; padding: 0; line-height: 1; transition: 0.3s;
         }
+        .close-order-btn:hover { color: var(--accent-berry); }
 
         .trust-badge {
-            display: inline-block; background: rgba(197, 240, 74, 0.1); color: var(--accent-lime);
-            padding: 5px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-            margin-bottom: 1rem; border: 1px solid var(--accent-lime);
+            display: inline-block; background: rgba(76, 175, 80, 0.1); color: var(--accent-leaf);
+            padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            margin-bottom: 1.5rem; border: 1px solid rgba(76, 175, 80, 0.3);
         }
 
-        .form-row { display: flex; gap: 0.8rem; width: 100%; margin-bottom: 0.6rem; align-items: flex-end; }
+        .form-row { display: flex; gap: 1rem; width: 100%; margin-bottom: 0.8rem; align-items: flex-end; }
         .form-row .form-group { flex: 1; margin-bottom: 0; }
-        .form-group { width: 100%; margin-bottom: 0.8rem; text-align: left; }
-        .form-label { display: flex; align-items: center; font-size: 0.7rem; color: #aaa; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 1px; }
-        input, select, button[type="submit"] {
-            width: 100%; height: 44px; padding: 0 0.8rem; 
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
-            color: white; border-radius: 8px; font-family: inherit; font-size: 16px !important; appearance: none;
+        .form-group { width: 100%; margin-bottom: 1rem; text-align: left; }
+        .form-label { display: flex; align-items: center; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        input, select {
+            width: 100%; height: 48px; padding: 0 1rem; 
+            background: var(--bg-alt); border: 1px solid #e1e4e8;
+            color: var(--text-main); border-radius: 10px; font-family: inherit; font-size: 16px !important; appearance: none;
+            transition: 0.3s;
         }
-        input:focus, select:focus { border-color: var(--accent-lime); }
-        select { background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); background-repeat: no-repeat; background-position-x: 96%; background-position-y: center; }
-        button[type="submit"] {
-            background: var(--accent-lime); color: black; font-weight: 700; cursor: pointer; border: none; 
-            text-transform: uppercase; letter-spacing: 1px; margin-top: 0.5rem; height: 50px;
+        input:focus, select:focus { border-color: var(--accent-blue); background: #fff; box-shadow: 0 0 0 3px rgba(58, 80, 107, 0.1); }
+        select { background-image: url('data:image/svg+xml;utf8,<svg fill="%2314213D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: center; }
+        
+        .submit-btn {
+            width: 100%; background: var(--accent-berry); color: #fff; font-weight: 700; cursor: pointer; border: none; 
+            text-transform: uppercase; letter-spacing: 1px; margin-top: 1rem; height: 54px; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(216, 30, 91, 0.3); transition: 0.3s; font-size: 1rem;
         }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216, 30, 91, 0.4); }
 
         /* --- Animations Classes --- */
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
-        .fade-in-still { opacity: 0; transition: opacity 0.6s ease-out; }
+        .fade-in-still { opacity: 0; transition: opacity 0.8s ease-in-out; }
         .fade-in-still.visible { opacity: 1; }
 
         @keyframes scroll-drop { 0% { transform: translate(-50%, 0); opacity: 1; } 70% { transform: translate(-50%, 20px); opacity: 0; } 100% { transform: translate(-50%, 0); opacity: 0; } }
-        .scroll-arrow-svg { position: absolute; bottom: 2rem; left: 50%; animation: scroll-drop 2s infinite ease-in-out; display: block; width: 40px; height: 40px; }
+        .scroll-arrow-svg { position: absolute; bottom: 2rem; left: 50%; animation: scroll-drop 2s infinite ease-in-out; display: block; width: 40px; height: 40px; color: var(--accent-blue); }
 
         /* --- Strict Mobile Fitment --- */
         @media (max-width: 900px) {
             .hamburger { display: block; z-index: 1001; }
-            .nav-brand { font-size: 1.4rem; } 
+            .nav-brand { font-size: 1.5rem; } 
             
             .nav-links {
                 position: fixed; top: -100vh; left: 0; flex-direction: column;
-                background: rgba(0, 0, 0, 0.98); width: 100%; text-align: center;
-                transition: top 0.4s ease-in-out; padding: calc(var(--nav-height) + 1rem) 0 2rem 0; gap: 1.5rem;
-                z-index: -1; border-bottom: 1px dashed rgba(255,255,255,0.2);
+                background: rgba(255, 255, 255, 0.98); width: 100%; text-align: center;
+                transition: top 0.4s ease-in-out; padding: calc(var(--nav-height) + 2rem) 0 3rem 0; gap: 2rem;
+                z-index: -1; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             }
             .nav-links.active { top: 0; }
-            .nav-links a { font-size: 1.4rem; font-family: 'Caveat', cursive; letter-spacing: 2px; }
+            .nav-links a { font-size: 1.4rem; color: var(--text-main); font-weight: 700; }
             
-            .slide-title { font-size: 2.8rem; margin-bottom: 0.3rem; }
-            .hero-subtitle { font-size: 1.8rem; }
-            .split-buttons { flex-direction: column; gap: 0.8rem; width: 100%; max-width: 280px;}
+            .slide-title { font-size: 2.6rem; margin-bottom: 0.5rem; }
+            .hero-card { padding: 2rem 1.5rem; }
+            .hero-subtitle { font-size: 1.5rem; margin-bottom: 1.5rem;}
+            .split-buttons { flex-direction: column; gap: 0.8rem; width: 100%; max-width: 300px;}
             .path-btn { padding: 1rem; min-width: unset;}
-            .path-btn span.emoji { font-size: 2rem; margin-bottom: 0.2rem; }
-            .path-btn span.title { font-size: 1.8rem; }
+            .path-btn span.emoji { font-size: 1.8rem; margin-bottom: 0.2rem; }
+            .path-btn span.title { font-size: 1.1rem; }
 
-            .z-step { width: 100%; gap: 0.5rem; }
-            .z-content h3 { font-size: 1.6rem; }
-            .z-content p { font-size: 0.75rem; }
-            .price-exaggerated { font-size: 1.6rem !important; }
+            .z-step { width: 100%; gap: 0.8rem; }
+            .z-content { padding: 0.8rem 1rem;}
+            .z-content h3 { font-size: 1.5rem; }
+            .z-content p { font-size: 0.8rem; }
+            .price-badge { font-size: 1.2rem; padding: 6px 12px;}
             
-            .grow-card { padding: 0.6rem 0.8rem; margin-bottom: 0.5rem; }
-            .grow-card h3 { font-size: 1.6rem; margin-bottom: 0.2rem; }
-            .grow-card p { font-size: 0.75rem; line-height: 1.3; }
-            .peat-grid { margin-top: 0.4rem; }
-            .peat-box { padding: 0.4rem 0.2rem; }
-            .peat-box h4 { font-size: 0.55rem; }
-            .peat-box span { font-size: 1.1rem; }
+            .grow-card { padding: 1.2rem; margin-bottom: 0.8rem; }
+            .grow-card h3 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+            .grow-card p { font-size: 0.85rem; line-height: 1.4; }
+            .peat-grid { margin-top: 0.8rem; }
+            .peat-box { padding: 0.6rem 0.3rem; }
+            .peat-box h4 { font-size: 0.6rem; }
+            .peat-box span { font-size: 1.2rem; }
             
-            .news-card { padding: 1rem; gap: 0.8rem; }
-            .news-card h3 { font-size: 2rem; }
-            .news-img { height: 130px !important; }
-            .contact-info a { font-size: 1.5rem; }
+            .order-modal-content { padding: 2rem 1rem; }
+            .form-row { flex-direction: column; gap: 0; margin-bottom: 0;}
+            
+            .news-card { padding: 1.2rem; gap: 0.8rem; }
+            .news-card h3 { font-size: 1.8rem; }
+            .news-img { height: 140px !important; }
 
-            .slide-content { padding-bottom: 2rem; justify-content: flex-start; padding-top: 0.5rem;}
+            .slide-content { padding-bottom: 2rem; justify-content: flex-start; padding-top: 1rem;}
             #growing .slide-content, #news .slide-content { justify-content: center; padding-bottom: 1rem; }
         }
     </style>
@@ -303,7 +350,7 @@
 <body>
 
     <nav>
-        <a class="nav-brand translatable" data-lv="KBO" data-en="KBO" onclick="switchView('view-home'); this.blur()">Kalna Baložu Ogas</a> 
+        <a class="nav-brand translatable" data-lv="Kalna Baložu Ogas" data-en="Kalna Baložu Ogas" onclick="switchView('view-home'); this.blur()">Kalna Baložu Ogas</a> 
         <div class="nav-right-container">
             <div class="nav-links" id="nav-links">
                 <a class="translatable nav-item" data-lv="Sākums" data-en="Home" onclick="switchView('view-home')">Sākums</a>
@@ -322,25 +369,29 @@
         
         <div id="view-home" class="view-section active">
             <section id="hero" class="snap-slide">
-                <div class="slide-content">
-                    <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo fade-in-still">
+                <div class="slide-content fade-in-still">
                     
-                    <p class="hero-subtitle fade-in delay-1 translatable" 
-                       data-lv="No mūsu ģimenes lauka līdz jūsu galdam.<br>Svaigums garantēts." 
-                       data-en="From our family field to your table.<br>Freshness guaranteed.">
-                       No mūsu ģimenes lauka līdz jūsu galdam.<br>Svaigums garantēts.
-                    </p>
+                    <div class="hero-card">
+                        <img src="IMG_4060.jpeg" alt="Kalna Baložu Ogas" class="hero-logo">
+                        
+                        <p class="hero-subtitle elegant-serif translatable" 
+                           data-lv="No mūsu ģimenes lauka līdz jūsu galdam.<br>Svaigums garantēts." 
+                           data-en="From our family field to your table.<br>Freshness guaranteed.">
+                           No mūsu ģimenes lauka līdz jūsu galdam.<br>Svaigums garantēts.
+                        </p>
 
-                    <div class="split-buttons fade-in delay-2">
-                        <div class="path-btn" onclick="switchView('view-berries')">
-                            <span class="emoji">🫐</span>
-                            <span class="title translatable" data-lv="Svaigas Ogas" data-en="Fresh Berries">Svaigas Ogas</span>
-                        </div>
-                        <div class="path-btn" onclick="switchView('view-plants')">
-                            <span class="emoji">🌱</span>
-                            <span class="title translatable" data-lv="Stādi Audzēšanai" data-en="Plants to Grow">Stādi Audzēšanai</span>
+                        <div class="split-buttons">
+                            <button class="path-btn" onclick="switchView('view-berries')">
+                                <span class="emoji">🫐</span>
+                                <span class="title translatable" data-lv="Svaigas Ogas" data-en="Fresh Berries">Svaigas Ogas</span>
+                            </button>
+                            <button class="path-btn alt-btn" onclick="switchView('view-plants')">
+                                <span class="emoji">🌱</span>
+                                <span class="title translatable" data-lv="Stādi Audzēšanai" data-en="Plants to Grow">Stādi Audzēšanai</span>
+                            </button>
                         </div>
                     </div>
+
                 </div>
             </section>
         </div>
@@ -348,31 +399,31 @@
         <div id="view-berries" class="view-section">
             
             <section class="snap-slide">
-                <h2 class="slide-title fade-in translatable" data-lv="Ogu Piegāde" data-en="Berry Delivery">Ogu Piegāde</h2>
+                <h2 class="slide-title elegant-serif fade-in translatable" data-lv="Ogu Piegāde" data-en="Berry Delivery">Ogu Piegāde</h2>
                 <div class="slide-content">
-                    <div class="slider-container sketchy-box fade-in delay-1">
+                    <div class="slider-container modern-card fade-in delay-1">
                         <img src="2.jpg" class="slide-img active">
                         <img src="6.jpg" class="slide-img">
                     </div>
                     
                     <div class="info-list fade-in delay-2">
                         <div class="info-row">
-                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></span>
-                            <span class="translatable" data-lv="Bezmaksas piegāde (Rīga-Aizkraukle)" data-en="Free Delivery (Riga-Aizkraukle)">Bezmaksas piegāde (Rīga-Aizkraukle)</span>
+                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></span>
+                            <span class="translatable" data-lv="Bezmaksas piegāde (Rīga - Aizkraukle)" data-en="Free Delivery (Riga - Aizkraukle)">Bezmaksas piegāde (Rīga - Aizkraukle)</span>
                         </div>
                         <div class="info-row">
-                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></span>
+                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></span>
                             <span class="translatable" data-lv="Minimālais pasūtījums 5kg (6.50€/kg)" data-en="Min order 5kg (€6.50/kg)">Minimālais pasūtījums 5kg (6.50€/kg)</span>
                         </div>
                         <div class="info-row">
-                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent-lime)" stroke-width="2"><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line><path d="M20 16l-4-4 4-4"></path><path d="M4 8l4 4-4 4"></path></svg></span>
-                            <span class="translatable" style="color: var(--accent-lime); font-weight: 600;" data-lv="Piegādātas refrižeratorā, saglabājot izcilu svaigumu!" data-en="Delivered in a refrigerated van, preserving freshness!">Piegādātas refrižeratorā, saglabājot izcilu svaigumu!</span>
+                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-leaf)" stroke-width="2"><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line><path d="M20 16l-4-4 4-4"></path><path d="M4 8l4 4-4 4"></path></svg></span>
+                            <span class="translatable" style="color: var(--accent-leaf); font-weight: 700;" data-lv="Piegādātas refrižeratorā, saglabājot izcilu svaigumu!" data-en="Delivered in a refrigerated van, preserving freshness!">Piegādātas refrižeratorā, saglabājot izcilu svaigumu!</span>
                         </div>
                     </div>
 
-                    <button onclick="openOrderModal()" class="global-order-btn fade-in delay-3 translatable" data-lv="Pasūtīt Ogas Tagad" data-en="Order Berries Now" style="margin-top: 1.5rem; padding: 1rem 2rem; font-size: 1rem;">Pasūtīt Ogas Tagad</button>
+                    <button onclick="openOrderModal()" class="global-order-btn fade-in delay-3 translatable" data-lv="Pasūtīt Ogas Tagad" data-en="Order Berries Now" style="margin-top: 2rem; padding: 1rem 2.5rem; font-size: 1rem;">Pasūtīt Ogas Tagad</button>
                 </div>
-                <svg class="scroll-arrow-svg fade-in delay-3" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m-6-6l6 6 6-6"/></svg>
+                <svg class="scroll-arrow-svg fade-in delay-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m-6-6l6 6 6-6"/></svg>
             </section>
 
             <section id="upick" class="snap-slide bg-alt">
@@ -382,22 +433,18 @@
                     <img src="5.jpg" class="bg-slide-img">
                 </div>
 
-                <h2 class="slide-title fade-in translatable" data-lv="Kā darbojas pašlasīšana?" data-en="How U-Pick Works?">Kā darbojas pašlasīšana?</h2>
+                <h2 class="slide-title elegant-serif fade-in translatable" data-lv="Kā darbojas pašlasīšana?" data-en="How U-Pick Works?" style="color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Kā darbojas pašlasīšana?</h2>
                 
-                <div class="fade-in delay-1" style="text-align: center; margin-top: -0.5rem; margin-bottom: 0.5rem; z-index: 5;">
-                    <span class="translatable price-exaggerated" data-lv="Tikai 4.50€/kg!" data-en="Only €4.50/kg!">Tikai 4.50€/kg!</span>
-                </div>
-
-                <div class="slide-content" style="padding-top: 0;">
+                <div class="slide-content" style="padding-top: 1rem;">
                     <div class="zigzag-timeline">
                         <svg class="zigzag-line fade-in delay-4" viewBox="0 0 100 100" preserveAspectRatio="none" style="z-index: 1;">
-                            <path d="M 50 12 C 150 25, -50 25, 50 37 C -50 50, 150 50, 50 62 C 150 75, -50 75, 50 87" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-dasharray="6, 8" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+                            <path d="M 50 12 C 120 30, -20 30, 50 50 C 120 70, -20 70, 50 88" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none" vector-effect="non-scaling-stroke" stroke-linecap="round" />
                         </svg>
 
                         <div class="z-step left fade-in delay-1">
                             <div class="z-icon"><svg viewBox="0 0 24 24" width="22" height="22" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
-                            <div class="z-content sketchy-box">
-                                <h3 class="translatable" data-lv="1. Brauc ciemos" data-en="1. Arrive">1. Brauc ciemos</h3>
+                            <div class="z-content modern-card">
+                                <h3 class="elegant-serif translatable" data-lv="1. Brauc ciemos" data-en="1. Arrive">1. Brauc ciemos</h3>
                                 <p class="translatable" data-lv="Atrodi mūs Aizkrauklē." data-en="Find us in Aizkraukle.">Atrodi mūs Aizkrauklē.</p>
                                 <div class="app-links" style="justify-content: flex-start;">
                                     <a href="https://waze.com/ul?q=Kalna+Baložu+Ogas" target="_blank" class="app-btn" onclick="this.blur()"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/waze.svg" width="12" height="12"> Waze</a>
@@ -408,27 +455,25 @@
 
                         <div class="z-step right fade-in delay-2">
                             <div class="z-icon"><svg viewBox="0 0 24 24" width="22" height="22" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18l-1.5 13H4.5z"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg></div>
-                            <div class="z-content sketchy-box">
-                                <h3 class="translatable" data-lv="2. Nosver trauku" data-en="2. Weigh container">2. Nosver trauku</h3>
+                            <div class="z-content modern-card">
+                                <h3 class="elegant-serif translatable" data-lv="2. Nosver trauku" data-en="2. Weigh container">2. Nosver trauku</h3>
                                 <p class="translatable" data-lv="Tukšu trauku svēršanas stacijā.<br>Aicinām ņemt savus!" data-en="Empty bucket at the station.<br>Bring your own!">Tukšu trauku svēršanas stacijā.<br>Aicinām ņemt savus!</p>
                             </div>
                         </div>
 
                         <div class="z-step left fade-in delay-3">
                             <div class="z-icon"><svg viewBox="0 0 24 24" width="22" height="22" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="14" r="3"/><circle cx="14" cy="16" r="3"/><circle cx="11" cy="9" r="4"/><path d="M11 5v4"/><path d="M11 5c2-2 5-1 5-1"/></svg></div>
-                            <div class="z-content sketchy-box">
-                                <h3 class="translatable" data-lv="3. Lasi" data-en="3. Pick">3. Lasi</h3>
+                            <div class="z-content modern-card">
+                                <h3 class="elegant-serif translatable" data-lv="3. Lasi" data-en="3. Pick">3. Lasi</h3>
                                 <p class="translatable" data-lv="Svaigākās ogas laukā." data-en="Freshest berries in the field.">Svaigākās ogas laukā.</p>
                             </div>
                         </div>
 
                         <div class="z-step right fade-in delay-4">
                             <div class="z-icon"><svg viewBox="0 0 24 24" width="22" height="22" overflow="visible" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M3 21h18"/><path d="M12 3l-9 7v2"/><path d="M12 3l9 7v2"/><path d="M3 12h18"/></svg></div>
-                            <div class="z-content sketchy-box">
-                                <h3 class="translatable" data-lv="4. Nosver un norēķinies" data-en="4. Weigh & Pay">4. Nosver un norēķinies</h3>
-                                <div class="info-row-content" style="justify-content: flex-end; margin-top: 5px;">
-                                    <span class="translatable" style="font-size: 0.75rem; color: #ccc;" data-lv="Skaidrā / Karte" data-en="Cash / Card">Skaidrā / Karte</span>
-                                </div>
+                            <div class="z-content modern-card">
+                                <h3 class="elegant-serif translatable" data-lv="4. Nosver un norēķinies" data-en="4. Weigh & Pay">4. Nosver un norēķinies</h3>
+                                <span class="price-badge translatable" data-lv="Tikai 4.50€/kg!" data-en="Only €4.50/kg!">Tikai 4.50€/kg!</span>
                             </div>
                         </div>
                     </div>
@@ -436,9 +481,9 @@
             </section>
 
             <section class="snap-slide">
-                <h2 class="slide-title fade-in translatable" data-lv="Zemnieku Nakts Tirgus" data-en="Farmers Night Market">Zemnieku Nakts Tirgus</h2>
+                <h2 class="slide-title elegant-serif fade-in translatable" data-lv="Zemnieku Nakts Tirgus" data-en="Farmers Night Market">Zemnieku Nakts Tirgus</h2>
                 <div class="slide-content">
-                    <div class="slider-container sketchy-box fade-in delay-1">
+                    <div class="slider-container modern-card fade-in delay-1">
                         <img src="10.jpg" class="slide-img active">
                         <img src="7.jpg" class="slide-img">
                         <img src="IMG_4077.jpeg" class="slide-img">
@@ -446,39 +491,22 @@
                     
                     <div class="info-list fade-in delay-2">
                         <div class="info-row">
-                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
                             <span class="translatable" data-lv="Spīķeru iela 2, Rīga" data-en="Spīķeru iela 2, Riga">Spīķeru iela 2, Rīga</span>
                         </div>
                         <div class="info-row">
-                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+                            <span class="icon-svg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
                             <span class="translatable" data-lv="Katru dienu no 15:00" data-en="Every day from 15:00">Katru dienu no 15:00</span>
                         </div>
                     </div>
-                </div>
-            </section>
 
-            <section id="news" class="snap-slide bg-alt">
-                <h2 class="slide-title fade-in translatable" data-lv="Jaunumi un Saziņa" data-en="News & Contact">Jaunumi un Saziņa</h2>
-                
-                <div class="slide-content">
-                    <div class="contact-info fade-in delay-1">
-                        <a href="tel:+37129459247" onclick="this.blur()">📞 +371 29459247</a>
-                        <span style="color: var(--text-main);">|</span>
-                        <a href="https://www.facebook.com/share/1HAaa99eSN/?mibextid=wwXIfr" target="_blank" onclick="this.blur()">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        </a>
-                        <a href="https://www.instagram.com" target="_blank" onclick="this.blur()" style="color: var(--text-main);">
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        </a>
-                    </div>
-
-                    <div class="news-card sketchy-box fade-in delay-2">
+                    <div class="news-card modern-card fade-in delay-3" style="margin-top: 2rem;">
                         <img src="IMG_4101.png" alt="Staburags News" class="news-img" style="width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;">
-                        <h3 class="translatable" data-lv="Par mums raksta Staburags.lv" data-en="Staburags.lv writes about us" style="color: var(--text-main); font-size: 2rem; margin-bottom: 0.5rem;">Par mums raksta Staburags.lv</h3>
-                        <p class="translatable" data-lv="“Gardā salduma pilni lauki – mellenēm vajag saulainas dienas un vēsākas naktis...”" data-en="“Fields full of delicious sweetness – blueberries need sunny days and cooler nights...”" style="margin-bottom: 1rem;">
+                        <h3 class="elegant-serif translatable" data-lv="Par mums raksta Staburags.lv" data-en="Staburags.lv writes about us" style="color: var(--accent-blue); font-size: 1.8rem; margin-bottom: 0.5rem;">Par mums raksta Staburags.lv</h3>
+                        <p class="translatable" data-lv="“Gardā salduma pilni lauki – mellenēm vajag saulainas dienas un vēsākas naktis...”" data-en="“Fields full of delicious sweetness – blueberries need sunny days and cooler nights...”" style="margin-bottom: 1rem; font-size: 0.9rem;">
                             “Gardā salduma pilni lauki – mellenēm vajag saulainas dienas un vēsākas naktis...”
                         </p>
-                        <a href="https://staburags.lv/staburaga-projektu-raksti/garda-salduma-pilni-lauki-mellenem-vajag-saulainas-dienas-un-vesakas-naktis/?fbclid=IwY2xjawNhoDFleHRuA2FlbQIxMQABHqqlA4l_XRyFLFGc7ekKZo33r792rHVRiApbIuDbfUWNifmIzB0KzHxVp3pq_aem_fKyM4tKHy8SV9fZahhESHA" target="_blank" class="news-link translatable" data-lv="Lasīt Rakstu" data-en="Read Article" style="background: var(--text-main); color: black;">Lasīt Rakstu</a>
+                        <a href="https://staburags.lv/staburaga-projektu-raksti/garda-salduma-pilni-lauki-mellenem-vajag-saulainas-dienas-un-vesakas-naktis/?fbclid=IwY2xjawNhoDFleHRuA2FlbQIxMQABHqqlA4l_XRyFLFGc7ekKZo33r792rHVRiApbIuDbfUWNifmIzB0KzHxVp3pq_aem_fKyM4tKHy8SV9fZahhESHA" target="_blank" class="news-link translatable" data-lv="Lasīt Rakstu" data-en="Read Article">Lasīt Rakstu</a>
                     </div>
                 </div>
             </section>
@@ -487,63 +515,61 @@
         <div id="view-plants" class="view-section">
             
             <section class="snap-slide">
-                <h2 class="slide-title fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
+                <h2 class="slide-title elegant-serif fade-in translatable" data-lv="Melleņu Stādi" data-en="Blueberry Plants">Melleņu Stādi</h2>
                 
                 <div class="slide-content">
-                    <p class="fade-in delay-1 translatable handwritten" data-lv="15€ - 30€" data-en="€15 - €30" style="margin-bottom: 1rem; font-size: 1.8rem; color: var(--text-main);">15€ - 30€</p>
                     <div class="plant-grid fade-in delay-2">
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Patriot', '• Vidēji agrīna\n• Ļoti augsta salizturība\n• Lielas, saldas ogas\n• Stāvs krūms', '• Mid-early\n• Highly frost-resistant\n• Large, sweet berries\n• Upright bush')">
-                            <h4>Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Patriot', '15€ - 30€\n\n• Vidēji agrīna\n• Ļoti augsta salizturība\n• Lielas, saldas ogas\n• Stāvs krūms', '€15 - €30\n\n• Mid-early\n• Highly frost-resistant\n• Large, sweet berries\n• Upright bush')">
+                            <h4 class="elegant-serif">Patriot</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Bluecrop', '• Vidēji agrīna (klasika)\n• Augsta ražība\n• Lielas, stingras ogas\n• Izturīga pret sausumu', '• Mid-season (classic)\n• High yield\n• Large, firm berries\n• Drought resistant')">
-                            <h4>Bluecrop</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Bluecrop', '15€ - 30€\n\n• Vidēji agrīna (klasika)\n• Augsta ražība\n• Lielas, stingras ogas\n• Izturīga pret sausumu', '€15 - €30\n\n• Mid-season (classic)\n• High yield\n• Large, firm berries\n• Drought resistant')">
+                            <h4 class="elegant-serif">Bluecrop</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Chanticleer', '• Ļoti agrīna\n• Vidējas/lielas ogas\n• Salda garša\n• Izturīga pret pavasara salnām', '• Very early\n• Medium/large berries\n• Sweet flavor\n• Spring frost resistant')">
-                            <h4>Chanticleer</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Chanticleer', '15€ - 30€\n\n• Ļoti agrīna\n• Vidējas/lielas ogas\n• Salda garša\n• Izturīga pret pavasara salnām', '€15 - €30\n\n• Very early\n• Medium/large berries\n• Sweet flavor\n• Spring frost resistant')">
+                            <h4 class="elegant-serif">Chanticleer</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Toro', '• Vidēji agrīna\n• Milzīgas ogas (kā vīnogas)\n• Izcila garša\n• Kompakts krūms', '• Mid-early\n• Giant berries (grape-like)\n• Outstanding flavor\n• Compact bush')">
-                            <h4>Toro</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Toro', '15€ - 30€\n\n• Vidēji agrīna\n• Milzīgas ogas (kā vīnogas)\n• Izcila garša\n• Kompakts krūms', '€15 - €30\n\n• Mid-early\n• Giant berries (grape-like)\n• Outstanding flavor\n• Compact bush')">
+                            <h4 class="elegant-serif">Toro</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Chandler', '• Vēla šķirne\n• Milzīgas ogas (>2cm)\n• Ilgs ražas laiks (4-6 nedēļas)\n• Lieliska garša', '• Late-season\n• Giant berries (>2cm)\n• Long harvest (4-6 weeks)\n• Excellent flavor')">
-                            <h4>Chandler</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Chandler', '15€ - 30€\n\n• Vēla šķirne\n• Milzīgas ogas (>2cm)\n• Ilgs ražas laiks (4-6 nedēļas)\n• Lieliska garša', '€15 - €30\n\n• Late-season\n• Giant berries (>2cm)\n• Long harvest (4-6 weeks)\n• Excellent flavor')">
+                            <h4 class="elegant-serif">Chandler</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Brigitta Blue', '• Vēla šķirne\n• Kraukšķīgas, stingras ogas\n• Ilgi uzglabājas\n• Spēcīgs krūms', '• Late-season\n• Crisp, firm berries\n• Long shelf life\n• Vigorous bush')">
-                            <h4>Brigitta</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Brigitta', '15€ - 30€\n\n• Vēla šķirne\n• Kraukšķīgas, stingras ogas\n• Ilgi uzglabājas\n• Spēcīgs krūms', '€15 - €30\n\n• Late-season\n• Crisp, firm berries\n• Long shelf life\n• Vigorous bush')">
+                            <h4 class="elegant-serif">Brigitta</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
                     </div>
                 </div>
-                <svg class="scroll-arrow-svg fade-in delay-3" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m-6-6l6 6 6-6"/></svg>
+                <svg class="scroll-arrow-svg fade-in delay-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m-6-6l6 6 6-6"/></svg>
             </section>
 
             <section class="snap-slide bg-alt">
-                <h2 class="slide-title fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
+                <h2 class="slide-title elegant-serif fade-in translatable" data-lv="Sausseržu Stādi" data-en="Honeyberry Plants">Sausseržu Stādi</h2>
                 
                 <div class="slide-content">
-                    <p class="fade-in delay-1 translatable handwritten" data-lv="10€ - 20€" data-en="€10 - €20" style="margin-bottom: 1rem; font-size: 1.8rem; color: var(--text-main);">10€ - 20€</p>
                     <div class="plant-grid fade-in delay-2">
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Blue Banana', '• Vidēji vēla\n• Banānu formas ogas\n• Ļoti saldas un sulīgas\n• Augsta ražība', '• Mid-late\n• Banana-shaped berries\n• Very sweet & juicy\n• High yield')">
-                            <h4>Banana</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Banana', '10€ - 20€\n\n• Vidēji vēla\n• Banānu formas ogas\n• Ļoti saldas un sulīgas\n• Augsta ražība', '€10 - €20\n\n• Mid-late\n• Banana-shaped berries\n• Very sweet & juicy\n• High yield')">
+                            <h4 class="elegant-serif">Banana</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Boreal Beast', '• Vidēji vēla\n• Salda ar skābumiņu\n• Lielisks apputeksnētājs\n• Spēcīgs krūms', '• Mid-late\n• Sweet-tart flavor\n• Excellent pollinator\n• Vigorous bush')">
-                            <h4>Beast</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Beast', '10€ - 20€\n\n• Vidēji vēla\n• Salda ar skābumiņu\n• Lielisks apputeksnētājs\n• Spēcīgs krūms', '€10 - €20\n\n• Mid-late\n• Sweet-tart flavor\n• Excellent pollinator\n• Vigorous bush')">
+                            <h4 class="elegant-serif">Beast</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Strawberry Sensation', '• Vidēji vēla\n• Zemeņu garšas nianses\n• Lielas ogas\n• Augsta ražība', '• Mid-late\n• Strawberry flavor notes\n• Large berries\n• High yield')">
-                            <h4>Strawberry</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Strawberry', '10€ - 20€\n\n• Vidēji vēla\n• Zemeņu garšas nianses\n• Lielas ogas\n• Augsta ražība', '€10 - €20\n\n• Mid-late\n• Strawberry flavor notes\n• Large berries\n• High yield')">
+                            <h4 class="elegant-serif">Strawberry</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
-                        <div class="plant-card sketchy-box" onclick="openPlantModal('Giant\'s Heart', '• Vidēji vēla\n• Sirds formas, lielas ogas\n• Salda garša\n• Stāvus izplests krūms', '• Mid-late\n• Heart-shaped, large berries\n• Sweet flavor\n• Upright-spreading bush')">
-                            <h4>Heart</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
+                        <div class="plant-card modern-card" onclick="openPlantModal('Heart', '10€ - 20€\n\n• Vidēji vēla\n• Sirds formas, lielas ogas\n• Salda garša\n• Stāvus izplests krūms', '€10 - €20\n\n• Mid-late\n• Heart-shaped, large berries\n• Sweet flavor\n• Upright-spreading bush')">
+                            <h4 class="elegant-serif">Heart</h4><p class="click-hint translatable" data-lv="Uzzināt vairāk" data-en="Learn more">Uzzināt vairāk</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section class="snap-slide">
-                <h2 class="slide-title fade-in translatable" data-lv="Stādīšana un Kopšana" data-en="Planting & Care">Stādīšana un Kopšana</h2>
+                <h2 class="slide-title elegant-serif fade-in translatable" data-lv="Kopšana" data-en="Care Guide">Kopšana</h2>
                 
                 <div class="slide-content">
-                    <div class="grow-card sketchy-box fade-in delay-1">
-                        <h3>
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--text-main)" stroke-width="2"><path d="M6 8h12l-1.5 13H7.5z"/><path d="M16 8v-2a4 4 0 00-8 0v2"/></svg>
+                    <div class="grow-card modern-card fade-in delay-1">
+                        <h3 class="elegant-serif">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l-1.5 13H7.5z"/><path d="M16 8v-2a4 4 0 00-8 0v2"/></svg>
                             <span class="translatable" data-lv="Auduma Podi" data-en="Fabric Pots">Auduma Podi</span>
                         </h3>
                         <p class="translatable" data-lv="Mūsu stādi tiek pārdoti jau iestādīti elpojošos auduma podos.
@@ -555,9 +581,9 @@
                         </p>
                     </div>
 
-                    <div class="grow-card sketchy-box fade-in delay-2">
-                        <h3>
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--text-main)" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 22l8-8"/></svg>
+                    <div class="grow-card modern-card fade-in delay-2">
+                        <h3 class="elegant-serif">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 22l8-8"/></svg>
                             <span class="translatable" data-lv="Kā Kopt?" data-en="How to Care?">Kā Kopt?</span>
                         </h3>
                         <p class="translatable" data-lv="• Pārstādīšanai izmantojiet skābu kūdru (pH 3.5 - 4.5)
@@ -569,8 +595,8 @@
                         </p>
                     </div>
 
-                    <div class="grow-card sketchy-box fade-in delay-3" style="margin-bottom: 0;">
-                        <h3 style="justify-content: center;">
+                    <div class="grow-card modern-card fade-in delay-3" style="margin-bottom: 0;">
+                        <h3 class="elegant-serif" style="justify-content: center;">
                             <span class="translatable" data-lv="Nepieciešamais kūdras apjoms" data-en="Required Peat Volume">Nepieciešamais kūdras apjoms</span>
                         </h3>
                         <div class="peat-grid">
@@ -578,9 +604,9 @@
                                 <h4 class="translatable" data-lv="Minimālais" data-en="Minimum">Minimālais</h4>
                                 <span>50L</span>
                             </div>
-                            <div class="peat-box" style="border-color: var(--text-main);">
-                                <h4 class="translatable" style="color: var(--accent-blue);" data-lv="Vidējais" data-en="Average">Vidējais</h4>
-                                <span style="color: var(--text-main);">80L</span>
+                            <div class="peat-box" style="background: rgba(58, 80, 107, 0.05); border: 1px solid var(--accent-blue);">
+                                <h4 class="translatable" data-lv="Vidējais" data-en="Average">Vidējais</h4>
+                                <span style="color: var(--accent-berry);">80L</span>
                             </div>
                             <div class="peat-box">
                                 <h4 class="translatable" data-lv="Perfektais" data-en="Perfect">Perfektais</h4>
@@ -593,10 +619,10 @@
         </div>
         
     </div> <div class="order-modal-overlay" id="orderModal" onclick="closeOrderModal(event)">
-        <div class="order-modal-content sketchy-box" onclick="event.stopPropagation()">
+        <div class="order-modal-content" onclick="event.stopPropagation()">
             <button class="close-order-btn" onclick="closeOrderModal(event)">×</button>
             
-            <h2 class="handwritten translatable" data-lv="Pasūtīt" data-en="Order" style="font-size: 3rem; color: var(--accent-lime); margin-bottom: 0.2rem;">Pasūtīt</h2>
+            <h2 class="elegant-serif translatable" data-lv="Pasūtīt" data-en="Order" style="font-size: 2.8rem; color: var(--accent-blue); margin-bottom: 0.5rem;">Pasūtīt</h2>
             
             <div class="trust-badge translatable" data-lv="Svaiguma garantija – piegādājam refrižeratorā" data-en="Freshness guaranteed – delivered refrigerated">
                 Svaiguma garantija – piegādājam refrižeratorā
@@ -635,41 +661,36 @@
                     </select>
                 </div>
 
-                <button type="submit" class="translatable" data-lv="Sūtīt Pasūtījumu" data-en="Submit Order">Sūtīt Pasūtījumu</button>
+                <button type="submit" class="submit-btn translatable" data-lv="Sūtīt Pasūtījumu" data-en="Submit Order">Sūtīt Pasūtījumu</button>
             </form>
             
-            <p class="translatable" data-lv="Vai zvaniet mums uzreiz: +371 29459247" data-en="Or call us directly: +371 29459247" style="font-size: 0.8rem; margin-top: 1rem; margin-bottom: 0; color: #ccc;">
-                Vai zvaniet mums uzreiz: <a href="tel:+37129459247" style="color: var(--text-main); font-weight: bold; text-decoration: underline;">+371 29459247</a>
-            </p>
+            <div class="contact-info" style="margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1rem;">
+                <p class="translatable" data-lv="Vai zvaniet mums uzreiz:" data-en="Or call us directly:" style="font-size: 0.8rem; margin: 0; color: var(--text-muted);">Vai zvaniet mums uzreiz:</p>
+                <a href="tel:+37129459247" style="font-size: 1.4rem; font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--accent-blue);">📞 +371 29459247</a>
+            </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="plantModal" onclick="closePlantModal(event)">
-        <div class="modal-content sketchy-box" onclick="event.stopPropagation()">
+        <div class="modal-content modern-card" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closePlantModal(event)">×</button>
-            <h3 id="modalTitle" style="font-family: 'Caveat', cursive; font-size: 3.5rem; color: var(--text-main); margin-bottom: 1rem; line-height: 1;">Variety</h3>
-            <p id="modalDescLv" style="display: block;">Apraksts</p>
-            <p id="modalDescEn" style="display: none;">Description</p>
+            <h3 id="modalTitle" class="elegant-serif" style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem; line-height: 1;">Variety</h3>
+            <p id="modalDescLv" style="display: block; color: var(--text-main); font-weight: 500;">Apraksts</p>
+            <p id="modalDescEn" style="display: none; color: var(--text-main); font-weight: 500;">Description</p>
+            <button class="global-order-btn translatable" data-lv="Pasūtīt" data-en="Order" onclick="closePlantModal(event); openOrderModal();" style="margin-top: 1.5rem; width: 100%;">Pasūtīt</button>
         </div>
     </div>
 
     <script>
         // --- SPA View Logic ---
         function switchView(viewId) {
-            // Hide all views
             document.querySelectorAll('.view-section').forEach(view => {
                 view.classList.remove('active');
             });
-            // Show target view
             document.getElementById(viewId).classList.add('active');
-            
-            // Close mobile menu if open
             document.getElementById('nav-links').classList.remove('active');
-            
-            // Scroll to top of container
             document.getElementById('main-scroll').scrollTo(0, 0);
 
-            // Re-trigger intersection observer for newly visible elements
             document.querySelectorAll('.fade-in, .fade-in-still').forEach(el => {
                 el.classList.remove('visible');
                 setTimeout(() => observer.observe(el), 50);
@@ -723,11 +744,10 @@
         let currentLang = 'lv';
         function toggleLanguage() {
             currentLang = currentLang === 'lv' ? 'en' : 'lv';
-            document.getElementById('langBtn').innerText = currentLang.toUpperCase();
+            document.getElementById('langBtn').innerText = currentLang === 'lv' ? 'EN' : 'LV';
             
             document.querySelectorAll('.translatable').forEach(el => {
                 if(el.tagName === 'P' || el.tagName === 'SPAN' || el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'H4' || el.tagName === 'LABEL' || el.tagName === 'OPTION' || el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'DIV') {
-                    // Check if it has the data attribute before setting (protects the buttons with emojis)
                     if(el.getAttribute(`data-${currentLang}`)) {
                         el.innerHTML = el.getAttribute(`data-${currentLang}`);
                     }
